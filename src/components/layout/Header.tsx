@@ -3,31 +3,33 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/contexts/LanguageContext";
 import logo from "@/assets/logo.jpeg";
-
-const navItems = [
-  { label: "Home", path: "/" },
-  {
-    label: "Investment Solutions",
-    path: "/solutions",
-    children: [
-      { label: "Mutual Funds", path: "/solutions/mutual-funds" },
-      { label: "Bonds", path: "/solutions/bonds" },
-      { label: "Insurance", path: "/solutions/insurance" },
-      { label: "IPO", path: "/solutions/ipo" },
-      { label: "Fixed Deposits", path: "/solutions/fixed-deposits" },
-    ],
-  },
-  { label: "Tools & Calculators", path: "/calculators" },
-  { label: "Education", path: "/education" },
-  { label: "Market Insights", path: "/insights" },
-  { label: "About", path: "/about" },
-];
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
+  const { t, language, setLanguage } = useLanguage();
+
+  const navItems = [
+    { label: t("nav.home"), path: "/" },
+    {
+      label: t("nav.investmentSolutions"),
+      path: "/solutions",
+      children: [
+        { label: t("nav.mutualFunds"), path: "/solutions/mutual-funds" },
+        { label: t("nav.bonds"), path: "/solutions/bonds" },
+        { label: t("nav.insurance"), path: "/solutions/insurance" },
+        { label: t("nav.ipo"), path: "/solutions/ipo" },
+        { label: t("nav.fixedDeposits"), path: "/solutions/fixed-deposits" },
+      ],
+    },
+    { label: t("nav.toolsCalculators"), path: "/calculators" },
+    { label: t("nav.education"), path: "/education" },
+    { label: t("nav.marketInsights"), path: "/insights" },
+    { label: t("nav.about"), path: "/about" },
+  ];
 
   const isActive = (path: string) => location.pathname === path || location.pathname.startsWith(path + "/");
 
@@ -92,10 +94,31 @@ const Header = () => {
           )}
         </nav>
 
-        {/* CTA + Mobile Toggle */}
+        {/* Language Toggle + CTA + Mobile Toggle */}
         <div className="flex items-center gap-3">
+          {/* Language Toggle */}
+          <div className="flex items-center rounded-full border border-border bg-card text-xs font-medium">
+            <button
+              onClick={() => setLanguage("en")}
+              className={cn(
+                "rounded-full px-2.5 py-1 transition-colors",
+                language === "en" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              EN
+            </button>
+            <button
+              onClick={() => setLanguage("hi")}
+              className={cn(
+                "rounded-full px-2.5 py-1 transition-colors",
+                language === "hi" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              हिं
+            </button>
+          </div>
           <Button asChild className="hidden sm:inline-flex">
-            <Link to="/contact">Free Financial Health Check</Link>
+            <Link to="/contact">{t("nav.freeHealthCheck")}</Link>
           </Button>
           <button
             className="inline-flex items-center justify-center rounded-md p-2 text-foreground lg:hidden"
@@ -142,7 +165,7 @@ const Header = () => {
             )}
             <Button asChild className="mt-2">
               <Link to="/contact" onClick={() => setMobileOpen(false)}>
-                Free Financial Health Check
+                {t("nav.freeHealthCheck")}
               </Link>
             </Button>
           </nav>

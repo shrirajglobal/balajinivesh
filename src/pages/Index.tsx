@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
@@ -22,60 +23,28 @@ const fadeInUp = {
   }),
 };
 
-const features = [
-  {
-    icon: Calculator,
-    title: "Financial Calculators",
-    description: "SIP, lumpsum, retirement & more — visualize your investment growth with interactive tools.",
-    path: "/calculators",
-    color: "bg-brand-orange-light text-primary",
-  },
-  {
-    icon: HeartPulse,
-    title: "Financial Health Check",
-    description: "Get your Financial Health Score and discover areas to improve your financial wellbeing.",
-    path: "/contact",
-    color: "bg-brand-green-light text-brand-green",
-  },
-  {
-    icon: Target,
-    title: "Goal Based Planning",
-    description: "Plan for retirement, child education, or home purchase with personalized SIP estimates.",
-    path: "/calculators",
-    color: "bg-brand-blue-light text-secondary",
-  },
-  {
-    icon: BookOpen,
-    title: "Investor Education",
-    description: "Learn the basics of mutual funds, asset allocation, tax planning and more.",
-    path: "/education",
-    color: "bg-brand-orange-light text-primary",
-  },
-  {
-    icon: TrendingUp,
-    title: "Market Insights",
-    description: "Stay updated with weekly market summaries and economic trends explained simply.",
-    path: "/insights",
-    color: "bg-brand-blue-light text-secondary",
-  },
-  {
-    icon: Shield,
-    title: "Risk Profiling",
-    description: "Understand your risk appetite and learn about suitable asset allocation strategies.",
-    path: "/calculators",
-    color: "bg-brand-green-light text-brand-green",
-  },
-];
-
-const solutions = [
-  { label: "Mutual Funds", path: "/solutions/mutual-funds" },
-  { label: "Bonds", path: "/solutions/bonds" },
-  { label: "Insurance", path: "/solutions/insurance" },
-  { label: "IPO", path: "/solutions/ipo" },
-  { label: "Fixed Deposits", path: "/solutions/fixed-deposits" },
-];
-
 const Index = () => {
+  const { t } = useLanguage();
+
+  const features = [
+    { icon: Calculator, title: t("home.feat1Title"), description: t("home.feat1Desc"), path: "/calculators", color: "bg-brand-orange-light text-primary" },
+    { icon: HeartPulse, title: t("home.feat2Title"), description: t("home.feat2Desc"), path: "/contact", color: "bg-brand-green-light text-brand-green" },
+    { icon: Target, title: t("home.feat3Title"), description: t("home.feat3Desc"), path: "/calculators", color: "bg-brand-blue-light text-secondary" },
+    { icon: BookOpen, title: t("home.feat4Title"), description: t("home.feat4Desc"), path: "/education", color: "bg-brand-orange-light text-primary" },
+    { icon: TrendingUp, title: t("home.feat5Title"), description: t("home.feat5Desc"), path: "/insights", color: "bg-brand-blue-light text-secondary" },
+    { icon: Shield, title: t("home.feat6Title"), description: t("home.feat6Desc"), path: "/calculators", color: "bg-brand-green-light text-brand-green" },
+  ];
+
+  const solutions = [
+    { label: t("nav.mutualFunds"), path: "/solutions/mutual-funds" },
+    { label: t("nav.bonds"), path: "/solutions/bonds" },
+    { label: t("nav.insurance"), path: "/solutions/insurance" },
+    { label: t("nav.ipo"), path: "/solutions/ipo" },
+    { label: t("nav.fixedDeposits"), path: "/solutions/fixed-deposits" },
+  ];
+
+  const trustPoints = [t("home.trust1"), t("home.trust2"), t("home.trust3"), t("home.trust4"), t("home.trust5"), t("home.trust6")];
+
   return (
     <div>
       {/* Hero */}
@@ -85,44 +54,22 @@ const Index = () => {
           <div className="mx-auto max-w-3xl text-center">
             <motion.div initial="hidden" animate="visible" variants={fadeInUp} custom={0}>
               <span className="inline-block rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground">
-                AMFI Registered Mutual Fund Distributor
+                {t("home.badge")}
               </span>
             </motion.div>
-            <motion.h1
-              initial="hidden"
-              animate="visible"
-              variants={fadeInUp}
-              custom={1}
-              className="mt-6 font-display text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl"
-            >
-              Plan Your Financial Future{" "}
-              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                with Confidence
-              </span>
+            <motion.h1 initial="hidden" animate="visible" variants={fadeInUp} custom={1} className="mt-6 font-display text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+              {t("home.heroTitle1")}{" "}
+              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">{t("home.heroTitle2")}</span>
             </motion.h1>
-            <motion.p
-              initial="hidden"
-              animate="visible"
-              variants={fadeInUp}
-              custom={2}
-              className="mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl"
-            >
-              Free financial planning tools, calculators, and educational resources to help you make informed investment decisions.
+            <motion.p initial="hidden" animate="visible" variants={fadeInUp} custom={2} className="mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl">
+              {t("home.heroSubtitle")}
             </motion.p>
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeInUp}
-              custom={3}
-              className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
-            >
+            <motion.div initial="hidden" animate="visible" variants={fadeInUp} custom={3} className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Button size="lg" asChild>
-                <Link to="/calculators">
-                  Explore Calculators <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
+                <Link to="/calculators">{t("home.exploreCalc")} <ArrowRight className="ml-1 h-4 w-4" /></Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link to="/contact">Get Free Financial Health Check</Link>
+                <Link to="/contact">{t("home.getFreeCheck")}</Link>
               </Button>
             </motion.div>
           </div>
@@ -133,35 +80,20 @@ const Index = () => {
       <section className="py-16 lg:py-24">
         <div className="container">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-              Everything You Need to Invest Wisely
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              Tools, education, and insights — all in one place, completely free.
-            </p>
+            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">{t("home.featuresTitle")}</h2>
+            <p className="mt-4 text-muted-foreground">{t("home.featuresSubtitle")}</p>
           </div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature, i) => (
-              <motion.div
-                key={feature.title}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                variants={fadeInUp}
-                custom={i}
-              >
+              <motion.div key={feature.title} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }} variants={fadeInUp} custom={i}>
                 <Link to={feature.path}>
                   <Card className="group h-full border-border/60 transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
                     <CardContent className="flex flex-col gap-4 p-6">
                       <div className={`inline-flex h-11 w-11 items-center justify-center rounded-lg ${feature.color}`}>
                         <feature.icon className="h-5 w-5" />
                       </div>
-                      <h3 className="font-display text-lg font-semibold text-foreground group-hover:text-primary">
-                        {feature.title}
-                      </h3>
-                      <p className="text-sm leading-relaxed text-muted-foreground">
-                        {feature.description}
-                      </p>
+                      <h3 className="font-display text-lg font-semibold text-foreground group-hover:text-primary">{feature.title}</h3>
+                      <p className="text-sm leading-relaxed text-muted-foreground">{feature.description}</p>
                     </CardContent>
                   </Card>
                 </Link>
@@ -175,23 +107,12 @@ const Index = () => {
       <section className="bg-muted/40 py-16 lg:py-24">
         <div className="container">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-              Investment Solutions We Distribute
-            </h2>
-            <p className="mt-4 text-muted-foreground">
-              Learn about different financial products and find what aligns with your goals.
-            </p>
+            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">{t("home.solutionsTitle")}</h2>
+            <p className="mt-4 text-muted-foreground">{t("home.solutionsSubtitle")}</p>
           </div>
           <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
             {solutions.map((s, i) => (
-              <motion.div
-                key={s.path}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeInUp}
-                custom={i}
-              >
+              <motion.div key={s.path} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} custom={i}>
                 <Button variant="outline" size="lg" asChild className="rounded-full">
                   <Link to={s.path}>{s.label}</Link>
                 </Button>
@@ -208,19 +129,12 @@ const Index = () => {
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div>
                 <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">
-                  Why Investors Trust{" "}
+                  {t("home.trustTitle1")}{" "}
                   <span className="text-primary">Balaji</span>{" "}
                   <span className="text-secondary">Nivesh</span>
                 </h2>
                 <ul className="mt-8 space-y-4">
-                  {[
-                    "AMFI registered mutual fund distributor",
-                    "Education-first approach to investing",
-                    "Free financial planning tools & calculators",
-                    "Personalized goal-based investment planning",
-                    "Transparent, no hidden charges",
-                    "Compliant with SEBI & AMFI regulations",
-                  ].map((item) => (
+                  {trustPoints.map((item) => (
                     <li key={item} className="flex items-start gap-3 text-muted-foreground">
                       <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-brand-green" />
                       <span>{item}</span>
@@ -230,13 +144,13 @@ const Index = () => {
               </div>
               <div className="rounded-2xl border border-border bg-gradient-to-br from-brand-orange-light to-brand-blue-light p-8 text-center lg:p-12">
                 <p className="font-display text-5xl font-extrabold text-primary">10+</p>
-                <p className="mt-2 text-sm text-muted-foreground">Years of Experience</p>
+                <p className="mt-2 text-sm text-muted-foreground">{t("home.yearsExp")}</p>
                 <div className="my-6 h-px bg-border" />
                 <p className="font-display text-5xl font-extrabold text-secondary">1000+</p>
-                <p className="mt-2 text-sm text-muted-foreground">Happy Investors</p>
+                <p className="mt-2 text-sm text-muted-foreground">{t("home.happyInvestors")}</p>
                 <div className="my-6 h-px bg-border" />
                 <p className="font-display text-5xl font-extrabold text-brand-green">₹50Cr+</p>
-                <p className="mt-2 text-sm text-muted-foreground">Assets Under Distribution</p>
+                <p className="mt-2 text-sm text-muted-foreground">{t("home.aum")}</p>
               </div>
             </div>
           </div>
@@ -246,20 +160,14 @@ const Index = () => {
       {/* CTA */}
       <section className="bg-gradient-to-r from-primary to-secondary py-16 lg:py-20">
         <div className="container text-center">
-          <h2 className="font-display text-3xl font-bold text-primary-foreground sm:text-4xl">
-            Start Your Investment Journey Today
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-primary-foreground/80">
-            Get a free financial health check and discover how to grow your wealth with disciplined investing.
-          </p>
+          <h2 className="font-display text-3xl font-bold text-primary-foreground sm:text-4xl">{t("home.ctaTitle")}</h2>
+          <p className="mx-auto mt-4 max-w-xl text-primary-foreground/80">{t("home.ctaSubtitle")}</p>
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <Button size="lg" variant="secondary" asChild className="bg-background text-foreground hover:bg-background/90">
-              <Link to="/contact">
-                Get Free Health Check <ArrowRight className="ml-1 h-4 w-4" />
-              </Link>
+              <Link to="/contact">{t("home.getHealthCheck")} <ArrowRight className="ml-1 h-4 w-4" /></Link>
             </Button>
             <Button size="lg" variant="outline" asChild className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
-              <Link to="/calculators">Try Our Calculators</Link>
+              <Link to="/calculators">{t("home.tryCalc")}</Link>
             </Button>
           </div>
         </div>
