@@ -17,6 +17,10 @@ import StepUpSIPCalculator from "./pages/calculators/StepUpSIPCalculator";
 import RetirementPlanner from "./pages/calculators/RetirementPlanner";
 import SIPvsFD from "./pages/calculators/SIPvsFD";
 import EmergencyFundCalculator from "./pages/calculators/EmergencyFundCalculator";
+import FinancialHealthCheck from "./pages/tools/FinancialHealthCheck";
+import RiskProfiler from "./pages/tools/RiskProfiler";
+import Education from "./pages/Education";
+import MarketInsights from "./pages/MarketInsights";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Resources from "./pages/Resources";
@@ -48,9 +52,12 @@ const App = () => (
             <Route path="/calculators/retirement" element={<RetirementPlanner />} />
             <Route path="/calculators/sip-vs-fd" element={<SIPvsFD />} />
             <Route path="/calculators/emergency-fund" element={<EmergencyFundCalculator />} />
+            {/* Assessment Tools */}
+            <Route path="/tools/health-check" element={<FinancialHealthCheck />} />
+            <Route path="/tools/risk-profile" element={<RiskProfiler />} />
             {/* Education & Insights */}
-            <Route path="/education" element={<Placeholder />} />
-            <Route path="/insights" element={<Placeholder />} />
+            <Route path="/education" element={<Education />} />
+            <Route path="/insights" element={<MarketInsights />} />
             {/* Static Pages */}
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
