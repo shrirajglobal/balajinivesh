@@ -52,11 +52,11 @@ const GiftClaimForm = ({ open, onOpenChange, segment }: GiftClaimFormProps) => {
     }
 
     setLoading(true);
-    const { error } = await supabase.from("gift_claims").insert({
+    const { error } = await supabase.from("gift_claims").insert([{
       user_id: user.id,
       segment,
       ...result.data,
-    });
+    }]);
 
     if (error) {
       toast.error("Failed to submit. Please try again.");
