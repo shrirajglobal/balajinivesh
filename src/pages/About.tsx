@@ -4,6 +4,7 @@ import { Users, Target, Heart, Award, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
+import HeroBanner from "@/components/layout/HeroBanner";
 import logo from "@/assets/logo.jpeg";
 
 const About = () => {
@@ -18,17 +19,15 @@ const About = () => {
 
   return (
     <div>
-      <section className="bg-gradient-to-br from-background to-accent py-16 lg:py-24">
-        <div className="container">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mx-auto max-w-3xl text-center">
-            <h1 className="font-display text-4xl font-extrabold text-foreground sm:text-5xl">
-              {t("about.title")} <span className="text-primary">Balaji</span>{" "}
-              <span className="text-secondary">Nivesh</span>
-            </h1>
-            <p className="mt-4 text-lg text-muted-foreground">{t("about.subtitle")}</p>
-          </motion.div>
-        </div>
-      </section>
+      <HeroBanner>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mx-auto max-w-3xl text-center">
+          <h1 className="font-display text-4xl font-extrabold text-foreground sm:text-5xl">
+            {t("about.title")} <span className="text-primary">Balaji</span>{" "}
+            <span className="text-secondary">Nivesh</span>
+          </h1>
+          <p className="mt-4 text-lg text-muted-foreground">{t("about.subtitle")}</p>
+        </motion.div>
+      </HeroBanner>
 
       <section className="py-16 lg:py-20">
         <div className="container">

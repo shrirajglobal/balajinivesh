@@ -6,6 +6,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import HeroBanner from "@/components/layout/HeroBanner";
 
 const Calculators = () => {
   const { t } = useLanguage();
@@ -23,14 +24,12 @@ const Calculators = () => {
 
   return (
     <div>
-      <section className="bg-gradient-to-br from-background to-accent py-16 lg:py-24">
-        <div className="container">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mx-auto max-w-3xl text-center">
-            <h1 className="font-display text-4xl font-extrabold text-foreground sm:text-5xl">{t("calculators.title")}</h1>
-            <p className="mt-4 text-lg text-muted-foreground">{t("calculators.subtitle")}</p>
-          </motion.div>
-        </div>
-      </section>
+      <HeroBanner>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mx-auto max-w-3xl text-center">
+          <h1 className="font-display text-4xl font-extrabold text-foreground sm:text-5xl">{t("calculators.title")}</h1>
+          <p className="mt-4 text-lg text-muted-foreground">{t("calculators.subtitle")}</p>
+        </motion.div>
+      </HeroBanner>
 
       <section className="py-16 lg:py-20">
         <div className="container">
