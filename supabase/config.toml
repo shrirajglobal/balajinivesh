@@ -1,0 +1,7 @@
+project_id = "xkyuyukppeaencmhakbu"
+
+[functions.send-certificate-email]
+verify_jwt = false
+
+[functions.notify-gift-claim]
+verify_jwt = false

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { BookOpen, Search, Clock, ArrowRight } from "lucide-react";
+import { BookOpen, Search, Clock, ArrowRight, Home, Rocket, GraduationCap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -101,6 +101,38 @@ const articles: Article[] = [
   },
 ];
 
+const segments = [
+  {
+    title: "For Investors",
+    description: "Comprehensive guides on SIPs, mutual funds, tax planning, and building wealth systematically.",
+    icon: GraduationCap,
+    color: "text-primary",
+    bg: "bg-brand-orange-light",
+    href: "#articles",
+    isSection: true,
+  },
+  {
+    title: "For Homemakers",
+    description: "Smart money lessons using everyday household wisdom. You already manage the hardest fund — your family!",
+    icon: Home,
+    color: "text-primary",
+    bg: "bg-brand-orange-light",
+    href: "/education/homemakers",
+    isSection: false,
+    badge: "🎓 Certificate + 🎁 Gift",
+  },
+  {
+    title: "For Students & Kids",
+    description: "Fun money missions for young minds (10+). Complete all missions to become a Junior Money Master!",
+    icon: Rocket,
+    color: "text-secondary",
+    bg: "bg-accent",
+    href: "/education/kids",
+    isSection: false,
+    badge: "🎓 Certificate + 🎁 Gift",
+  },
+];
+
 const Education = () => {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
@@ -111,6 +143,10 @@ const Education = () => {
     return matchSearch && matchCat;
   });
 
+  const scrollToArticles = () => {
+    document.getElementById("articles")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div>
       <section className="bg-gradient-to-br from-background to-accent py-16 lg:py-24">
@@ -119,18 +155,67 @@ const Education = () => {
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-orange-light text-primary">
               <BookOpen className="h-7 w-7" />
             </div>
-            <h1 className="font-display text-4xl font-extrabold text-foreground sm:text-5xl">Investor Education</h1>
-            <p className="mt-4 text-lg text-muted-foreground">Build your investing knowledge with simple, jargon-free articles and guides.</p>
-            <div className="relative mx-auto mt-8 max-w-md">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input placeholder="Search articles..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-10" />
-            </div>
+            <h1 className="font-display text-4xl font-extrabold text-foreground sm:text-5xl">Education Hub</h1>
+            <p className="mt-4 text-lg text-muted-foreground">Financial literacy for everyone — investors, homemakers, and young minds. Pick your path!</p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-10 lg:py-16">
+      {/* Segment Selector */}
+      <section className="py-10 lg:py-14">
         <div className="container">
+          <div className="grid gap-6 sm:grid-cols-3">
+            {segments.map((seg, i) => (
+              <motion.div key={seg.title} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}>
+                {seg.isSection ? (
+                  <button onClick={scrollToArticles} className="block w-full text-left">
+                    <Card className="group h-full border-border/60 transition-all hover:border-primary/30 hover:shadow-lg cursor-pointer">
+                      <CardContent className="flex flex-col items-start gap-3 p-6">
+                        <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${seg.bg}`}>
+                          <seg.icon className={`h-6 w-6 ${seg.color}`} />
+                        </div>
+                        <h3 className="font-display text-xl font-bold text-foreground group-hover:text-primary">{seg.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{seg.description}</p>
+                        <span className="mt-auto flex items-center text-sm font-medium text-primary">
+                          Browse articles <ArrowRight className="ml-1 h-3 w-3" />
+                        </span>
+                      </CardContent>
+                    </Card>
+                  </button>
+                ) : (
+                  <Link to={seg.href}>
+                    <Card className="group h-full border-border/60 transition-all hover:border-primary/30 hover:shadow-lg">
+                      <CardContent className="flex flex-col items-start gap-3 p-6">
+                        <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${seg.bg}`}>
+                          <seg.icon className={`h-6 w-6 ${seg.color}`} />
+                        </div>
+                        <h3 className="font-display text-xl font-bold text-foreground group-hover:text-primary">{seg.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{seg.description}</p>
+                        {seg.badge && <Badge variant="secondary" className="text-xs">{seg.badge}</Badge>}
+                        <span className="mt-auto flex items-center text-sm font-medium text-primary">
+                          Start learning <ArrowRight className="ml-1 h-3 w-3" />
+                        </span>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Investor Articles Section */}
+      <section id="articles" className="py-10 lg:py-16 bg-muted/30">
+        <div className="container">
+          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <h2 className="font-display text-2xl font-bold text-foreground">Investor Education Articles</h2>
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input placeholder="Search articles..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-10" />
+            </div>
+          </div>
+
           {/* Category Filters */}
           <div className="mb-8 flex flex-wrap gap-2">
             {categories.map((cat) => (
