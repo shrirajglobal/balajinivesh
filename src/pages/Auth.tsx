@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,6 +18,7 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,12 +29,12 @@ const Auth = () => {
       if (error) {
         toast.error(error.message);
       } else {
-        toast.success("Welcome back!");
+        toast.success(t("auth.welcomeToast"));
         navigate(-1);
       }
     } else {
       if (!fullName.trim()) {
-        toast.error("Please enter your full name");
+        toast.error(t("auth.nameRequired"));
         setLoading(false);
         return;
       }
@@ -40,7 +42,7 @@ const Auth = () => {
       if (error) {
         toast.error(error.message);
       } else {
-        toast.success("Account created! Please check your email to verify.");
+        toast.success(t("auth.signUpSuccess"));
       }
     }
     setLoading(false);
@@ -54,42 +56,36 @@ const Auth = () => {
             <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-brand-orange-light text-primary">
               <BookOpen className="h-6 w-6" />
             </div>
-            <CardTitle className="font-display text-2xl">{isLogin ? "Welcome Back" : "Create Account"}</CardTitle>
-            <CardDescription>
-              {isLogin ? "Sign in to track your learning progress" : "Join us to earn certificates & rewards"}
-            </CardDescription>
+            <CardTitle className="font-display text-2xl">{isLogin ? t("auth.welcomeBack") : t("auth.createAccount")}</CardTitle>
+            <CardDescription>{isLogin ? t("auth.signInSubtitle") : t("auth.signUpSubtitle")}</CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               {!isLogin && (
                 <div className="space-y-2">
-                  <Label htmlFor="fullName">Full Name</Label>
-                  <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Your full name" required={!isLogin} />
+                  <Label htmlFor="fullName">{t("auth.fullName")}</Label>
+                  <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder={t("auth.fullName")} required={!isLogin} />
                 </div>
               )}
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("auth.email")}</Label>
                 <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{t("auth.password")}</Label>
                 <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required minLength={6} />
               </div>
               <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? "Please wait..." : isLogin ? (
-                  <><LogIn className="mr-2 h-4 w-4" /> Sign In</>
+                {loading ? t("auth.pleaseWait") : isLogin ? (
+                  <><LogIn className="mr-2 h-4 w-4" /> {t("auth.signIn")}</>
                 ) : (
-                  <><UserPlus className="mr-2 h-4 w-4" /> Create Account</>
+                  <><UserPlus className="mr-2 h-4 w-4" /> {t("auth.createAccount")}</>
                 )}
               </Button>
             </form>
             <div className="mt-4 text-center">
-              <button
-                type="button"
-                onClick={() => setIsLogin(!isLogin)}
-                className="text-sm text-primary hover:underline"
-              >
-                {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
+              <button type="button" onClick={() => setIsLogin(!isLogin)} className="text-sm text-primary hover:underline">
+                {isLogin ? t("auth.noAccount") : t("auth.hasAccount")}
               </button>
             </div>
           </CardContent>
