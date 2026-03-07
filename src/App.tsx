@@ -28,7 +28,9 @@ import MarketInsights from "./pages/MarketInsights";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Resources from "./pages/Resources";
-import Placeholder from "./pages/Placeholder";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfUse from "./pages/TermsOfUse";
+import Disclaimer from "./pages/Disclaimer";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -71,9 +73,9 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/resources" element={<Resources />} />
-              <Route path="/privacy" element={<Placeholder />} />
-              <Route path="/terms" element={<Placeholder />} />
-              <Route path="/disclaimer" element={<Placeholder />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfUse />} />
+              <Route path="/disclaimer" element={<Disclaimer />} />
               {/* Catch-all */}
               <Route path="*" element={<NotFound />} />
             </Routes>
