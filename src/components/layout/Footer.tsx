@@ -76,7 +76,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <span>Your Office Address, City, State, India</span>
+                <span>Lal Bazar, Kolkata, West Bengal, India</span>
               </li>
             </ul>
           </div>
