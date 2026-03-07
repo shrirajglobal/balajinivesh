@@ -14,7 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      certificates: {
+        Row: {
+          certificate_number: string
+          id: string
+          issued_at: string
+          segment: Database["public"]["Enums"]["education_segment"]
+          user_id: string
+        }
+        Insert: {
+          certificate_number: string
+          id?: string
+          issued_at?: string
+          segment: Database["public"]["Enums"]["education_segment"]
+          user_id: string
+        }
+        Update: {
+          certificate_number?: string
+          id?: string
+          issued_at?: string
+          segment?: Database["public"]["Enums"]["education_segment"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      education_progress: {
+        Row: {
+          completed_at: string
+          id: string
+          segment: Database["public"]["Enums"]["education_segment"]
+          topic_id: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string
+          id?: string
+          segment: Database["public"]["Enums"]["education_segment"]
+          topic_id: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string
+          id?: string
+          segment?: Database["public"]["Enums"]["education_segment"]
+          topic_id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      gift_claims: {
+        Row: {
+          address: string
+          city: string
+          created_at: string
+          full_name: string
+          id: string
+          phone: string
+          pincode: string
+          segment: Database["public"]["Enums"]["education_segment"]
+          status: Database["public"]["Enums"]["gift_claim_status"]
+          user_id: string
+        }
+        Insert: {
+          address: string
+          city: string
+          created_at?: string
+          full_name: string
+          id?: string
+          phone: string
+          pincode: string
+          segment: Database["public"]["Enums"]["education_segment"]
+          status?: Database["public"]["Enums"]["gift_claim_status"]
+          user_id: string
+        }
+        Update: {
+          address?: string
+          city?: string
+          created_at?: string
+          full_name?: string
+          id?: string
+          phone?: string
+          pincode?: string
+          segment?: Database["public"]["Enums"]["education_segment"]
+          status?: Database["public"]["Enums"]["gift_claim_status"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +136,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      education_segment: "homemakers" | "kids"
+      gift_claim_status: "pending" | "shipped" | "delivered"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +264,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      education_segment: ["homemakers", "kids"],
+      gift_claim_status: ["pending", "shipped", "delivered"],
+    },
   },
 } as const
