@@ -10,6 +10,13 @@ import Bonds from "./pages/solutions/Bonds";
 import Insurance from "./pages/solutions/Insurance";
 import IPO from "./pages/solutions/IPO";
 import FixedDeposits from "./pages/solutions/FixedDeposits";
+import Calculators from "./pages/Calculators";
+import SIPCalculator from "./pages/calculators/SIPCalculator";
+import LumpsumCalculator from "./pages/calculators/LumpsumCalculator";
+import StepUpSIPCalculator from "./pages/calculators/StepUpSIPCalculator";
+import RetirementPlanner from "./pages/calculators/RetirementPlanner";
+import SIPvsFD from "./pages/calculators/SIPvsFD";
+import EmergencyFundCalculator from "./pages/calculators/EmergencyFundCalculator";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Resources from "./pages/Resources";
@@ -33,8 +40,14 @@ const App = () => (
             <Route path="/solutions/insurance" element={<Insurance />} />
             <Route path="/solutions/ipo" element={<IPO />} />
             <Route path="/solutions/fixed-deposits" element={<FixedDeposits />} />
-            {/* Tools */}
-            <Route path="/calculators" element={<Placeholder />} />
+            {/* Calculators */}
+            <Route path="/calculators" element={<Calculators />} />
+            <Route path="/calculators/sip" element={<SIPCalculator />} />
+            <Route path="/calculators/lumpsum" element={<LumpsumCalculator />} />
+            <Route path="/calculators/step-up-sip" element={<StepUpSIPCalculator />} />
+            <Route path="/calculators/retirement" element={<RetirementPlanner />} />
+            <Route path="/calculators/sip-vs-fd" element={<SIPvsFD />} />
+            <Route path="/calculators/emergency-fund" element={<EmergencyFundCalculator />} />
             {/* Education & Insights */}
             <Route path="/education" element={<Placeholder />} />
             <Route path="/insights" element={<Placeholder />} />
