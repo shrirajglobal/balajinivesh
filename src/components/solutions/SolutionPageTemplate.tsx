@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Clock, AlertTriangle, Users, HelpCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import HeroBanner from "@/components/layout/HeroBanner";
 import {
   Accordion,
   AccordionContent,
@@ -52,24 +53,22 @@ const SolutionPageTemplate = ({
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-background to-accent py-16 lg:py-24">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mx-auto max-w-3xl text-center"
-          >
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-orange-light text-primary">
-              {icon}
-            </div>
-            <h1 className="font-display text-4xl font-extrabold text-foreground sm:text-5xl">
-              {title}
-            </h1>
-            <p className="mt-4 text-lg text-muted-foreground">{subtitle}</p>
-          </motion.div>
-        </div>
-      </section>
+      <HeroBanner>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mx-auto max-w-3xl text-center"
+        >
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-orange-light text-primary">
+            {icon}
+          </div>
+          <h1 className="font-display text-4xl font-extrabold text-foreground sm:text-5xl">
+            {title}
+          </h1>
+          <p className="mt-4 text-lg text-muted-foreground">{subtitle}</p>
+        </motion.div>
+      </HeroBanner>
 
       {/* What is it */}
       <section className="py-16 lg:py-20">
