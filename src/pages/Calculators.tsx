@@ -7,6 +7,8 @@ import {
   Landmark,
   PiggyBank,
   Shield,
+  HeartPulse,
+  UserCheck,
   ArrowRight,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -54,6 +56,20 @@ const calculators = [
     description: "Find out how much you need in your emergency fund based on your monthly expenses.",
     path: "/calculators/emergency-fund",
     color: "bg-brand-green-light text-brand-green",
+  },
+  {
+    icon: HeartPulse,
+    title: "Financial Health Check",
+    description: "Answer simple questions about your finances and get a Financial Health Score with improvement recommendations.",
+    path: "/tools/health-check",
+    color: "bg-brand-green-light text-brand-green",
+  },
+  {
+    icon: UserCheck,
+    title: "Risk Profiler",
+    description: "Understand your risk appetite through a questionnaire and see educational asset allocation guidance.",
+    path: "/tools/risk-profile",
+    color: "bg-brand-blue-light text-secondary",
   },
 ];
 
