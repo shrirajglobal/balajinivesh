@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
+import HeroBanner from "@/components/layout/HeroBanner";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
@@ -48,33 +49,30 @@ const Index = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-background via-background to-accent py-20 lg:py-28">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,hsl(var(--brand-orange)/0.06),transparent_50%),radial-gradient(circle_at_20%_80%,hsl(var(--brand-blue)/0.06),transparent_50%)]" />
-        <div className="container relative">
-          <div className="mx-auto max-w-3xl text-center">
-            <motion.div initial="hidden" animate="visible" variants={fadeInUp} custom={0}>
-              <span className="inline-block rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground">
-                {t("home.badge")}
-              </span>
-            </motion.div>
-            <motion.h1 initial="hidden" animate="visible" variants={fadeInUp} custom={1} className="mt-6 font-display text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              {t("home.heroTitle1")}{" "}
-              <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">{t("home.heroTitle2")}</span>
-            </motion.h1>
-            <motion.p initial="hidden" animate="visible" variants={fadeInUp} custom={2} className="mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl">
-              {t("home.heroSubtitle")}
-            </motion.p>
-            <motion.div initial="hidden" animate="visible" variants={fadeInUp} custom={3} className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <Button size="lg" asChild>
-                <Link to="/calculators">{t("home.exploreCalc")} <ArrowRight className="ml-1 h-4 w-4" /></Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link to="/contact">{t("home.getFreeCheck")}</Link>
-              </Button>
-            </motion.div>
-          </div>
+      <HeroBanner className="py-20 lg:py-28">
+        <div className="mx-auto max-w-3xl text-center">
+          <motion.div initial="hidden" animate="visible" variants={fadeInUp} custom={0}>
+            <span className="inline-block rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium text-muted-foreground">
+              {t("home.badge")}
+            </span>
+          </motion.div>
+          <motion.h1 initial="hidden" animate="visible" variants={fadeInUp} custom={1} className="mt-6 font-display text-4xl font-extrabold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+            {t("home.heroTitle1")}{" "}
+            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">{t("home.heroTitle2")}</span>
+          </motion.h1>
+          <motion.p initial="hidden" animate="visible" variants={fadeInUp} custom={2} className="mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl">
+            {t("home.heroSubtitle")}
+          </motion.p>
+          <motion.div initial="hidden" animate="visible" variants={fadeInUp} custom={3} className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+            <Button size="lg" asChild>
+              <Link to="/calculators">{t("home.exploreCalc")} <ArrowRight className="ml-1 h-4 w-4" /></Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link to="/contact">{t("home.getFreeCheck")}</Link>
+            </Button>
+          </motion.div>
         </div>
-      </section>
+      </HeroBanner>
 
       {/* Features Grid */}
       <section className="py-16 lg:py-24">
