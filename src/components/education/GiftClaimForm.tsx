@@ -52,10 +52,15 @@ const GiftClaimForm = ({ open, onOpenChange, segment }: GiftClaimFormProps) => {
     }
 
     setLoading(true);
+    const validated = result.data;
     const { error } = await supabase.from("gift_claims").insert([{
       user_id: user.id,
       segment,
-      ...result.data,
+      full_name: validated.full_name,
+      phone: validated.phone,
+      address: validated.address,
+      city: validated.city,
+      pincode: validated.pincode,
     }]);
 
     if (error) {
