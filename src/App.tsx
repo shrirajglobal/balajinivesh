@@ -73,9 +73,9 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/resources" element={<Resources />} />
-              <Route path="/privacy" element={<Placeholder />} />
-              <Route path="/terms" element={<Placeholder />} />
-              <Route path="/disclaimer" element={<Placeholder />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfUse />} />
+              <Route path="/disclaimer" element={<Disclaimer />} />
               {/* Catch-all */}
               <Route path="*" element={<NotFound />} />
             </Routes>
