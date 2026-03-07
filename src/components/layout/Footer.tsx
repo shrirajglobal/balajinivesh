@@ -76,7 +76,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <span>Lal Bazar, Kolkata, West Bengal, India</span>
+                <span>No 320, 1 R N Mukherjee Road, 3rd Floor, Kolkata, West Bengal 700001</span>
               </li>
             </ul>
           </div>

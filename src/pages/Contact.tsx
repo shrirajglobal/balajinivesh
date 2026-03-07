@@ -99,7 +99,7 @@ const Contact = () => {
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-green-light text-brand-green"><MapPin className="h-5 w-5" /></div>
                   <div>
                     <h3 className="font-display text-sm font-semibold text-foreground">{t("contact.visitUs")}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">Lal Bazar<br />Kolkata, West Bengal, India</p>
+                    <p className="mt-1 text-sm text-muted-foreground">No 320, 1 R N Mukherjee Road<br />3rd Floor Room, Kolkata<br />West Bengal 700001</p>
                   </div>
                 </CardContent>
               </Card>
@@ -107,7 +107,7 @@ const Contact = () => {
               <Card className="border-border/60 overflow-hidden">
                 <div className="aspect-[4/3] w-full">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.1!2d88.3503!3d22.5726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM0JzIxLjQiTiA4OMKwMjEnMDEuMSJF!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin&q=Balaji+Nivesh+Lal+Bazar+Kolkata"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.1!2d88.3488!3d22.5726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM0JzIxLjQiTiA4OMKwMjAnNTUuNyJF!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin&q=320+R+N+Mukherjee+Road+Kolkata+700001"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
