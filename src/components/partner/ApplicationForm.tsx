@@ -34,10 +34,9 @@ const ApplicationForm = () => {
 
   const onSubmit = async (data: FormData) => {
     setLoading(true);
-    const { error } = await supabase.from("partner_applications").insert({
-      ...data,
-      user_id: user?.id ?? null,
-    });
+    const insertData: any = { ...data };
+    if (user?.id) insertData.user_id = user.id;
+    const { error } = await supabase.from("partner_applications").insert([insertData]);
     setLoading(false);
 
     if (error) {
