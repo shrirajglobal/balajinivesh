@@ -3,6 +3,8 @@ import { Navigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Upload, Loader2, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -22,6 +24,10 @@ const RTAUploadPage = () => {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [uploads, setUploads] = useState<RTAUpload[]>([]);
   const [uploading, setUploading] = useState(false);
+  const [monthYear, setMonthYear] = useState(() => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+  });
 
   useEffect(() => {
     if (!user) return;
@@ -49,6 +55,11 @@ const RTAUploadPage = () => {
       return;
     }
 
+    if (!monthYear) {
+      toast({ title: "Select month", description: "Please select the statement month/year.", variant: "destructive" });
+      return;
+    }
+
     setUploading(true);
     const filePath = `rta-statements/${Date.now()}_${file.name}`;
 
@@ -61,20 +72,43 @@ const RTAUploadPage = () => {
     }
 
     // Create record
-    const { error: dbError } = await supabase.from("rta_uploads").insert({
+    const { data: uploadRecord, error: dbError } = await supabase.from("rta_uploads").insert({
       file_name: file.name,
       file_path: filePath,
       admin_id: user.id,
-      status: "uploaded",
-    });
+      status: "processing",
+    }).select("id").single();
 
-    setUploading(false);
-    if (dbError) {
-      toast({ title: "Error", description: dbError.message, variant: "destructive" });
+    if (dbError || !uploadRecord) {
+      toast({ title: "Error", description: dbError?.message || "Failed to create upload record", variant: "destructive" });
+      setUploading(false);
       return;
     }
 
-    toast({ title: "File uploaded!", description: "RTA statement uploaded. Processing will begin shortly." });
+    // Invoke edge function to parse
+    const { data: parseResult, error: parseError } = await supabase.functions.invoke("parse-rta-statement", {
+      body: {
+        upload_id: uploadRecord.id,
+        file_path: filePath,
+        month_year: `${monthYear}-01`, // Convert to date format
+      },
+    });
+
+    setUploading(false);
+
+    if (parseError) {
+      toast({ title: "Parsing failed", description: parseError.message, variant: "destructive" });
+    } else if (parseResult?.error) {
+      toast({ title: "Parsing issue", description: parseResult.error, variant: "destructive" });
+    } else {
+      const msg = `Processed ${parseResult?.records_processed || 0} of ${parseResult?.total_rows || 0} rows.`;
+      const unmatched = parseResult?.unmatched_arns;
+      toast({
+        title: "Statement Parsed!",
+        description: unmatched?.length ? `${msg} Unmatched ARNs: ${unmatched.join(", ")}` : msg,
+      });
+    }
+
     fetchUploads();
     if (fileRef.current) fileRef.current.value = "";
   };
@@ -88,14 +122,28 @@ const RTAUploadPage = () => {
       <h1 className="font-display text-2xl font-bold text-foreground">RTA Statement Upload</h1>
       <p className="mt-1 text-muted-foreground">Upload CAMS / KFintech statements to update partner data.</p>
 
-      <div className="mt-8 rounded-xl border-2 border-dashed border-border bg-card p-8 text-center">
-        <FileText className="mx-auto h-12 w-12 text-muted-foreground" />
-        <p className="mt-4 font-medium text-foreground">Upload RTA Statement</p>
-        <p className="mt-1 text-sm text-muted-foreground">CSV or Excel files from CAMS / KFintech</p>
-        <input ref={fileRef} type="file" accept=".csv,.xlsx,.xls" onChange={handleUpload} className="hidden" />
-        <Button className="mt-4" onClick={() => fileRef.current?.click()} disabled={uploading}>
-          {uploading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Uploading...</> : <><Upload className="mr-2 h-4 w-4" /> Choose File</>}
-        </Button>
+      <div className="mt-8 rounded-xl border-2 border-dashed border-border bg-card p-8">
+        <div className="mx-auto max-w-md text-center">
+          <FileText className="mx-auto h-12 w-12 text-muted-foreground" />
+          <p className="mt-4 font-medium text-foreground">Upload RTA Statement</p>
+          <p className="mt-1 text-sm text-muted-foreground">CSV files from CAMS / KFintech with columns: ARN/Distributor Code, Investor Name, Folio, PAN, AMC, Scheme, AUM/Market Value, Commission</p>
+
+          <div className="mt-6">
+            <Label htmlFor="month-year" className="text-sm">Statement Month *</Label>
+            <Input
+              id="month-year"
+              type="month"
+              value={monthYear}
+              onChange={(e) => setMonthYear(e.target.value)}
+              className="mx-auto mt-1 max-w-[200px]"
+            />
+          </div>
+
+          <input ref={fileRef} type="file" accept=".csv,.xlsx,.xls" onChange={handleUpload} className="hidden" />
+          <Button className="mt-4" onClick={() => fileRef.current?.click()} disabled={uploading}>
+            {uploading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing...</> : <><Upload className="mr-2 h-4 w-4" /> Choose CSV File</>}
+          </Button>
+        </div>
       </div>
 
       <h2 className="mt-12 font-display text-lg font-semibold text-foreground">Upload History</h2>
@@ -117,7 +165,9 @@ const RTAUploadPage = () => {
                 <TableCell className="font-medium">{u.file_name}</TableCell>
                 <TableCell>
                   <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                    u.status === "completed" ? "bg-brand-green-light text-brand-green" : "bg-brand-orange-light text-primary"
+                    u.status === "completed" ? "bg-brand-green-light text-brand-green" :
+                    u.status === "failed" ? "bg-destructive/10 text-destructive" :
+                    "bg-brand-orange-light text-primary"
                   }`}>{u.status}</span>
                 </TableCell>
                 <TableCell>{u.records_processed ?? "—"}</TableCell>
