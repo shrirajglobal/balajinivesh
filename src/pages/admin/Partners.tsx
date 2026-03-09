@@ -4,8 +4,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Loader2 } from "lucide-react";
 
 interface Application {
   id: string;
@@ -25,6 +29,10 @@ const AdminPartners = () => {
   const { t } = useLanguage();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [apps, setApps] = useState<Application[]>([]);
+  const [approveDialog, setApproveDialog] = useState<Application | null>(null);
+  const [arnNumber, setArnNumber] = useState("");
+  const [euin, setEuin] = useState("");
+  const [approving, setApproving] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -41,10 +49,58 @@ const AdminPartners = () => {
     setApps(data || []);
   };
 
-  const updateStatus = async (id: string, status: string) => {
-    const { error } = await supabase.from("partner_applications").update({ status: status as any }).eq("id", id);
+  const handleApprove = async () => {
+    if (!approveDialog) return;
+    if (!arnNumber.trim()) {
+      toast({ title: "ARN Required", description: "Please enter the partner's ARN number", variant: "destructive" });
+      return;
+    }
+
+    setApproving(true);
+
+    // Create partner record
+    const partnerData: any = {
+      arn_number: arnNumber.trim().toUpperCase(),
+      euin: euin.trim() || null,
+      status: "active",
+    };
+
+    // If application has user_id, link the partner to that user
+    if (approveDialog.user_id) {
+      partnerData.user_id = approveDialog.user_id;
+    } else {
+      // Create a placeholder - admin will need to link later when user signs up
+      // For now, use admin's user_id as placeholder (not ideal but prevents null constraint violation)
+      partnerData.user_id = user!.id;
+    }
+
+    const { error: partnerError } = await supabase.from("partners").insert([partnerData]);
+    if (partnerError) {
+      toast({ title: "Error", description: partnerError.message, variant: "destructive" });
+      setApproving(false);
+      return;
+    }
+
+    // Update application status
+    const { error: appError } = await supabase.from("partner_applications").update({ status: "approved" as any }).eq("id", approveDialog.id);
+    if (appError) {
+      toast({ title: "Error", description: appError.message, variant: "destructive" });
+      setApproving(false);
+      return;
+    }
+
+    toast({ title: "Partner Approved!", description: `${approveDialog.full_name} has been approved with ARN ${arnNumber}` });
+    setApproving(false);
+    setApproveDialog(null);
+    setArnNumber("");
+    setEuin("");
+    fetchApps();
+  };
+
+  const handleReject = async (id: string) => {
+    const { error } = await supabase.from("partner_applications").update({ status: "rejected" as any }).eq("id", id);
     if (error) { toast({ title: t("partnerLeads.errorTitle"), description: error.message, variant: "destructive" }); return; }
-    toast({ title: `Application ${status}` });
+    toast({ title: "Application Rejected" });
     fetchApps();
   };
 
@@ -90,8 +146,8 @@ const AdminPartners = () => {
                 <TableCell>
                   {a.status === "pending" && (
                     <div className="flex gap-2">
-                      <Button size="sm" variant="outline" onClick={() => updateStatus(a.id, "approved")}>{t("admin.approve")}</Button>
-                      <Button size="sm" variant="ghost" onClick={() => updateStatus(a.id, "rejected")}>{t("admin.reject")}</Button>
+                      <Button size="sm" variant="outline" onClick={() => setApproveDialog(a)}>{t("admin.approve")}</Button>
+                      <Button size="sm" variant="ghost" onClick={() => handleReject(a.id)}>{t("admin.reject")}</Button>
                     </div>
                   )}
                 </TableCell>
@@ -100,6 +156,45 @@ const AdminPartners = () => {
           </TableBody>
         </Table>
       </div>
+
+      {/* Approve Dialog with ARN Input */}
+      <Dialog open={!!approveDialog} onOpenChange={(open) => !open && setApproveDialog(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Approve Partner Application</DialogTitle>
+            <DialogDescription>
+              Enter the ARN number to create the partner record for {approveDialog?.full_name}.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="arn">ARN Number *</Label>
+              <Input
+                id="arn"
+                placeholder="e.g., ARN-123456"
+                value={arnNumber}
+                onChange={(e) => setArnNumber(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">This will be used to match RTA statement data</p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="euin">EUIN (Optional)</Label>
+              <Input
+                id="euin"
+                placeholder="e.g., E123456"
+                value={euin}
+                onChange={(e) => setEuin(e.target.value)}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setApproveDialog(null)}>Cancel</Button>
+            <Button onClick={handleApprove} disabled={approving}>
+              {approving ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Approving...</> : "Approve & Create Partner"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
