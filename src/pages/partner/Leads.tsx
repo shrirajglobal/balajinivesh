@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Plus, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const schema = z.object({
   name: z.string().trim().min(2).max(100),
@@ -34,6 +35,7 @@ interface Lead {
 const Leads = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [leads, setLeads] = useState<Lead[]>([]);
   const [partnerId, setPartnerId] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
@@ -67,12 +69,11 @@ const Leads = () => {
       notes: data.notes || null,
     });
     setLoading(false);
-    if (error) { toast({ title: "Error", description: "Failed to add lead.", variant: "destructive" }); return; }
+    if (error) { toast({ title: t("partnerLeads.errorTitle"), description: t("partnerLeads.errorDesc"), variant: "destructive" }); return; }
 
-    toast({ title: "Lead Added!" });
+    toast({ title: t("partnerLeads.successTitle") });
     setOpen(false);
     form.reset();
-    // Refresh
     const { data: rows } = await supabase.from("partner_leads").select("*").eq("partner_id", partnerId).order("created_at", { ascending: false });
     setLeads(rows || []);
   };
@@ -81,34 +82,34 @@ const Leads = () => {
     <PartnerLayout>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-display text-2xl font-bold text-foreground">Lead CRM</h1>
-          <p className="mt-1 text-muted-foreground">Track your prospects and follow-ups.</p>
+          <h1 className="font-display text-2xl font-bold text-foreground">{t("partnerLeads.title")}</h1>
+          <p className="mt-1 text-muted-foreground">{t("partnerLeads.subtitle")}</p>
         </div>
         {partnerId && (
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-              <Button><Plus className="mr-1 h-4 w-4" /> Add Lead</Button>
+              <Button><Plus className="mr-1 h-4 w-4" /> {t("partnerLeads.addLead")}</Button>
             </DialogTrigger>
             <DialogContent>
-              <DialogHeader><DialogTitle>Add New Lead</DialogTitle></DialogHeader>
+              <DialogHeader><DialogTitle>{t("partnerLeads.addNewLead")}</DialogTitle></DialogHeader>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                   <FormField control={form.control} name="name" render={({ field }) => (
-                    <FormItem><FormLabel>Name *</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>{t("partnerLeads.name")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
                   <div className="grid gap-4 sm:grid-cols-2">
                     <FormField control={form.control} name="phone" render={({ field }) => (
-                      <FormItem><FormLabel>Phone</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                      <FormItem><FormLabel>{t("partnerLeads.phone")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
                     <FormField control={form.control} name="email" render={({ field }) => (
-                      <FormItem><FormLabel>Email</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                      <FormItem><FormLabel>{t("partnerLeads.email")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
                   </div>
                   <FormField control={form.control} name="notes" render={({ field }) => (
-                    <FormItem><FormLabel>Notes</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>{t("partnerLeads.notes")}</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
                   <Button type="submit" className="w-full" disabled={loading}>
-                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null} Add Lead
+                    {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null} {t("partnerLeads.addLead")}
                   </Button>
                 </form>
               </Form>
@@ -121,16 +122,16 @@ const Leads = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Phone</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Added</TableHead>
+              <TableHead>{t("partnerLeads.name")}</TableHead>
+              <TableHead>{t("partnerLeads.phone")}</TableHead>
+              <TableHead>{t("partnerLeads.email")}</TableHead>
+              <TableHead>{t("partnerLeads.status")}</TableHead>
+              <TableHead>{t("partnerLeads.added")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {leads.length === 0 ? (
-              <TableRow><TableCell colSpan={5} className="py-8 text-center text-muted-foreground">{partnerId ? "No leads yet. Click 'Add Lead' to start tracking prospects." : "You need to be an approved partner to use the Lead CRM."}</TableCell></TableRow>
+              <TableRow><TableCell colSpan={5} className="py-8 text-center text-muted-foreground">{partnerId ? t("partnerLeads.emptyWithPartner") : t("partnerLeads.emptyNoPartner")}</TableCell></TableRow>
             ) : leads.map((l) => (
               <TableRow key={l.id}>
                 <TableCell className="font-medium">{l.name}</TableCell>

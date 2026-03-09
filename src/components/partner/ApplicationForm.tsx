@@ -10,6 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, CheckCircle2 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const schema = z.object({
   full_name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -24,6 +25,7 @@ type FormData = z.infer<typeof schema>;
 const ApplicationForm = () => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -40,57 +42,57 @@ const ApplicationForm = () => {
     setLoading(false);
 
     if (error) {
-      toast({ title: "Error", description: "Failed to submit. Please try again.", variant: "destructive" });
+      toast({ title: t("partnerApp.errorTitle"), description: t("partnerApp.errorDesc"), variant: "destructive" });
       return;
     }
 
     setSubmitted(true);
-    toast({ title: "Application Submitted!", description: "We'll review and get back to you within 48 hours." });
+    toast({ title: t("partnerApp.toastTitle"), description: t("partnerApp.toastDesc") });
   };
 
   if (submitted) {
     return (
       <div className="flex flex-col items-center gap-4 rounded-2xl border border-border bg-card p-8 text-center">
         <CheckCircle2 className="h-12 w-12 text-brand-green" />
-        <h3 className="font-display text-xl font-bold text-foreground">Application Received!</h3>
-        <p className="text-muted-foreground">Our team will review your application and contact you within 48 hours.</p>
+        <h3 className="font-display text-xl font-bold text-foreground">{t("partnerApp.successTitle")}</h3>
+        <p className="text-muted-foreground">{t("partnerApp.successDesc")}</p>
       </div>
     );
   }
 
   return (
     <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
-      <h3 className="font-display text-xl font-bold text-foreground">Become a Partner</h3>
-      <p className="mt-1 text-sm text-muted-foreground">Fill in your details and we'll get in touch.</p>
+      <h3 className="font-display text-xl font-bold text-foreground">{t("partnerApp.title")}</h3>
+      <p className="mt-1 text-sm text-muted-foreground">{t("partnerApp.subtitle")}</p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4">
           <FormField control={form.control} name="full_name" render={({ field }) => (
-            <FormItem><FormLabel>Full Name *</FormLabel><FormControl><Input placeholder="Your full name" {...field} /></FormControl><FormMessage /></FormItem>
+            <FormItem><FormLabel>{t("partnerApp.fullName")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
           )} />
           <div className="grid gap-4 sm:grid-cols-2">
             <FormField control={form.control} name="email" render={({ field }) => (
-              <FormItem><FormLabel>Email *</FormLabel><FormControl><Input type="email" placeholder="you@email.com" {...field} /></FormControl><FormMessage /></FormItem>
+              <FormItem><FormLabel>{t("partnerApp.email")}</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="phone" render={({ field }) => (
-              <FormItem><FormLabel>Phone *</FormLabel><FormControl><Input placeholder="+91 XXXXX XXXXX" {...field} /></FormControl><FormMessage /></FormItem>
+              <FormItem><FormLabel>{t("partnerApp.phone")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
             )} />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             <FormField control={form.control} name="city" render={({ field }) => (
-              <FormItem><FormLabel>City *</FormLabel><FormControl><Input placeholder="Your city" {...field} /></FormControl><FormMessage /></FormItem>
+              <FormItem><FormLabel>{t("partnerApp.city")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="profession" render={({ field }) => (
               <FormItem>
-                <FormLabel>Profession *</FormLabel>
+                <FormLabel>{t("partnerApp.profession")}</FormLabel>
                 <Select onValueChange={field.onChange} value={field.value}>
-                  <FormControl><SelectTrigger><SelectValue placeholder="Select profession" /></SelectTrigger></FormControl>
+                  <FormControl><SelectTrigger><SelectValue placeholder={t("partnerApp.selectProfession")} /></SelectTrigger></FormControl>
                   <SelectContent>
-                    <SelectItem value="homemaker">Homemaker</SelectItem>
-                    <SelectItem value="student">Student</SelectItem>
-                    <SelectItem value="ca">CA / Tax Professional</SelectItem>
-                    <SelectItem value="professional">Working Professional</SelectItem>
-                    <SelectItem value="retired">Retired</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
+                    <SelectItem value="homemaker">{t("partnerApp.homemaker")}</SelectItem>
+                    <SelectItem value="student">{t("partnerApp.student")}</SelectItem>
+                    <SelectItem value="ca">{t("partnerApp.ca")}</SelectItem>
+                    <SelectItem value="professional">{t("partnerApp.professional")}</SelectItem>
+                    <SelectItem value="retired">{t("partnerApp.retired")}</SelectItem>
+                    <SelectItem value="other">{t("partnerApp.other")}</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -98,7 +100,7 @@ const ApplicationForm = () => {
             )} />
           </div>
           <Button type="submit" className="w-full" size="lg" disabled={loading}>
-            {loading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...</> : "Submit Application"}
+            {loading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> {t("partnerApp.submitting")}</> : t("partnerApp.submit")}
           </Button>
         </form>
       </Form>

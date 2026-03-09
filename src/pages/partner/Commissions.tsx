@@ -3,6 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import PartnerLayout from "@/components/partner/PartnerLayout";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Commission {
   id: string;
@@ -14,6 +15,7 @@ interface Commission {
 
 const Commissions = () => {
   const { user } = useAuth();
+  const { t } = useLanguage();
   const [data, setData] = useState<Commission[]>([]);
 
   useEffect(() => {
@@ -21,11 +23,7 @@ const Commissions = () => {
     const fetch = async () => {
       const { data: partner } = await supabase.from("partners").select("id").eq("user_id", user.id).maybeSingle();
       if (!partner) return;
-      const { data: rows } = await supabase
-        .from("partner_commissions")
-        .select("*")
-        .eq("partner_id", partner.id)
-        .order("month_year", { ascending: false });
+      const { data: rows } = await supabase.from("partner_commissions").select("*").eq("partner_id", partner.id).order("month_year", { ascending: false });
       setData(rows || []);
     };
     fetch();
@@ -35,22 +33,22 @@ const Commissions = () => {
 
   return (
     <PartnerLayout>
-      <h1 className="font-display text-2xl font-bold text-foreground">Commission Tracker</h1>
-      <p className="mt-1 text-muted-foreground">Monthly commission breakdown by AMC.</p>
+      <h1 className="font-display text-2xl font-bold text-foreground">{t("partnerComm.title")}</h1>
+      <p className="mt-1 text-muted-foreground">{t("partnerComm.subtitle")}</p>
 
       <div className="mt-8 rounded-xl border border-border">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Month</TableHead>
-              <TableHead>AMC</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
-              <TableHead>Status</TableHead>
+              <TableHead>{t("partnerComm.month")}</TableHead>
+              <TableHead>{t("partnerComm.amc")}</TableHead>
+              <TableHead className="text-right">{t("partnerComm.amount")}</TableHead>
+              <TableHead>{t("partnerComm.status")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {data.length === 0 ? (
-              <TableRow><TableCell colSpan={4} className="py-8 text-center text-muted-foreground">No commission data yet. Data appears after admin uploads RTA statements.</TableCell></TableRow>
+              <TableRow><TableCell colSpan={4} className="py-8 text-center text-muted-foreground">{t("partnerComm.empty")}</TableCell></TableRow>
             ) : data.map((c) => (
               <TableRow key={c.id}>
                 <TableCell>{new Date(c.month_year).toLocaleDateString("en-IN", { month: "short", year: "numeric" })}</TableCell>

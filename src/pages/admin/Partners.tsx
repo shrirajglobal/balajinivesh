@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Application {
   id: string;
@@ -21,6 +22,7 @@ interface Application {
 const AdminPartners = () => {
   const { user, loading: authLoading } = useAuth();
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
   const [apps, setApps] = useState<Application[]>([]);
 
@@ -41,36 +43,36 @@ const AdminPartners = () => {
 
   const updateStatus = async (id: string, status: string) => {
     const { error } = await supabase.from("partner_applications").update({ status: status as any }).eq("id", id);
-    if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
+    if (error) { toast({ title: t("partnerLeads.errorTitle"), description: error.message, variant: "destructive" }); return; }
     toast({ title: `Application ${status}` });
     fetchApps();
   };
 
-  if (authLoading || isAdmin === null) return <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">Loading...</div>;
+  if (authLoading || isAdmin === null) return <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">{t("admin.loading")}</div>;
   if (!user) return <Navigate to="/auth" replace />;
-  if (!isAdmin) return <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">Access denied. Admin only.</div>;
+  if (!isAdmin) return <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">{t("admin.accessDenied")}</div>;
 
   return (
     <div className="container py-8 lg:py-12">
-      <h1 className="font-display text-2xl font-bold text-foreground">Partner Management</h1>
-      <p className="mt-1 text-muted-foreground">Review and manage partner applications.</p>
+      <h1 className="font-display text-2xl font-bold text-foreground">{t("admin.partnersTitle")}</h1>
+      <p className="mt-1 text-muted-foreground">{t("admin.partnersSubtitle")}</p>
 
       <div className="mt-8 rounded-xl border border-border">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Phone</TableHead>
-              <TableHead>City</TableHead>
-              <TableHead>Profession</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Actions</TableHead>
+              <TableHead>{t("admin.nameCol")}</TableHead>
+              <TableHead>{t("admin.emailCol")}</TableHead>
+              <TableHead>{t("admin.phoneCol")}</TableHead>
+              <TableHead>{t("admin.cityCol")}</TableHead>
+              <TableHead>{t("admin.professionCol")}</TableHead>
+              <TableHead>{t("admin.statusCol")}</TableHead>
+              <TableHead>{t("admin.actionsCol")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {apps.length === 0 ? (
-              <TableRow><TableCell colSpan={7} className="py-8 text-center text-muted-foreground">No applications yet.</TableCell></TableRow>
+              <TableRow><TableCell colSpan={7} className="py-8 text-center text-muted-foreground">{t("admin.noApps")}</TableCell></TableRow>
             ) : apps.map((a) => (
               <TableRow key={a.id}>
                 <TableCell className="font-medium">{a.full_name}</TableCell>
@@ -88,8 +90,8 @@ const AdminPartners = () => {
                 <TableCell>
                   {a.status === "pending" && (
                     <div className="flex gap-2">
-                      <Button size="sm" variant="outline" onClick={() => updateStatus(a.id, "approved")}>Approve</Button>
-                      <Button size="sm" variant="ghost" onClick={() => updateStatus(a.id, "rejected")}>Reject</Button>
+                      <Button size="sm" variant="outline" onClick={() => updateStatus(a.id, "approved")}>{t("admin.approve")}</Button>
+                      <Button size="sm" variant="ghost" onClick={() => updateStatus(a.id, "rejected")}>{t("admin.reject")}</Button>
                     </div>
                   )}
                 </TableCell>
