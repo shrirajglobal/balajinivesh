@@ -9,6 +9,10 @@ import {
   Shield,
   ArrowRight,
   CheckCircle2,
+  Home,
+  GraduationCap,
+  Briefcase,
+  Users,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -45,6 +49,13 @@ const Index = () => {
   ];
 
   const trustPoints = [t("home.trust1"), t("home.trust2"), t("home.trust3"), t("home.trust4"), t("home.trust5"), t("home.trust6")];
+
+  const partnerPersonas = [
+    { icon: Home, title: "Homemakers", desc: "Earn from home with flexible hours", color: "bg-brand-orange-light text-primary" },
+    { icon: GraduationCap, title: "Students", desc: "Build income while studying", color: "bg-brand-blue-light text-secondary" },
+    { icon: Briefcase, title: "CAs & Professionals", desc: "Add MF distribution to your practice", color: "bg-brand-green-light text-brand-green" },
+    { icon: Users, title: "Anyone Passionate", desc: "Side income opportunity for all", color: "bg-brand-orange-light text-primary" },
+  ];
 
   return (
     <div>
@@ -151,6 +162,36 @@ const Index = () => {
                 <p className="mt-2 text-sm text-muted-foreground">{t("home.aum")}</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Join Our Team */}
+      <section className="bg-muted/40 py-16 lg:py-24">
+        <div className="container">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="font-display text-3xl font-bold text-foreground sm:text-4xl">Join Our Team</h2>
+            <p className="mt-4 text-muted-foreground">Become a mutual fund distribution partner. Earn commissions while helping families invest wisely.</p>
+          </div>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {partnerPersonas.map((p, i) => (
+              <motion.div key={p.title} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} custom={i}>
+                <Card className="h-full border-border/60 text-center transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
+                  <CardContent className="flex flex-col items-center gap-3 p-6">
+                    <div className={`inline-flex h-11 w-11 items-center justify-center rounded-lg ${p.color}`}>
+                      <p.icon className="h-5 w-5" />
+                    </div>
+                    <h3 className="font-display text-base font-semibold text-foreground">{p.title}</h3>
+                    <p className="text-sm text-muted-foreground">{p.desc}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Button size="lg" asChild>
+              <Link to="/partner">Become a Partner <ArrowRight className="ml-1 h-4 w-4" /></Link>
+            </Button>
           </div>
         </div>
       </section>

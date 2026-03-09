@@ -33,6 +33,15 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import Disclaimer from "./pages/Disclaimer";
 import NotFound from "./pages/NotFound";
+import Partner from "./pages/Partner";
+import PartnerDashboard from "./pages/partner/Dashboard";
+import PartnerCommissions from "./pages/partner/Commissions";
+import PartnerClients from "./pages/partner/Clients";
+import PartnerLeads from "./pages/partner/Leads";
+import PartnerAcademy from "./pages/partner/Academy";
+import PartnerToolkit from "./pages/partner/Toolkit";
+import AdminPartners from "./pages/admin/Partners";
+import AdminRTAUpload from "./pages/admin/RTAUpload";
 
 const queryClient = new QueryClient();
 
@@ -69,6 +78,17 @@ const App = () => (
                 <Route path="/education/homemakers" element={<HomemakersEducation />} />
                 <Route path="/education/kids" element={<KidsEducation />} />
                 <Route path="/insights" element={<MarketInsights />} />
+                {/* Partner */}
+                <Route path="/partner" element={<Partner />} />
+                <Route path="/partner/dashboard" element={<PartnerDashboard />} />
+                <Route path="/partner/commissions" element={<PartnerCommissions />} />
+                <Route path="/partner/clients" element={<PartnerClients />} />
+                <Route path="/partner/leads" element={<PartnerLeads />} />
+                <Route path="/partner/academy" element={<PartnerAcademy />} />
+                <Route path="/partner/toolkit" element={<PartnerToolkit />} />
+                {/* Admin */}
+                <Route path="/admin/partners" element={<AdminPartners />} />
+                <Route path="/admin/rta-upload" element={<AdminRTAUpload />} />
                 {/* Auth */}
                 <Route path="/auth" element={<Auth />} />
                 {/* Static Pages */}
