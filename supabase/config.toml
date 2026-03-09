@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.notify-gift-claim]
 verify_jwt = false
+
+[functions.parse-rta-statement]
+verify_jwt = false
