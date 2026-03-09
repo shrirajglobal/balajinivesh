@@ -107,17 +107,26 @@ Deno.serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const token = authHeader.replace("Bearer ", "");
-    const { data: claimsData, error: claimsError } = await supabase.auth.getClaims(token);
-    if (claimsError || !claimsData?.claims) {
-      return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+    // Get user from token
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError || !user) {
+      return new Response(JSON.stringify({ error: "Unauthorized", details: userError?.message }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    const userId = claimsData.claims.sub as string;
+    // Check admin role using service client (to bypass RLS on user_roles)
+    const adminClient = createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+    );
 
-    // Check admin role
-    const { data: isAdmin } = await supabase.rpc("has_role", { _user_id: userId, _role: "admin" });
-    if (!isAdmin) {
+    const { data: roleData } = await adminClient
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user.id)
+      .eq("role", "admin")
+      .maybeSingle();
+
+    if (!roleData) {
       return new Response(JSON.stringify({ error: "Admin access required" }), { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
@@ -127,12 +136,6 @@ Deno.serve(async (req) => {
     if (!upload_id || !file_path || !month_year) {
       return new Response(JSON.stringify({ error: "Missing upload_id, file_path, or month_year" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
-
-    // Use service role to access storage and write data
-    const adminClient = createClient(
-      Deno.env.get("SUPABASE_URL")!,
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
-    );
 
     // Download file from storage
     const { data: fileData, error: downloadError } = await adminClient.storage
@@ -156,14 +159,30 @@ Deno.serve(async (req) => {
     const { data: partners } = await adminClient.from("partners").select("id, arn_number");
     const arnToPartner = new Map<string, string>();
     (partners || []).forEach((p) => {
-      if (p.arn_number) arnToPartner.set(p.arn_number.trim().toUpperCase(), p.id);
+      if (p.arn_number) {
+        // Store multiple variations of ARN for matching
+        const arn = p.arn_number.trim().toUpperCase();
+        arnToPartner.set(arn, p.id);
+        // Also store without "ARN-" prefix if present
+        if (arn.startsWith("ARN-")) {
+          arnToPartner.set(arn.substring(4), p.id);
+        }
+        // Also store with "ARN-" prefix if not present
+        if (!arn.startsWith("ARN-") && !arn.startsWith("ARN")) {
+          arnToPartner.set(`ARN-${arn}`, p.id);
+        }
+      }
     });
 
     let recordsProcessed = 0;
     const unmatchedArns = new Set<string>();
 
     for (const row of rows) {
-      const partnerId = arnToPartner.get(row.partner_arn.trim().toUpperCase());
+      const rowArn = row.partner_arn.trim().toUpperCase();
+      const partnerId = arnToPartner.get(rowArn) || 
+        arnToPartner.get(rowArn.replace(/^ARN-?/, "")) ||
+        arnToPartner.get(`ARN-${rowArn.replace(/^ARN-?/, "")}`);
+      
       if (!partnerId) {
         if (row.partner_arn) unmatchedArns.add(row.partner_arn);
         continue;
