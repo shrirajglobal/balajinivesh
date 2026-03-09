@@ -8,7 +8,7 @@ interface HeroBannerProps {
 
 const HeroBanner = ({ children, className = "" }: HeroBannerProps) => {
   return (
-    <section className={`relative overflow-hidden bg-background py-16 lg:py-24 ${className}`}>
+    <section className={`relative overflow-hidden bg-background py-10 sm:py-16 lg:py-24 ${className}`}>
       {/* Dot grid pattern */}
       <div
         className="absolute inset-0 opacity-[0.4]"
@@ -24,7 +24,7 @@ const HeroBanner = ({ children, className = "" }: HeroBannerProps) => {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="absolute -right-20 -top-20 h-[420px] w-[420px] rounded-full"
+        className="absolute -right-20 -top-20 h-[280px] w-[280px] rounded-full sm:h-[360px] sm:w-[360px] lg:h-[420px] lg:w-[420px]"
         style={{
           background:
             "radial-gradient(circle, hsl(var(--brand-orange) / 0.12) 0%, hsl(var(--brand-orange) / 0.04) 40%, transparent 70%)",
@@ -36,7 +36,7 @@ const HeroBanner = ({ children, className = "" }: HeroBannerProps) => {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
-        className="absolute -bottom-20 -left-20 h-[360px] w-[360px] rounded-full"
+        className="absolute -bottom-20 -left-20 h-[240px] w-[240px] rounded-full sm:h-[300px] sm:w-[300px] lg:h-[360px] lg:w-[360px]"
         style={{
           background:
             "radial-gradient(circle, hsl(var(--brand-blue) / 0.10) 0%, hsl(var(--brand-blue) / 0.03) 40%, transparent 70%)",

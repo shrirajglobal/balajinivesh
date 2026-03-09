@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -9,8 +9,25 @@ import logo from "@/assets/logo.jpeg";
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileSubOpen, setMobileSubOpen] = useState(false);
   const location = useLocation();
   const { t, language, setLanguage } = useLanguage();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+    setMobileSubOpen(false);
+    setDropdownOpen(false);
+  }, [location.pathname]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
+  const toggleMobile = useCallback(() => setMobileOpen((prev) => !prev), []);
 
   const navItems = [
     { label: t("nav.home"), path: "/" },
@@ -32,26 +49,27 @@ const Header = () => {
     { label: t("nav.about"), path: "/about" },
   ];
 
-  const isActive = (path: string) => location.pathname === path || location.pathname.startsWith(path + "/");
+  const isActive = (path: string) => location.pathname === path || (path !== "/" && location.pathname.startsWith(path + "/"));
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="container flex h-16 items-center justify-between lg:h-18">
+      <div className="container flex h-14 items-center justify-between sm:h-16 lg:h-18">
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="Balaji Nivesh" className="h-10 w-auto" />
-          <span className="hidden font-display text-lg font-bold text-foreground sm:inline-block">
+        <Link to="/" className="flex items-center gap-2 shrink-0">
+          <img src={logo} alt="Balaji Nivesh" className="h-8 w-auto sm:h-10" />
+          <span className="hidden font-display text-base font-bold text-foreground sm:inline-block sm:text-lg">
             Balaji <span className="text-secondary">Nivesh</span>
           </span>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-1 lg:flex">
+        <nav className="hidden items-center gap-0.5 lg:flex">
           {navItems.map((item) =>
             item.children ? (
               <div
                 key={item.label}
                 className="relative"
+                ref={dropdownRef}
                 onMouseEnter={() => setDropdownOpen(true)}
                 onMouseLeave={() => setDropdownOpen(false)}
               >
@@ -60,18 +78,23 @@ const Header = () => {
                     "flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
                     isActive(item.path) ? "text-primary" : "text-muted-foreground"
                   )}
+                  aria-expanded={dropdownOpen}
+                  aria-haspopup="true"
                 >
                   {item.label}
-                  <ChevronDown className="h-3.5 w-3.5" />
+                  <ChevronDown className={cn("h-3.5 w-3.5 transition-transform", dropdownOpen && "rotate-180")} />
                 </button>
                 {dropdownOpen && (
                   <div className="absolute left-0 top-full pt-1">
-                    <div className="min-w-[200px] rounded-lg border border-border bg-card p-2 shadow-lg">
+                    <div className="min-w-[220px] rounded-lg border border-border bg-card p-1.5 shadow-xl shadow-foreground/5">
                       {item.children.map((child) => (
                         <Link
                           key={child.path}
                           to={child.path}
-                          className="block rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                          className={cn(
+                            "flex items-center rounded-md px-3 py-2.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground",
+                            isActive(child.path) ? "text-primary bg-accent/50" : "text-muted-foreground"
+                          )}
                         >
                           {child.label}
                         </Link>
@@ -95,14 +118,14 @@ const Header = () => {
           )}
         </nav>
 
-        {/* Language Toggle + CTA + Mobile Toggle */}
-        <div className="flex items-center gap-3">
+        {/* Right side: Language + CTA + Hamburger */}
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Language Toggle */}
           <div className="flex items-center rounded-full border border-border bg-card text-xs font-medium">
             <button
               onClick={() => setLanguage("en")}
               className={cn(
-                "rounded-full px-2.5 py-1 transition-colors",
+                "rounded-full px-2 py-1 transition-colors sm:px-2.5",
                 language === "en" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -111,19 +134,19 @@ const Header = () => {
             <button
               onClick={() => setLanguage("hi")}
               className={cn(
-                "rounded-full px-2.5 py-1 transition-colors",
+                "rounded-full px-2 py-1 transition-colors sm:px-2.5",
                 language === "hi" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
               )}
             >
               हिं
             </button>
           </div>
-          <Button asChild className="hidden sm:inline-flex">
+          <Button asChild size="sm" className="hidden sm:inline-flex">
             <Link to="/contact">{t("nav.freeHealthCheck")}</Link>
           </Button>
           <button
-            className="inline-flex items-center justify-center rounded-md p-2 text-foreground lg:hidden"
-            onClick={() => setMobileOpen(!mobileOpen)}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-foreground transition-colors hover:bg-accent lg:hidden"
+            onClick={toggleMobile}
             aria-label="Toggle menu"
           >
             {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -131,32 +154,43 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Mobile Nav — full screen overlay */}
       {mobileOpen && (
-        <div className="border-t border-border bg-background lg:hidden">
-          <nav className="container flex flex-col gap-1 py-4">
+        <div className="fixed inset-x-0 top-14 bottom-0 z-50 overflow-y-auto overscroll-contain border-t border-border bg-background sm:top-16 lg:hidden">
+          <nav className="container flex flex-col gap-1 py-4 pb-24">
             {navItems.map((item) =>
               item.children ? (
                 <div key={item.label}>
-                  <p className="px-3 py-2 text-sm font-semibold text-foreground">{item.label}</p>
-                  {item.children.map((child) => (
-                    <Link
-                      key={child.path}
-                      to={child.path}
-                      onClick={() => setMobileOpen(false)}
-                      className="block rounded-md px-6 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                    >
-                      {child.label}
-                    </Link>
-                  ))}
+                  <button
+                    onClick={() => setMobileSubOpen(!mobileSubOpen)}
+                    className="flex w-full items-center justify-between rounded-lg px-3 py-3 text-sm font-semibold text-foreground active:bg-accent"
+                  >
+                    {item.label}
+                    <ChevronRight className={cn("h-4 w-4 text-muted-foreground transition-transform", mobileSubOpen && "rotate-90")} />
+                  </button>
+                  {mobileSubOpen && (
+                    <div className="ml-3 border-l-2 border-border pl-3">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.path}
+                          to={child.path}
+                          className={cn(
+                            "block rounded-lg px-3 py-3 text-sm transition-colors active:bg-accent",
+                            isActive(child.path) ? "text-primary font-medium" : "text-muted-foreground"
+                          )}
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ) : (
                 <Link
                   key={item.path}
                   to={item.path}
-                  onClick={() => setMobileOpen(false)}
                   className={cn(
-                    "rounded-md px-3 py-2 text-sm font-medium hover:bg-accent",
+                    "rounded-lg px-3 py-3 text-sm font-medium transition-colors active:bg-accent",
                     isActive(item.path) ? "text-primary" : "text-muted-foreground"
                   )}
                 >
@@ -164,11 +198,11 @@ const Header = () => {
                 </Link>
               )
             )}
-            <Button asChild className="mt-2">
-              <Link to="/contact" onClick={() => setMobileOpen(false)}>
-                {t("nav.freeHealthCheck")}
-              </Link>
-            </Button>
+            <div className="mt-4 px-3">
+              <Button asChild className="w-full">
+                <Link to="/contact">{t("nav.freeHealthCheck")}</Link>
+              </Button>
+            </div>
           </nav>
         </div>
       )}

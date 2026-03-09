@@ -18,7 +18,7 @@ const PartnerSidebar = () => {
 
   return (
     <aside className="w-full shrink-0 lg:w-56">
-      <nav className="flex gap-1 overflow-x-auto lg:flex-col">
+      <nav className="flex gap-1 overflow-x-auto pb-2 scrollbar-thin lg:flex-col lg:pb-0">
         {navItems.map((item) => {
           const active = location.pathname === item.path;
           return (
@@ -26,7 +26,7 @@ const PartnerSidebar = () => {
               key={item.path}
               to={item.path}
               className={cn(
-                "flex items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+                "flex items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
                 active
                   ? "bg-primary/10 text-primary"
                   : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"

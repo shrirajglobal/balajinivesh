@@ -8,13 +8,13 @@ const Footer = () => {
 
   return (
     <footer className="border-t border-border bg-muted/50">
-      <div className="container py-12 lg:py-16">
+      <div className="container py-10 sm:py-12 lg:py-16">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
-          <div className="space-y-4">
+          <div className="space-y-4 sm:col-span-2 lg:col-span-1">
             <Link to="/" className="flex items-center gap-2">
-              <img src={logo} alt="Balaji Nivesh" className="h-10 w-auto" />
-              <span className="font-display text-lg font-bold text-foreground">
+              <img src={logo} alt="Balaji Nivesh" className="h-9 w-auto sm:h-10" />
+              <span className="font-display text-base font-bold text-foreground sm:text-lg">
                 Balaji <span className="text-secondary">Nivesh</span>
               </span>
             </Link>
@@ -24,8 +24,8 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="mb-4 font-display text-sm font-semibold text-foreground">{t("footer.quickLinks")}</h4>
-            <ul className="space-y-2.5">
+            <h4 className="mb-3 font-display text-sm font-semibold text-foreground sm:mb-4">{t("footer.quickLinks")}</h4>
+            <ul className="space-y-2">
               {[
                 { label: t("footer.aboutUs"), path: "/about" },
                 { label: t("footer.investmentSolutions"), path: "/solutions/mutual-funds" },
@@ -35,7 +35,7 @@ const Footer = () => {
                 { label: t("footer.contactUs"), path: "/contact" },
               ].map((link) => (
                 <li key={link.path}>
-                  <Link to={link.path} className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                  <Link to={link.path} className="inline-block py-0.5 text-sm text-muted-foreground transition-colors hover:text-primary">
                     {link.label}
                   </Link>
                 </li>
@@ -45,8 +45,8 @@ const Footer = () => {
 
           {/* Solutions */}
           <div>
-            <h4 className="mb-4 font-display text-sm font-semibold text-foreground">{t("footer.solutions")}</h4>
-            <ul className="space-y-2.5">
+            <h4 className="mb-3 font-display text-sm font-semibold text-foreground sm:mb-4">{t("footer.solutions")}</h4>
+            <ul className="space-y-2">
               {[
                 { label: t("nav.mutualFunds"), path: "/solutions/mutual-funds" },
                 { label: t("nav.bonds"), path: "/solutions/bonds" },
@@ -55,7 +55,7 @@ const Footer = () => {
                 { label: t("nav.fixedDeposits"), path: "/solutions/fixed-deposits" },
               ].map((link) => (
                 <li key={link.path}>
-                  <Link to={link.path} className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                  <Link to={link.path} className="inline-block py-0.5 text-sm text-muted-foreground transition-colors hover:text-primary">
                     {link.label}
                   </Link>
                 </li>
@@ -65,7 +65,7 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="mb-4 font-display text-sm font-semibold text-foreground">{t("footer.contactUs")}</h4>
+            <h4 className="mb-3 font-display text-sm font-semibold text-foreground sm:mb-4">{t("footer.contactUs")}</h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
@@ -73,7 +73,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <span>info@balajinivesh.com</span>
+                <span className="break-all">info@balajinivesh.com</span>
               </li>
               <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
@@ -84,13 +84,13 @@ const Footer = () => {
         </div>
 
         {/* Disclaimers */}
-        <div className="mt-10 border-t border-border pt-6">
+        <div className="mt-8 border-t border-border pt-6 sm:mt-10">
           <p className="text-xs leading-relaxed text-muted-foreground">
             <strong>{t("footer.disclaimerLink")}:</strong> {t("footer.disclaimer")}
           </p>
-          <div className="mt-4 flex flex-col items-center justify-between gap-2 text-xs text-muted-foreground sm:flex-row">
+          <div className="mt-4 flex flex-col items-center justify-between gap-3 text-xs text-muted-foreground sm:flex-row sm:gap-2">
             <p>{t("footer.copyright").replace("{year}", new Date().getFullYear().toString())}</p>
-            <div className="flex gap-4">
+            <div className="flex flex-wrap justify-center gap-4">
               <Link to="/privacy" className="hover:text-primary">{t("footer.privacyPolicy")}</Link>
               <Link to="/terms" className="hover:text-primary">{t("footer.termsOfUse")}</Link>
               <Link to="/disclaimer" className="hover:text-primary">{t("footer.disclaimerLink")}</Link>
