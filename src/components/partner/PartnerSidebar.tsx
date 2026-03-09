@@ -1,18 +1,20 @@
 import { Link, useLocation } from "react-router-dom";
 import { LayoutDashboard, IndianRupee, Users, UserPlus, GraduationCap, Megaphone } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const navItems = [
-  { icon: LayoutDashboard, label: "Dashboard", path: "/partner/dashboard" },
-  { icon: IndianRupee, label: "Commissions", path: "/partner/commissions" },
-  { icon: Users, label: "Clients", path: "/partner/clients" },
-  { icon: UserPlus, label: "Leads", path: "/partner/leads" },
-  { icon: GraduationCap, label: "Academy", path: "/partner/academy" },
-  { icon: Megaphone, label: "Toolkit", path: "/partner/toolkit" },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const PartnerSidebar = () => {
   const location = useLocation();
+  const { t } = useLanguage();
+
+  const navItems = [
+    { icon: LayoutDashboard, label: t("partnerSidebar.dashboard"), path: "/partner/dashboard" },
+    { icon: IndianRupee, label: t("partnerSidebar.commissions"), path: "/partner/commissions" },
+    { icon: Users, label: t("partnerSidebar.clients"), path: "/partner/clients" },
+    { icon: UserPlus, label: t("partnerSidebar.leads"), path: "/partner/leads" },
+    { icon: GraduationCap, label: t("partnerSidebar.academy"), path: "/partner/academy" },
+    { icon: Megaphone, label: t("partnerSidebar.toolkit"), path: "/partner/toolkit" },
+  ];
 
   return (
     <aside className="w-full shrink-0 lg:w-56">
