@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useMemo, ReactNode } from "react";
 import en from "@/locales/en.json";
 import hi from "@/locales/hi.json";
 
@@ -21,21 +21,28 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguageState] = useState<Language>(() => {
+    if (typeof window === "undefined") return "en";
     const stored = localStorage.getItem("balaji-nivesh-lang");
     return (stored === "hi" ? "hi" : "en") as Language;
   });
 
-  const setLanguage = (lang: Language) => {
+  const setLanguage = useCallback((lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem("balaji-nivesh-lang", lang);
-  };
+  }, []);
 
-  const t = (key: string): string => {
+  const t = useCallback((key: string): string => {
     return getNestedValue(translations[language], key);
-  };
+  }, [language]);
+
+  const value = useMemo(() => ({
+    language,
+    setLanguage,
+    t,
+  }), [language, setLanguage, t]);
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );
