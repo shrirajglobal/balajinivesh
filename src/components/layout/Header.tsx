@@ -28,6 +28,7 @@ const Header = () => {
     { label: t("nav.toolsCalculators"), path: "/calculators" },
     { label: t("nav.education"), path: "/education" },
     { label: t("nav.marketInsights"), path: "/insights" },
+    { label: "Partner", path: "/partner" },
     { label: t("nav.about"), path: "/about" },
   ];
 
