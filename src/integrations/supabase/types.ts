@@ -101,6 +101,246 @@ export type Database = {
         }
         Relationships: []
       }
+      partner_applications: {
+        Row: {
+          city: string
+          created_at: string
+          email: string
+          full_name: string
+          id: string
+          phone: string
+          profession: string
+          status: Database["public"]["Enums"]["partner_status"]
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          city: string
+          created_at?: string
+          email: string
+          full_name: string
+          id?: string
+          phone: string
+          profession: string
+          status?: Database["public"]["Enums"]["partner_status"]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          city?: string
+          created_at?: string
+          email?: string
+          full_name?: string
+          id?: string
+          phone?: string
+          profession?: string
+          status?: Database["public"]["Enums"]["partner_status"]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      partner_aum_data: {
+        Row: {
+          amc_name: string
+          aum_amount: number
+          client_id: string | null
+          created_at: string
+          id: string
+          month_year: string
+          partner_id: string
+          scheme_name: string
+        }
+        Insert: {
+          amc_name: string
+          aum_amount?: number
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          month_year: string
+          partner_id: string
+          scheme_name: string
+        }
+        Update: {
+          amc_name?: string
+          aum_amount?: number
+          client_id?: string | null
+          created_at?: string
+          id?: string
+          month_year?: string
+          partner_id?: string
+          scheme_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_aum_data_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "partner_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "partner_aum_data_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partner_clients: {
+        Row: {
+          client_name: string
+          created_at: string
+          folio_number: string | null
+          id: string
+          pan_number: string | null
+          partner_id: string
+          updated_at: string
+        }
+        Insert: {
+          client_name: string
+          created_at?: string
+          folio_number?: string | null
+          id?: string
+          pan_number?: string | null
+          partner_id: string
+          updated_at?: string
+        }
+        Update: {
+          client_name?: string
+          created_at?: string
+          folio_number?: string | null
+          id?: string
+          pan_number?: string | null
+          partner_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_clients_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partner_commissions: {
+        Row: {
+          amc_name: string
+          commission_amount: number
+          created_at: string
+          id: string
+          month_year: string
+          partner_id: string
+          status: string
+        }
+        Insert: {
+          amc_name: string
+          commission_amount?: number
+          created_at?: string
+          id?: string
+          month_year: string
+          partner_id: string
+          status?: string
+        }
+        Update: {
+          amc_name?: string
+          commission_amount?: number
+          created_at?: string
+          id?: string
+          month_year?: string
+          partner_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_commissions_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partner_leads: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          notes: string | null
+          partner_id: string
+          phone: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          partner_id: string
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          partner_id?: string
+          phone?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_leads_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      partners: {
+        Row: {
+          arn_number: string | null
+          created_at: string
+          euin: string | null
+          id: string
+          joined_date: string
+          status: Database["public"]["Enums"]["partner_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          arn_number?: string | null
+          created_at?: string
+          euin?: string | null
+          id?: string
+          joined_date?: string
+          status?: Database["public"]["Enums"]["partner_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          arn_number?: string | null
+          created_at?: string
+          euin?: string | null
+          id?: string
+          joined_date?: string
+          status?: Database["public"]["Enums"]["partner_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -128,16 +368,77 @@ export type Database = {
         }
         Relationships: []
       }
+      rta_uploads: {
+        Row: {
+          admin_id: string | null
+          created_at: string
+          file_name: string
+          file_path: string
+          id: string
+          records_processed: number | null
+          status: string
+        }
+        Insert: {
+          admin_id?: string | null
+          created_at?: string
+          file_name: string
+          file_path: string
+          id?: string
+          records_processed?: number | null
+          status?: string
+        }
+        Update: {
+          admin_id?: string | null
+          created_at?: string
+          file_name?: string
+          file_path?: string
+          id?: string
+          records_processed?: number | null
+          status?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
+      app_role: "admin" | "partner" | "user"
       education_segment: "homemakers" | "kids"
       gift_claim_status: "pending" | "shipped" | "delivered"
+      partner_status:
+        | "pending"
+        | "approved"
+        | "rejected"
+        | "active"
+        | "inactive"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -265,8 +566,10 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["admin", "partner", "user"],
       education_segment: ["homemakers", "kids"],
       gift_claim_status: ["pending", "shipped", "delivered"],
+      partner_status: ["pending", "approved", "rejected", "active", "inactive"],
     },
   },
 } as const
