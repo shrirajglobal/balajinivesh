@@ -31,6 +31,7 @@ const Footer = () => {
                 { label: t("footer.investmentSolutions"), path: "/solutions/mutual-funds" },
                 { label: t("footer.toolsCalculators"), path: "/calculators" },
                 { label: t("footer.investorEducation"), path: "/education" },
+                { label: "Become a Partner", path: "/partner" },
                 { label: t("footer.contactUs"), path: "/contact" },
               ].map((link) => (
                 <li key={link.path}>
