@@ -172,6 +172,46 @@ const Header = () => {
               हिं
             </button>
           </div>
+
+          {/* Login / User Menu */}
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="hidden h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-semibold sm:inline-flex">
+                  {user.email?.charAt(0).toUpperCase() || "U"}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <div className="px-2 py-1.5 text-xs text-muted-foreground truncate">{user.email}</div>
+                <DropdownMenuSeparator />
+                {isAdmin && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin" className="flex items-center gap-2 cursor-pointer">
+                      <Shield className="h-4 w-4" /> Admin Panel
+                    </Link>
+                  </DropdownMenuItem>
+                )}
+                {isPartner && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/partner/dashboard" className="flex items-center gap-2 cursor-pointer">
+                      <LayoutDashboard className="h-4 w-4" /> Partner Portal
+                    </Link>
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => signOut()} className="flex items-center gap-2 cursor-pointer text-destructive">
+                  <LogOut className="h-4 w-4" /> Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button asChild size="sm" variant="outline" className="hidden sm:inline-flex">
+              <Link to="/auth" className="flex items-center gap-1.5">
+                <LogIn className="h-4 w-4" /> Login
+              </Link>
+            </Button>
+          )}
+
           <Button asChild size="sm" className="hidden sm:inline-flex">
             <Link to="/contact">{t("nav.freeHealthCheck")}</Link>
           </Button>
