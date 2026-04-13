@@ -281,10 +281,33 @@ const Header = () => {
                 Admin Panel
               </Link>
             )}
-            <div className="mt-4 px-3">
+            {isPartner && (
+              <Link
+                to="/partner/dashboard"
+                className={cn(
+                  "flex items-center gap-2 rounded-lg px-3 py-3 text-sm font-medium transition-colors active:bg-accent",
+                  isActive("/partner") ? "text-primary" : "text-muted-foreground"
+                )}
+              >
+                <LayoutDashboard className="h-4 w-4" />
+                Partner Portal
+              </Link>
+            )}
+            <div className="mt-4 px-3 flex flex-col gap-2">
               <Button asChild className="w-full">
                 <Link to="/contact">{t("nav.freeHealthCheck")}</Link>
               </Button>
+              {user ? (
+                <Button variant="outline" className="w-full flex items-center gap-2" onClick={() => signOut()}>
+                  <LogOut className="h-4 w-4" /> Sign Out
+                </Button>
+              ) : (
+                <Button asChild variant="outline" className="w-full">
+                  <Link to="/auth" className="flex items-center gap-2">
+                    <LogIn className="h-4 w-4" /> Login
+                  </Link>
+                </Button>
+              )}
             </div>
           </nav>
         </div>
