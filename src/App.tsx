@@ -52,8 +52,21 @@ const PartnerLeads = lazy(() => import("./pages/partner/Leads"));
 const PartnerAcademy = lazy(() => import("./pages/partner/Academy"));
 const PartnerToolkit = lazy(() => import("./pages/partner/Toolkit"));
 
+// Admin
+const AdminGuard = lazy(() => import("./components/admin/AdminGuard"));
+const AdminLayout = lazy(() => import("./components/admin/AdminLayout"));
+const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
 const AdminPartners = lazy(() => import("./pages/admin/Partners"));
+const AdminActivePartners = lazy(() => import("./pages/admin/AdminActivePartners"));
 const AdminRTAUpload = lazy(() => import("./pages/admin/RTAUpload"));
+const AdminClients = lazy(() => import("./pages/admin/AdminClients"));
+const AdminCommissions = lazy(() => import("./pages/admin/AdminCommissions"));
+const AdminAUM = lazy(() => import("./pages/admin/AdminAUM"));
+const AdminUsers = lazy(() => import("./pages/admin/AdminUsers"));
+const AdminGifts = lazy(() => import("./pages/admin/AdminGifts"));
+const AdminCertificates = lazy(() => import("./pages/admin/AdminCertificates"));
+const AdminLeads = lazy(() => import("./pages/admin/AdminLeads"));
+const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
 
 // Optimized QueryClient with caching
 const queryClient = new QueryClient({
@@ -75,57 +88,85 @@ const App = () => (
           <Toaster />
           <Sonner position="top-center" />
           <BrowserRouter>
-            <Layout>
-              <Suspense fallback={<PageSkeleton />}>
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  {/* Investment Solutions */}
-                  <Route path="/solutions/mutual-funds" element={<MutualFunds />} />
-                  <Route path="/solutions/bonds" element={<Bonds />} />
-                  <Route path="/solutions/insurance" element={<Insurance />} />
-                  <Route path="/solutions/ipo" element={<IPO />} />
-                  <Route path="/solutions/fixed-deposits" element={<FixedDeposits />} />
-                  {/* Calculators */}
-                  <Route path="/calculators" element={<Calculators />} />
-                  <Route path="/calculators/sip" element={<SIPCalculator />} />
-                  <Route path="/calculators/lumpsum" element={<LumpsumCalculator />} />
-                  <Route path="/calculators/step-up-sip" element={<StepUpSIPCalculator />} />
-                  <Route path="/calculators/retirement" element={<RetirementPlanner />} />
-                  <Route path="/calculators/sip-vs-fd" element={<SIPvsFD />} />
-                  <Route path="/calculators/emergency-fund" element={<EmergencyFundCalculator />} />
-                  {/* Assessment Tools */}
-                  <Route path="/tools/health-check" element={<FinancialHealthCheck />} />
-                  <Route path="/tools/risk-profile" element={<RiskProfiler />} />
-                  {/* Education & Insights */}
-                  <Route path="/education" element={<Education />} />
-                  <Route path="/education/homemakers" element={<HomemakersEducation />} />
-                  <Route path="/education/kids" element={<KidsEducation />} />
-                  <Route path="/insights" element={<MarketInsights />} />
-                  {/* Partner */}
-                  <Route path="/partner" element={<Partner />} />
-                  <Route path="/partner/dashboard" element={<PartnerDashboard />} />
-                  <Route path="/partner/commissions" element={<PartnerCommissions />} />
-                  <Route path="/partner/clients" element={<PartnerClients />} />
-                  <Route path="/partner/leads" element={<PartnerLeads />} />
-                  <Route path="/partner/academy" element={<PartnerAcademy />} />
-                  <Route path="/partner/toolkit" element={<PartnerToolkit />} />
-                  {/* Admin */}
-                  <Route path="/admin/partners" element={<AdminPartners />} />
-                  <Route path="/admin/rta-upload" element={<AdminRTAUpload />} />
-                  {/* Auth */}
-                  <Route path="/auth" element={<Auth />} />
-                  {/* Static Pages */}
-                  <Route path="/about" element={<About />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/resources" element={<Resources />} />
-                  <Route path="/privacy" element={<PrivacyPolicy />} />
-                  <Route path="/terms" element={<TermsOfUse />} />
-                  <Route path="/disclaimer" element={<Disclaimer />} />
-                  {/* Catch-all */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
-            </Layout>
+            <Suspense fallback={<PageSkeleton />}>
+              <Routes>
+                {/* Admin routes — no main Layout wrapper */}
+                <Route
+                  path="/admin"
+                  element={
+                    <AdminGuard>
+                      <AdminLayout />
+                    </AdminGuard>
+                  }
+                >
+                  <Route index element={<AdminDashboard />} />
+                  <Route path="partners" element={<AdminPartners />} />
+                  <Route path="partners/active" element={<AdminActivePartners />} />
+                  <Route path="rta-upload" element={<AdminRTAUpload />} />
+                  <Route path="clients" element={<AdminClients />} />
+                  <Route path="commissions" element={<AdminCommissions />} />
+                  <Route path="aum" element={<AdminAUM />} />
+                  <Route path="users" element={<AdminUsers />} />
+                  <Route path="gifts" element={<AdminGifts />} />
+                  <Route path="certificates" element={<AdminCertificates />} />
+                  <Route path="leads" element={<AdminLeads />} />
+                  <Route path="settings" element={<AdminSettings />} />
+                </Route>
+
+                {/* Main site routes */}
+                <Route
+                  path="*"
+                  element={
+                    <Layout>
+                      <Routes>
+                        <Route path="/" element={<Index />} />
+                        {/* Investment Solutions */}
+                        <Route path="/solutions/mutual-funds" element={<MutualFunds />} />
+                        <Route path="/solutions/bonds" element={<Bonds />} />
+                        <Route path="/solutions/insurance" element={<Insurance />} />
+                        <Route path="/solutions/ipo" element={<IPO />} />
+                        <Route path="/solutions/fixed-deposits" element={<FixedDeposits />} />
+                        {/* Calculators */}
+                        <Route path="/calculators" element={<Calculators />} />
+                        <Route path="/calculators/sip" element={<SIPCalculator />} />
+                        <Route path="/calculators/lumpsum" element={<LumpsumCalculator />} />
+                        <Route path="/calculators/step-up-sip" element={<StepUpSIPCalculator />} />
+                        <Route path="/calculators/retirement" element={<RetirementPlanner />} />
+                        <Route path="/calculators/sip-vs-fd" element={<SIPvsFD />} />
+                        <Route path="/calculators/emergency-fund" element={<EmergencyFundCalculator />} />
+                        {/* Assessment Tools */}
+                        <Route path="/tools/health-check" element={<FinancialHealthCheck />} />
+                        <Route path="/tools/risk-profile" element={<RiskProfiler />} />
+                        {/* Education & Insights */}
+                        <Route path="/education" element={<Education />} />
+                        <Route path="/education/homemakers" element={<HomemakersEducation />} />
+                        <Route path="/education/kids" element={<KidsEducation />} />
+                        <Route path="/insights" element={<MarketInsights />} />
+                        {/* Partner */}
+                        <Route path="/partner" element={<Partner />} />
+                        <Route path="/partner/dashboard" element={<PartnerDashboard />} />
+                        <Route path="/partner/commissions" element={<PartnerCommissions />} />
+                        <Route path="/partner/clients" element={<PartnerClients />} />
+                        <Route path="/partner/leads" element={<PartnerLeads />} />
+                        <Route path="/partner/academy" element={<PartnerAcademy />} />
+                        <Route path="/partner/toolkit" element={<PartnerToolkit />} />
+                        {/* Auth */}
+                        <Route path="/auth" element={<Auth />} />
+                        {/* Static Pages */}
+                        <Route path="/about" element={<About />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route path="/resources" element={<Resources />} />
+                        <Route path="/privacy" element={<PrivacyPolicy />} />
+                        <Route path="/terms" element={<TermsOfUse />} />
+                        <Route path="/disclaimer" element={<Disclaimer />} />
+                        {/* Catch-all */}
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </Layout>
+                  }
+                />
+              </Routes>
+            </Suspense>
           </BrowserRouter>
         </AuthProvider>
       </LanguageProvider>

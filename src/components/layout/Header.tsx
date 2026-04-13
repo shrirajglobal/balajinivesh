@@ -1,18 +1,30 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.jpeg";
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileSubOpen, setMobileSubOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
   const { t, language, setLanguage } = useLanguage();
+  const { user } = useAuth();
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Check admin role
+  useEffect(() => {
+    if (!user) { setIsAdmin(false); return; }
+    supabase.rpc("has_role", { _user_id: user.id, _role: "admin" }).then(({ data }) => {
+      setIsAdmin(!!data);
+    });
+  }, [user]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -116,6 +128,18 @@ const Header = () => {
               </Link>
             )
           )}
+          {isAdmin && (
+            <Link
+              to="/admin"
+              className={cn(
+                "flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:text-primary",
+                isActive("/admin") ? "text-primary" : "text-muted-foreground"
+              )}
+            >
+              <Shield className="h-3.5 w-3.5" />
+              Admin
+            </Link>
+          )}
         </nav>
 
         {/* Right side: Language + CTA + Hamburger */}
@@ -197,6 +221,18 @@ const Header = () => {
                   {item.label}
                 </Link>
               )
+            )}
+            {isAdmin && (
+              <Link
+                to="/admin"
+                className={cn(
+                  "flex items-center gap-2 rounded-lg px-3 py-3 text-sm font-medium transition-colors active:bg-accent",
+                  isActive("/admin") ? "text-primary" : "text-muted-foreground"
+                )}
+              >
+                <Shield className="h-4 w-4" />
+                Admin Panel
+              </Link>
             )}
             <div className="mt-4 px-3">
               <Button asChild className="w-full">
