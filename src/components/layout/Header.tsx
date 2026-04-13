@@ -20,17 +20,17 @@ const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileSubOpen, setMobileSubOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isPartner, setIsPartner] = useState(false);
   const location = useLocation();
   const { t, language, setLanguage } = useLanguage();
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Check admin role
+  // Check roles
   useEffect(() => {
-    if (!user) { setIsAdmin(false); return; }
-    supabase.rpc("has_role", { _user_id: user.id, _role: "admin" }).then(({ data }) => {
-      setIsAdmin(!!data);
-    });
+    if (!user) { setIsAdmin(false); setIsPartner(false); return; }
+    supabase.rpc("has_role", { _user_id: user.id, _role: "admin" }).then(({ data }) => setIsAdmin(!!data));
+    supabase.rpc("has_role", { _user_id: user.id, _role: "partner" }).then(({ data }) => setIsPartner(!!data));
   }, [user]);
 
   // Close mobile menu on route change
