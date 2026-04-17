@@ -67,6 +67,8 @@ const AdminGifts = lazy(() => import("./pages/admin/AdminGifts"));
 const AdminCertificates = lazy(() => import("./pages/admin/AdminCertificates"));
 const AdminLeads = lazy(() => import("./pages/admin/AdminLeads"));
 const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
+const AdminIntegrations = lazy(() => import("./pages/admin/AdminIntegrations"));
+const AdminSiteSettings = lazy(() => import("./pages/admin/AdminSiteSettings"));
 
 // Optimized QueryClient with caching
 const queryClient = new QueryClient({
@@ -110,6 +112,8 @@ const App = () => (
                   <Route path="gifts" element={<AdminGifts />} />
                   <Route path="certificates" element={<AdminCertificates />} />
                   <Route path="leads" element={<AdminLeads />} />
+                  <Route path="integrations" element={<AdminIntegrations />} />
+                  <Route path="site-settings" element={<AdminSiteSettings />} />
                   <Route path="settings" element={<AdminSettings />} />
                 </Route>
 

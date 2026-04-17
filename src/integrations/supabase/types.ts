@@ -101,6 +101,54 @@ export type Database = {
         }
         Relationships: []
       }
+      integration_settings: {
+        Row: {
+          category: string
+          config: Json
+          created_at: string
+          display_name: string
+          enabled: boolean
+          id: string
+          is_default: boolean
+          last_test_at: string | null
+          last_test_message: string | null
+          last_test_status: string | null
+          provider_key: string
+          secret_names: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          config?: Json
+          created_at?: string
+          display_name: string
+          enabled?: boolean
+          id?: string
+          is_default?: boolean
+          last_test_at?: string | null
+          last_test_message?: string | null
+          last_test_status?: string | null
+          provider_key: string
+          secret_names?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          config?: Json
+          created_at?: string
+          display_name?: string
+          enabled?: boolean
+          id?: string
+          is_default?: boolean
+          last_test_at?: string | null
+          last_test_message?: string | null
+          last_test_status?: string | null
+          provider_key?: string
+          secret_names?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       partner_applications: {
         Row: {
           city: string
@@ -395,6 +443,36 @@ export type Database = {
           id?: string
           records_processed?: number | null
           status?: string
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          is_public: boolean
+          setting_key: string
+          setting_value: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_public?: boolean
+          setting_key: string
+          setting_value?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_public?: boolean
+          setting_key?: string
+          setting_value?: string | null
+          updated_at?: string
         }
         Relationships: []
       }

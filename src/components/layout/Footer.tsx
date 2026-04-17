@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import logo from "@/assets/logo.jpeg";
 
 const Footer = () => {
   const { t } = useLanguage();
+  const { data: settings } = useSiteSettings();
+  const arnLine = settings?.map.arn_number
+    ? `${settings.map.arn_number}${settings.map.arn_holder_name ? ` · ${settings.map.arn_holder_name}` : ""}`
+    : t("footer.arn");
+  const contactPhone = settings?.map.contact_phone || "+91 XXXXX XXXXX";
+  const contactEmail = settings?.map.contact_email || "info@balajinivesh.com";
 
   return (
     <footer className="border-t border-border bg-muted/50">
@@ -19,7 +27,7 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-sm leading-relaxed text-muted-foreground">{t("footer.tagline")}</p>
-            <p className="text-xs font-medium text-muted-foreground">{t("footer.arn")}</p>
+            <p className="text-xs font-medium text-muted-foreground">{arnLine}</p>
           </div>
 
           {/* Quick Links */}
@@ -69,11 +77,11 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
                 <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <span>+91 XXXXX XXXXX</span>
+                <span>{contactPhone}</span>
               </li>
               <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
                 <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <span className="break-all">info@balajinivesh.com</span>
+                <span className="break-all">{contactEmail}</span>
               </li>
               <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
@@ -85,6 +93,7 @@ const Footer = () => {
 
         {/* Disclaimers */}
         <div className="mt-8 border-t border-border pt-6 sm:mt-10">
+          <SebiDisclaimer variant="compact" className="mb-4" />
           <p className="text-xs leading-relaxed text-muted-foreground">
             <strong>{t("footer.disclaimerLink")}:</strong> {t("footer.disclaimer")}
           </p>
