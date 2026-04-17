@@ -1,9 +1,9 @@
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronDown, ChevronRight, Shield, LogIn, LogOut, User, LayoutDashboard } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronRight, Shield, LogIn, LogOut, Globe, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, LANGUAGE_LABELS, type Language } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.jpeg";
