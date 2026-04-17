@@ -271,6 +271,71 @@ export type Database = {
         }
         Relationships: []
       }
+      chat_conversations: {
+        Row: {
+          created_at: string
+          id: string
+          session_id: string
+          source: string
+          title: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          session_id: string
+          source?: string
+          title?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          session_id?: string
+          source?: string
+          title?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      chat_messages: {
+        Row: {
+          citations: Json
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          role: string
+        }
+        Insert: {
+          citations?: Json
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          role: string
+        }
+        Update: {
+          citations?: Json
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "chat_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       contact_submissions: {
         Row: {
           created_at: string
@@ -304,6 +369,51 @@ export type Database = {
         }
         Relationships: []
       }
+      content_embeddings: {
+        Row: {
+          chunk_index: number
+          content: string
+          created_at: string
+          embedding: string | null
+          id: string
+          metadata: Json
+          source_id: string
+          source_type: string
+          title: string
+          token_count: number | null
+          updated_at: string
+          url: string | null
+        }
+        Insert: {
+          chunk_index?: number
+          content: string
+          created_at?: string
+          embedding?: string | null
+          id?: string
+          metadata?: Json
+          source_id: string
+          source_type: string
+          title: string
+          token_count?: number | null
+          updated_at?: string
+          url?: string | null
+        }
+        Update: {
+          chunk_index?: number
+          content?: string
+          created_at?: string
+          embedding?: string | null
+          id?: string
+          metadata?: Json
+          source_id?: string
+          source_type?: string
+          title?: string
+          token_count?: number | null
+          updated_at?: string
+          url?: string | null
+        }
+        Relationships: []
+      }
       education_progress: {
         Row: {
           completed_at: string
@@ -325,6 +435,89 @@ export type Database = {
           segment?: Database["public"]["Enums"]["education_segment"]
           topic_id?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      forum_posts: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          status: string
+          thread_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          status?: string
+          thread_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          status?: string
+          thread_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forum_posts_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "forum_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      forum_threads: {
+        Row: {
+          body: string
+          category: string
+          created_at: string
+          id: string
+          last_activity_at: string
+          reply_count: number
+          slug: string
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+          view_count: number
+        }
+        Insert: {
+          body: string
+          category?: string
+          created_at?: string
+          id?: string
+          last_activity_at?: string
+          reply_count?: number
+          slug: string
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+          view_count?: number
+        }
+        Update: {
+          body?: string
+          category?: string
+          created_at?: string
+          id?: string
+          last_activity_at?: string
+          reply_count?: number
+          slug?: string
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+          view_count?: number
         }
         Relationships: []
       }
@@ -1138,6 +1331,44 @@ export type Database = {
           },
         ]
       }
+      partner_service_areas: {
+        Row: {
+          city: string | null
+          created_at: string
+          id: string
+          is_primary: boolean
+          partner_id: string
+          pincode: string
+          state: string | null
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string
+          id?: string
+          is_primary?: boolean
+          partner_id: string
+          pincode: string
+          state?: string | null
+        }
+        Update: {
+          city?: string | null
+          created_at?: string
+          id?: string
+          is_primary?: boolean
+          partner_id?: string
+          pincode?: string
+          state?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_service_areas_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       partners: {
         Row: {
           arn_number: string | null
@@ -1448,17 +1679,95 @@ export type Database = {
         }
         Relationships: []
       }
+      video_resources: {
+        Row: {
+          audience: string
+          category: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          display_order: number
+          duration_seconds: number | null
+          id: string
+          is_published: boolean
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+          view_count: number
+          youtube_id: string
+        }
+        Insert: {
+          audience?: string
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          display_order?: number
+          duration_seconds?: number | null
+          id?: string
+          is_published?: boolean
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string
+          view_count?: number
+          youtube_id: string
+        }
+        Update: {
+          audience?: string
+          category?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          display_order?: number
+          duration_seconds?: number | null
+          id?: string
+          is_published?: boolean
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+          view_count?: number
+          youtube_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      find_partners_by_location: {
+        Args: { _city?: string; _limit?: number; _pincode?: string }
+        Returns: {
+          arn_number: string
+          city: string
+          full_name: string
+          match_type: string
+          partner_id: string
+          pincode: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      match_content_embeddings: {
+        Args: {
+          match_count?: number
+          match_threshold?: number
+          query_embedding: string
+        }
+        Returns: {
+          content: string
+          id: string
+          similarity: number
+          source_id: string
+          source_type: string
+          title: string
+          url: string
+        }[]
       }
     }
     Enums: {
