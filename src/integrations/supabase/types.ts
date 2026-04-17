@@ -271,6 +271,39 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string | null
+          source: string | null
+          subject: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone?: string | null
+          source?: string | null
+          subject?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string | null
+          source?: string | null
+          subject?: string | null
+        }
+        Relationships: []
+      }
       education_progress: {
         Row: {
           completed_at: string
@@ -378,6 +411,51 @@ export type Database = {
           last_test_status?: string | null
           provider_key?: string
           secret_names?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      lead_inbox: {
+        Row: {
+          assigned_to: string | null
+          created_at: string
+          email: string | null
+          id: string
+          name: string | null
+          notes: string | null
+          payload: Json | null
+          phone: string | null
+          source: string
+          source_id: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          notes?: string | null
+          payload?: Json | null
+          phone?: string | null
+          source: string
+          source_id?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          assigned_to?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string | null
+          notes?: string | null
+          payload?: Json | null
+          phone?: string | null
+          source?: string
+          source_id?: string | null
+          status?: string
           updated_at?: string
         }
         Relationships: []
@@ -658,6 +736,114 @@ export type Database = {
           what_it_means?: string | null
         }
         Relationships: []
+      }
+      newsletter_campaigns: {
+        Row: {
+          clicked_count: number
+          created_at: string
+          created_by: string | null
+          html_body: string
+          id: string
+          opened_count: number
+          preheader: string | null
+          recipient_count: number
+          scheduled_for: string | null
+          sent_at: string | null
+          source_id: string | null
+          source_type: string
+          status: string
+          subject: string
+          updated_at: string
+        }
+        Insert: {
+          clicked_count?: number
+          created_at?: string
+          created_by?: string | null
+          html_body: string
+          id?: string
+          opened_count?: number
+          preheader?: string | null
+          recipient_count?: number
+          scheduled_for?: string | null
+          sent_at?: string | null
+          source_id?: string | null
+          source_type?: string
+          status?: string
+          subject: string
+          updated_at?: string
+        }
+        Update: {
+          clicked_count?: number
+          created_at?: string
+          created_by?: string | null
+          html_body?: string
+          id?: string
+          opened_count?: number
+          preheader?: string | null
+          recipient_count?: number
+          scheduled_for?: string | null
+          sent_at?: string | null
+          source_id?: string | null
+          source_type?: string
+          status?: string
+          subject?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      newsletter_sends: {
+        Row: {
+          campaign_id: string
+          created_at: string
+          email: string
+          error_message: string | null
+          first_clicked_at: string | null
+          id: string
+          open_token: string
+          opened_at: string | null
+          status: string
+          subscriber_id: string
+        }
+        Insert: {
+          campaign_id: string
+          created_at?: string
+          email: string
+          error_message?: string | null
+          first_clicked_at?: string | null
+          id?: string
+          open_token?: string
+          opened_at?: string | null
+          status?: string
+          subscriber_id: string
+        }
+        Update: {
+          campaign_id?: string
+          created_at?: string
+          email?: string
+          error_message?: string | null
+          first_clicked_at?: string | null
+          id?: string
+          open_token?: string
+          opened_at?: string | null
+          status?: string
+          subscriber_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "newsletter_sends_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "newsletter_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "newsletter_sends_subscriber_id_fkey"
+            columns: ["subscriber_id"]
+            isOneToOne: false
+            referencedRelation: "subscribers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       partner_applications: {
         Row: {
@@ -1195,6 +1381,51 @@ export type Database = {
           is_public?: boolean
           setting_key?: string
           setting_value?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      subscribers: {
+        Row: {
+          confirmation_token: string
+          confirmed_at: string | null
+          created_at: string
+          email: string
+          id: string
+          language: string
+          name: string | null
+          source: string
+          status: string
+          unsubscribe_token: string
+          unsubscribed_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          confirmation_token?: string
+          confirmed_at?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          language?: string
+          name?: string | null
+          source?: string
+          status?: string
+          unsubscribe_token?: string
+          unsubscribed_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          confirmation_token?: string
+          confirmed_at?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          language?: string
+          name?: string | null
+          source?: string
+          status?: string
+          unsubscribe_token?: string
+          unsubscribed_at?: string | null
           updated_at?: string
         }
         Relationships: []
