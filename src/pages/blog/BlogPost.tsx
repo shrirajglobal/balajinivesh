@@ -6,7 +6,7 @@ import SEO from "@/components/seo/SEO";
 import Markdown from "@/components/blog/Markdown";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+
 import { Loader2, Calendar, Clock, ChevronLeft } from "lucide-react";
 import { format } from "date-fns";
 import { useSiteSettings } from "@/hooks/useSiteSettings";

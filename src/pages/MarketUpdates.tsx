@@ -5,13 +5,11 @@ import { TrendingUp, TrendingDown, Minus, Calendar, ArrowRight } from "lucide-re
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-
 import { Skeleton } from "@/components/ui/skeleton";
 import HeroBanner from "@/components/layout/HeroBanner";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import SEO from "@/components/seo/SEO";
 import ShareButtons from "@/components/share/ShareButtons";
-import { toast } from "sonner";
 
 interface MarketUpdate {
   id: string;
