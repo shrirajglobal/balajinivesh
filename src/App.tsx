@@ -37,6 +37,7 @@ const KidsEducation = lazy(() => import("./pages/education/KidsEducation"));
 
 const Auth = lazy(() => import("./pages/Auth"));
 const MarketInsights = lazy(() => import("./pages/MarketInsights"));
+const MarketUpdates = lazy(() => import("./pages/MarketUpdates"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Resources = lazy(() => import("./pages/Resources"));
@@ -70,6 +71,7 @@ const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
 const AdminIntegrations = lazy(() => import("./pages/admin/AdminIntegrations"));
 const AdminSiteSettings = lazy(() => import("./pages/admin/AdminSiteSettings"));
 const AdminBlog = lazy(() => import("./pages/admin/AdminBlog"));
+const AdminMarketUpdates = lazy(() => import("./pages/admin/AdminMarketUpdates"));
 
 // Public blog
 const BlogIndex = lazy(() => import("./pages/blog/BlogIndex"));
@@ -120,6 +122,7 @@ const App = () => (
                   <Route path="integrations" element={<AdminIntegrations />} />
                   <Route path="site-settings" element={<AdminSiteSettings />} />
                   <Route path="blog" element={<AdminBlog />} />
+                  <Route path="market-updates" element={<AdminMarketUpdates />} />
                   <Route path="settings" element={<AdminSettings />} />
                 </Route>
 
@@ -152,6 +155,8 @@ const App = () => (
                         <Route path="/education/homemakers" element={<HomemakersEducation />} />
                         <Route path="/education/kids" element={<KidsEducation />} />
                         <Route path="/insights" element={<MarketInsights />} />
+                        <Route path="/market-updates" element={<MarketUpdates />} />
+                        <Route path="/market-updates/:date" element={<MarketUpdates />} />
                         {/* Blog */}
                         <Route path="/blog" element={<BlogIndex audience="all" />} />
                         <Route path="/blog/investor" element={<BlogIndex audience="investor" />} />
