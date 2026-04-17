@@ -1769,6 +1769,10 @@ export type Database = {
           url: string
         }[]
       }
+      trigger_embed_content: {
+        Args: { _source_id: string; _source_type: string }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "partner" | "user"
