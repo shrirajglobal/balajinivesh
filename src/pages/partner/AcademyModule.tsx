@@ -42,7 +42,7 @@ const ModuleOverview = () => {
       setChapters((chapRes.data as any) ?? []);
       setQuestionCount(qRes.count ?? 0);
       setDoneIds(new Set(((progRes.data as any) ?? []).map((p: any) => p.chapter_id)));
-      setBestScore((progRes as any)?.data && (certRes.data as any)?.best_quiz_score_pct ?? null);
+      setBestScore((certRes as any)?.data?.best_quiz_score_pct ?? null);
       if (user) {
         const { data: c } = await supabase.from("learning_certificates").select("id").eq("user_id", user.id).eq("module_id", m.id).maybeSingle();
         setHasCert(!!c);
