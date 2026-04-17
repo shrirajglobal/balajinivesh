@@ -1,14 +1,14 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /partner/dashboard
+Disallow: /partner/clients
+Disallow: /partner/commissions
+Disallow: /partner/leads
+Disallow: /partner/academy
+Disallow: /partner/toolkit
+Disallow: /auth
+
+Sitemap: https://balajinivesh.lovable.app/sitemap.xml
+Sitemap: https://xkyuyukppeaencmhakbu.supabase.co/functions/v1/sitemap
+
