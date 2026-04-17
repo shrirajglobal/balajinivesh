@@ -89,6 +89,16 @@ const Subscribe = lazy(() => import("./pages/subscribe/Subscribe"));
 const ConfirmSubscription = lazy(() => import("./pages/subscribe/ConfirmSubscription"));
 const Unsubscribe = lazy(() => import("./pages/subscribe/Unsubscribe"));
 
+// Phase 6: Engagement & Community
+const Locator = lazy(() => import("./pages/Locator"));
+const Videos = lazy(() => import("./pages/Videos"));
+const ForumIndex = lazy(() => import("./pages/forum/ForumIndex"));
+const ForumThread = lazy(() => import("./pages/forum/ForumThread"));
+const AdminEmbeddings = lazy(() => import("./pages/admin/AdminEmbeddings"));
+const AdminVideos = lazy(() => import("./pages/admin/AdminVideos"));
+const AdminForum = lazy(() => import("./pages/admin/AdminForum"));
+const AdminLocator = lazy(() => import("./pages/admin/AdminLocator"));
+
 // Optimized QueryClient with caching
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -138,6 +148,10 @@ const App = () => (
                   <Route path="academy" element={<AdminAcademy />} />
                   <Route path="newsletter" element={<AdminNewsletter />} />
                   <Route path="crm" element={<AdminCRM />} />
+                  <Route path="embeddings" element={<AdminEmbeddings />} />
+                  <Route path="videos" element={<AdminVideos />} />
+                  <Route path="forum" element={<AdminForum />} />
+                  <Route path="locator" element={<AdminLocator />} />
                   <Route path="settings" element={<AdminSettings />} />
                 </Route>
 
@@ -189,6 +203,11 @@ const App = () => (
                         <Route path="/partner/academy/:moduleSlug/quiz" element={<PartnerAcademyQuiz />} />
                         <Route path="/partner/academy/:moduleSlug/:chapterSlug" element={<PartnerAcademyChapter />} />
                         <Route path="/partner/toolkit" element={<PartnerToolkit />} />
+                        {/* Engagement & Community (Phase 6) */}
+                        <Route path="/locator" element={<Locator />} />
+                        <Route path="/videos" element={<Videos />} />
+                        <Route path="/forum" element={<ForumIndex />} />
+                        <Route path="/forum/:slug" element={<ForumThread />} />
                         {/* Subscribe */}
                         <Route path="/subscribe" element={<Subscribe />} />
                         <Route path="/subscribe/confirm" element={<ConfirmSubscription />} />
