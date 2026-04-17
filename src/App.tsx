@@ -51,6 +51,9 @@ const PartnerCommissions = lazy(() => import("./pages/partner/Commissions"));
 const PartnerClients = lazy(() => import("./pages/partner/Clients"));
 const PartnerLeads = lazy(() => import("./pages/partner/Leads"));
 const PartnerAcademy = lazy(() => import("./pages/partner/Academy"));
+const PartnerAcademyModule = lazy(() => import("./pages/partner/AcademyModule"));
+const PartnerAcademyChapter = lazy(() => import("./pages/partner/AcademyChapter"));
+const PartnerAcademyQuiz = lazy(() => import("./pages/partner/AcademyQuiz"));
 const PartnerToolkit = lazy(() => import("./pages/partner/Toolkit"));
 
 // Admin
@@ -72,6 +75,7 @@ const AdminIntegrations = lazy(() => import("./pages/admin/AdminIntegrations"));
 const AdminSiteSettings = lazy(() => import("./pages/admin/AdminSiteSettings"));
 const AdminBlog = lazy(() => import("./pages/admin/AdminBlog"));
 const AdminMarketUpdates = lazy(() => import("./pages/admin/AdminMarketUpdates"));
+const AdminAcademy = lazy(() => import("./pages/admin/AdminAcademy"));
 
 // Public blog
 const BlogIndex = lazy(() => import("./pages/blog/BlogIndex"));
@@ -123,6 +127,7 @@ const App = () => (
                   <Route path="site-settings" element={<AdminSiteSettings />} />
                   <Route path="blog" element={<AdminBlog />} />
                   <Route path="market-updates" element={<AdminMarketUpdates />} />
+                  <Route path="academy" element={<AdminAcademy />} />
                   <Route path="settings" element={<AdminSettings />} />
                 </Route>
 
@@ -169,6 +174,9 @@ const App = () => (
                         <Route path="/partner/clients" element={<PartnerClients />} />
                         <Route path="/partner/leads" element={<PartnerLeads />} />
                         <Route path="/partner/academy" element={<PartnerAcademy />} />
+                        <Route path="/partner/academy/:moduleSlug" element={<PartnerAcademyModule />} />
+                        <Route path="/partner/academy/:moduleSlug/quiz" element={<PartnerAcademyQuiz />} />
+                        <Route path="/partner/academy/:moduleSlug/:chapterSlug" element={<PartnerAcademyChapter />} />
                         <Route path="/partner/toolkit" element={<PartnerToolkit />} />
                         {/* Auth */}
                         <Route path="/auth" element={<Auth />} />

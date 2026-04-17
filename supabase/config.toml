@@ -26,3 +26,6 @@ verify_jwt = true
 
 [functions.cron-market-update]
 verify_jwt = false
+
+[functions.generate-academy-content]
+verify_jwt = true
