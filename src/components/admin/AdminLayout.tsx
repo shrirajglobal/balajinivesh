@@ -32,6 +32,10 @@ import {
   TrendingUp,
   Mail,
   Inbox,
+  Sparkles,
+  Video,
+  MessagesSquare,
+  MapPin,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -52,6 +56,10 @@ const menuItems = [
   { title: "Academy CMS", path: "/admin/academy", icon: GraduationCap },
   { title: "Newsletter", path: "/admin/newsletter", icon: Mail },
   { title: "CRM Inbox", path: "/admin/crm", icon: Inbox },
+  { title: "AI Embeddings", path: "/admin/embeddings", icon: Sparkles },
+  { title: "Videos", path: "/admin/videos", icon: Video },
+  { title: "Forum Moderation", path: "/admin/forum", icon: MessagesSquare },
+  { title: "Locator (PINs)", path: "/admin/locator", icon: MapPin },
   { title: "Integrations", path: "/admin/integrations", icon: Plug },
   { title: "Site Settings", path: "/admin/site-settings", icon: Globe },
   { title: "Settings", path: "/admin/settings", icon: Settings },
