@@ -11,3 +11,12 @@ verify_jwt = false
 
 [functions.test-integration]
 verify_jwt = true
+
+[functions.generate-blog-post]
+verify_jwt = true
+
+[functions.cron-blog-generator]
+verify_jwt = false
+
+[functions.sitemap]
+verify_jwt = false

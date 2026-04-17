@@ -63,6 +63,7 @@ const Header = () => {
     },
     { label: t("nav.toolsCalculators"), path: "/calculators" },
     { label: t("nav.education"), path: "/education" },
+    { label: "Blog", path: "/blog" },
     { label: t("nav.marketInsights"), path: "/insights" },
     { label: t("partner.navPartner"), path: "/partner" },
     { label: t("nav.about"), path: "/about" },

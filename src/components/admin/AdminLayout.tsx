@@ -28,6 +28,7 @@ import {
   Shield,
   Plug,
   Globe,
+  Newspaper,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -43,6 +44,7 @@ const menuItems = [
   { title: "Gift Claims", path: "/admin/gifts", icon: Gift },
   { title: "Certificates", path: "/admin/certificates", icon: GraduationCap },
   { title: "Leads", path: "/admin/leads", icon: FileText },
+  { title: "Blog CMS", path: "/admin/blog", icon: Newspaper },
   { title: "Integrations", path: "/admin/integrations", icon: Plug },
   { title: "Site Settings", path: "/admin/site-settings", icon: Globe },
   { title: "Settings", path: "/admin/settings", icon: Settings },
