@@ -1,8 +1,15 @@
 import { createContext, useContext, useState, useCallback, useMemo, ReactNode } from "react";
 import en from "@/locales/en.json";
 import hi from "@/locales/hi.json";
+import bn from "@/locales/bn.json";
 
-type Language = "en" | "hi";
+export type Language = "en" | "hi" | "bn";
+
+export const LANGUAGE_LABELS: Record<Language, string> = {
+  en: "EN",
+  hi: "हिं",
+  bn: "বাং",
+};
 
 interface LanguageContextType {
   language: Language;
@@ -10,7 +17,7 @@ interface LanguageContextType {
   t: (key: string) => string;
 }
 
-const translations: Record<Language, Record<string, any>> = { en, hi };
+const translations: Record<Language, Record<string, any>> = { en, hi, bn };
 
 const getNestedValue = (obj: any, path: string): string => {
   const value = path.split(".").reduce((current, key) => current?.[key], obj);
@@ -23,7 +30,8 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguageState] = useState<Language>(() => {
     if (typeof window === "undefined") return "en";
     const stored = localStorage.getItem("balaji-nivesh-lang");
-    return (stored === "hi" ? "hi" : "en") as Language;
+    if (stored === "hi" || stored === "bn" || stored === "en") return stored as Language;
+    return "en";
   });
 
   const setLanguage = useCallback((lang: Language) => {
