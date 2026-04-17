@@ -29,6 +29,7 @@ import {
   Plug,
   Globe,
   Newspaper,
+  TrendingUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -45,6 +46,7 @@ const menuItems = [
   { title: "Certificates", path: "/admin/certificates", icon: GraduationCap },
   { title: "Leads", path: "/admin/leads", icon: FileText },
   { title: "Blog CMS", path: "/admin/blog", icon: Newspaper },
+  { title: "Market Updates", path: "/admin/market-updates", icon: TrendingUp },
   { title: "Integrations", path: "/admin/integrations", icon: Plug },
   { title: "Site Settings", path: "/admin/site-settings", icon: Globe },
   { title: "Settings", path: "/admin/settings", icon: Settings },

@@ -382,6 +382,132 @@ export type Database = {
         }
         Relationships: []
       }
+      market_updates: {
+        Row: {
+          ai_generated: boolean
+          ai_model: string | null
+          ai_provider: string | null
+          approved_at: string | null
+          approved_by: string | null
+          bank_nifty_change_pct: number | null
+          bank_nifty_close: number | null
+          created_at: string
+          created_by: string | null
+          crude_change_pct: number | null
+          crude_price: number | null
+          data_source: string | null
+          gold_change_pct: number | null
+          gold_price: number | null
+          headline: string
+          id: string
+          key_movers: Json | null
+          market_sentiment: string | null
+          meta_description: string | null
+          meta_title: string | null
+          nifty_change: number | null
+          nifty_change_pct: number | null
+          nifty_close: number | null
+          published_at: string | null
+          raw_ai_output: Json | null
+          scheduled_for: string | null
+          sensex_change: number | null
+          sensex_change_pct: number | null
+          sensex_close: number | null
+          silver_change_pct: number | null
+          silver_price: number | null
+          status: string
+          summary: string
+          update_date: string
+          updated_at: string
+          usd_inr: number | null
+          usd_inr_change_pct: number | null
+          view_count: number
+          what_it_means: string | null
+        }
+        Insert: {
+          ai_generated?: boolean
+          ai_model?: string | null
+          ai_provider?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          bank_nifty_change_pct?: number | null
+          bank_nifty_close?: number | null
+          created_at?: string
+          created_by?: string | null
+          crude_change_pct?: number | null
+          crude_price?: number | null
+          data_source?: string | null
+          gold_change_pct?: number | null
+          gold_price?: number | null
+          headline: string
+          id?: string
+          key_movers?: Json | null
+          market_sentiment?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          nifty_change?: number | null
+          nifty_change_pct?: number | null
+          nifty_close?: number | null
+          published_at?: string | null
+          raw_ai_output?: Json | null
+          scheduled_for?: string | null
+          sensex_change?: number | null
+          sensex_change_pct?: number | null
+          sensex_close?: number | null
+          silver_change_pct?: number | null
+          silver_price?: number | null
+          status?: string
+          summary: string
+          update_date: string
+          updated_at?: string
+          usd_inr?: number | null
+          usd_inr_change_pct?: number | null
+          view_count?: number
+          what_it_means?: string | null
+        }
+        Update: {
+          ai_generated?: boolean
+          ai_model?: string | null
+          ai_provider?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          bank_nifty_change_pct?: number | null
+          bank_nifty_close?: number | null
+          created_at?: string
+          created_by?: string | null
+          crude_change_pct?: number | null
+          crude_price?: number | null
+          data_source?: string | null
+          gold_change_pct?: number | null
+          gold_price?: number | null
+          headline?: string
+          id?: string
+          key_movers?: Json | null
+          market_sentiment?: string | null
+          meta_description?: string | null
+          meta_title?: string | null
+          nifty_change?: number | null
+          nifty_change_pct?: number | null
+          nifty_close?: number | null
+          published_at?: string | null
+          raw_ai_output?: Json | null
+          scheduled_for?: string | null
+          sensex_change?: number | null
+          sensex_change_pct?: number | null
+          sensex_close?: number | null
+          silver_change_pct?: number | null
+          silver_price?: number | null
+          status?: string
+          summary?: string
+          update_date?: string
+          updated_at?: string
+          usd_inr?: number | null
+          usd_inr_change_pct?: number | null
+          view_count?: number
+          what_it_means?: string | null
+        }
+        Relationships: []
+      }
       partner_applications: {
         Row: {
           city: string
