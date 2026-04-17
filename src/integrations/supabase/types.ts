@@ -14,6 +14,239 @@ export type Database = {
   }
   public: {
     Tables: {
+      blog_categories: {
+        Row: {
+          audience: string
+          created_at: string
+          description: string | null
+          display_order: number
+          id: string
+          name: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          audience?: string
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          name: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          audience?: string
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          name?: string
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      blog_generation_jobs: {
+        Row: {
+          ai_model: string
+          ai_provider: string
+          audience: string
+          category_id: string | null
+          created_at: string
+          created_by: string | null
+          error_message: string | null
+          generated_post_id: string | null
+          id: string
+          raw_output: Json | null
+          scheduled_publish_at: string | null
+          status: string
+          topic: string
+          updated_at: string
+        }
+        Insert: {
+          ai_model?: string
+          ai_provider?: string
+          audience?: string
+          category_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          error_message?: string | null
+          generated_post_id?: string | null
+          id?: string
+          raw_output?: Json | null
+          scheduled_publish_at?: string | null
+          status?: string
+          topic: string
+          updated_at?: string
+        }
+        Update: {
+          ai_model?: string
+          ai_provider?: string
+          audience?: string
+          category_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          error_message?: string | null
+          generated_post_id?: string | null
+          id?: string
+          raw_output?: Json | null
+          scheduled_publish_at?: string | null
+          status?: string
+          topic?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_generation_jobs_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "blog_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_generation_jobs_generated_post_id_fkey"
+            columns: ["generated_post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_post_tags: {
+        Row: {
+          post_id: string
+          tag_id: string
+        }
+        Insert: {
+          post_id: string
+          tag_id: string
+        }
+        Update: {
+          post_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_post_tags_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "blog_posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blog_post_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "blog_tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_posts: {
+        Row: {
+          ai_generated: boolean
+          audience: string
+          author_name: string
+          category_id: string | null
+          content: string
+          cover_image_url: string | null
+          created_at: string
+          created_by: string | null
+          excerpt: string
+          id: string
+          meta_description: string | null
+          meta_keywords: string[] | null
+          meta_title: string | null
+          published_at: string | null
+          reading_time_minutes: number | null
+          scheduled_for: string | null
+          slug: string
+          status: string
+          subtitle: string | null
+          title: string
+          updated_at: string
+          view_count: number
+        }
+        Insert: {
+          ai_generated?: boolean
+          audience?: string
+          author_name?: string
+          category_id?: string | null
+          content: string
+          cover_image_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          excerpt: string
+          id?: string
+          meta_description?: string | null
+          meta_keywords?: string[] | null
+          meta_title?: string | null
+          published_at?: string | null
+          reading_time_minutes?: number | null
+          scheduled_for?: string | null
+          slug: string
+          status?: string
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+          view_count?: number
+        }
+        Update: {
+          ai_generated?: boolean
+          audience?: string
+          author_name?: string
+          category_id?: string | null
+          content?: string
+          cover_image_url?: string | null
+          created_at?: string
+          created_by?: string | null
+          excerpt?: string
+          id?: string
+          meta_description?: string | null
+          meta_keywords?: string[] | null
+          meta_title?: string | null
+          published_at?: string | null
+          reading_time_minutes?: number | null
+          scheduled_for?: string | null
+          slug?: string
+          status?: string
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+          view_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blog_posts_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "blog_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      blog_tags: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          slug?: string
+        }
+        Relationships: []
+      }
       certificates: {
         Row: {
           certificate_number: string
