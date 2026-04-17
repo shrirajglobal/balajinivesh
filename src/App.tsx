@@ -174,6 +174,9 @@ const App = () => (
                         <Route path="/partner/clients" element={<PartnerClients />} />
                         <Route path="/partner/leads" element={<PartnerLeads />} />
                         <Route path="/partner/academy" element={<PartnerAcademy />} />
+                        <Route path="/partner/academy/:moduleSlug" element={<PartnerAcademyModule />} />
+                        <Route path="/partner/academy/:moduleSlug/quiz" element={<PartnerAcademyQuiz />} />
+                        <Route path="/partner/academy/:moduleSlug/:chapterSlug" element={<PartnerAcademyChapter />} />
                         <Route path="/partner/toolkit" element={<PartnerToolkit />} />
                         {/* Auth */}
                         <Route path="/auth" element={<Auth />} />

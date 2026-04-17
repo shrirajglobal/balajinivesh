@@ -47,6 +47,7 @@ const menuItems = [
   { title: "Leads", path: "/admin/leads", icon: FileText },
   { title: "Blog CMS", path: "/admin/blog", icon: Newspaper },
   { title: "Market Updates", path: "/admin/market-updates", icon: TrendingUp },
+  { title: "Academy CMS", path: "/admin/academy", icon: GraduationCap },
   { title: "Integrations", path: "/admin/integrations", icon: Plug },
   { title: "Site Settings", path: "/admin/site-settings", icon: Globe },
   { title: "Settings", path: "/admin/settings", icon: Settings },
