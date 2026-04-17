@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { TrendingUp, TrendingDown, Minus, Calendar, ArrowRight, Share2 } from "lucide-react";
+import { TrendingUp, TrendingDown, Minus, Calendar, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import HeroBanner from "@/components/layout/HeroBanner";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import SEO from "@/components/seo/SEO";
-import { toast } from "sonner";
+import ShareButtons from "@/components/share/ShareButtons";
 
 interface MarketUpdate {
   id: string;
@@ -111,17 +110,7 @@ const MarketUpdates = () => {
     })();
   }, [date]);
 
-  const share = () => {
-    if (!latest) return;
-    const url = `${window.location.origin}/market-updates`;
-    const text = `${latest.headline} — Samajhne Wali Khabar by Balaji Nivesh`;
-    if (navigator.share) {
-      navigator.share({ title: latest.headline, text, url }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(`${text} ${url}`);
-      toast.success("Link copied");
-    }
-  };
+  // Native share replaced by <ShareButtons /> with UTM tracking.
 
   return (
     <div>
@@ -169,9 +158,14 @@ const MarketUpdates = () => {
                         <Calendar className="h-3.5 w-3.5" />
                         {new Date(latest.update_date).toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
                       </span>
-                      <Button variant="ghost" size="sm" className="ml-auto" onClick={share}>
-                        <Share2 className="h-4 w-4" /> Share
-                      </Button>
+                      <div className="ml-auto">
+                        <ShareButtons
+                          title={`${latest.headline} — Samajhne Wali Khabar by Balaji Nivesh`}
+                          campaign="market_update"
+                          content={latest.update_date}
+                          compact
+                        />
+                      </div>
                     </div>
                     <h2 className="mt-3 font-display text-2xl font-bold text-foreground sm:text-3xl">{latest.headline}</h2>
                   </CardContent>

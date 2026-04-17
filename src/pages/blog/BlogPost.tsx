@@ -6,11 +6,11 @@ import SEO from "@/components/seo/SEO";
 import Markdown from "@/components/blog/Markdown";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Loader2, Calendar, Clock, ChevronLeft, Share2 } from "lucide-react";
+
+import { Loader2, Calendar, Clock, ChevronLeft } from "lucide-react";
 import { format } from "date-fns";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
-import { toast } from "sonner";
+import ShareButtons from "@/components/share/ShareButtons";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -83,14 +83,7 @@ const BlogPost = () => {
     ],
   };
 
-  const shareWhatsApp = () => {
-    const text = encodeURIComponent(`${post.title}\n\n${post.excerpt}\n\n${url}`);
-    window.open(`https://wa.me/?text=${text}`, "_blank");
-  };
-  const copyLink = async () => {
-    await navigator.clipboard.writeText(url);
-    toast.success("Link copied");
-  };
+  // Share handled by <ShareButtons /> with built-in UTM tracking.
 
   return (
     <article className="container max-w-3xl py-12 lg:py-16">
@@ -144,15 +137,13 @@ const BlogPost = () => {
         <Markdown content={post.content} />
       </div>
 
-      <div className="mt-8 flex flex-wrap items-center gap-2 border-t border-border pt-6">
-        <span className="text-sm font-medium text-foreground">Share:</span>
-        <Button size="sm" variant="outline" onClick={shareWhatsApp}>
-          <Share2 className="mr-1.5 h-3.5 w-3.5" />
-          WhatsApp
-        </Button>
-        <Button size="sm" variant="outline" onClick={copyLink}>
-          Copy link
-        </Button>
+      <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-border pt-6">
+        <span className="text-sm font-medium text-foreground">Share this article:</span>
+        <ShareButtons
+          title={`${post.title} — ${post.excerpt}`}
+          campaign="blog_post"
+          content={post.slug}
+        />
       </div>
 
       <div className="mt-8">

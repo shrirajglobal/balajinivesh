@@ -1,0 +1,48 @@
+{
+  "nav": {
+    "home": "হোম",
+    "investmentSolutions": "বিনিয়োগ সমাধান",
+    "mutualFunds": "মিউচুয়াল ফান্ড",
+    "bonds": "বন্ড",
+    "insurance": "বীমা",
+    "ipo": "IPO",
+    "fixedDeposits": "ফিক্সড ডিপোজিট",
+    "toolsCalculators": "টুলস ও ক্যালকুলেটর",
+    "education": "শিক্ষা",
+    "marketInsights": "মার্কেট আপডেট",
+    "about": "আমাদের সম্পর্কে",
+    "freeHealthCheck": "ফ্রি ফিনান্সিয়াল হেলথ চেক"
+  },
+  "footer": {
+    "tagline": "আপনার আর্থিক পরিকল্পনা ও বিনিয়োগ ডিস্ট্রিবিউশনের বিশ্বস্ত সঙ্গী। AMFI নিবন্ধিত মিউচুয়াল ফান্ড ডিস্ট্রিবিউটর।",
+    "arn": "ARN - XXXXXX | AMFI Registered",
+    "quickLinks": "কুইক লিঙ্ক",
+    "aboutUs": "আমাদের সম্পর্কে",
+    "investmentSolutions": "বিনিয়োগ সমাধান",
+    "toolsCalculators": "টুলস ও ক্যালকুলেটর",
+    "investorEducation": "বিনিয়োগকারী শিক্ষা",
+    "contactUs": "যোগাযোগ করুন",
+    "solutions": "সমাধান",
+    "callUs": "কল করুন",
+    "emailUs": "ইমেইল করুন",
+    "disclaimer": "মিউচুয়াল ফান্ড বিনিয়োগ মার্কেট ঝুঁকির অধীন। বিনিয়োগের আগে সমস্ত স্কিম-সম্পর্কিত নথি সাবধানে পড়ুন। অতীত পারফরম্যান্স ভবিষ্যৎ ফলাফলের নিশ্চয়তা নয়। এই প্ল্যাটফর্মে প্রদত্ত তথ্য শুধুমাত্র শিক্ষামূলক উদ্দেশ্যে এবং investment advice হিসেবে গণ্য নয়। Balaji Nivesh একজন AMFI registered mutual fund distributor — SEBI (Investment Advisers) Regulations, 2013 অনুযায়ী investment advisory service প্রদান করে না।",
+    "copyright": "© {year} Balaji Nivesh. সমস্ত অধিকার সংরক্ষিত।",
+    "privacyPolicy": "গোপনীয়তা নীতি",
+    "termsOfUse": "ব্যবহারের শর্তাবলী",
+    "disclaimerLink": "ডিসক্লেইমার"
+  },
+  "home": {
+    "badge": "AMFI Registered Mutual Fund Distributor",
+    "heroTitle1": "আত্মবিশ্বাসের সাথে",
+    "heroTitle2": "আপনার আর্থিক ভবিষ্যৎ পরিকল্পনা করুন",
+    "heroSubtitle": "ফ্রি ফিনান্সিয়াল প্ল্যানিং টুলস, ক্যালকুলেটর ও শিক্ষামূলক রিসোর্স — যা আপনাকে সঠিক বিনিয়োগের সিদ্ধান্ত নিতে সাহায্য করবে।",
+    "exploreCalc": "ক্যালকুলেটর দেখুন",
+    "getFreeCheck": "ফ্রি ফিনান্সিয়াল হেলথ চেক নিন"
+  },
+  "partner": {
+    "navPartner": "পার্টনার"
+  },
+  "common": {
+    "shareOnWhatsApp": "WhatsApp-এ শেয়ার করুন"
+  }
+}

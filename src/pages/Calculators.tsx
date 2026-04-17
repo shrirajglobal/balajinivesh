@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  Calculator, TrendingUp, ArrowUpRight, Landmark, PiggyBank, Shield, HeartPulse, UserCheck, ArrowRight,
+  Calculator, TrendingUp, ArrowUpRight, Landmark, PiggyBank, Shield, HeartPulse, UserCheck, ArrowRight, Target,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ const Calculators = () => {
   const { t } = useLanguage();
 
   const calculators = [
+    { icon: Target, title: "SIP Goal Visualizer", description: "Pick a life goal — child education, retirement, home — and see exactly how much SIP you need.", path: "/tools/sip-goal", color: "bg-brand-orange-light text-primary", featured: true },
     { icon: Calculator, title: t("calculators.sipTitle"), description: t("calculators.sipDesc"), path: "/calculators/sip", color: "bg-brand-orange-light text-primary" },
     { icon: TrendingUp, title: t("calculators.lumpsumTitle"), description: t("calculators.lumpsumDesc"), path: "/calculators/lumpsum", color: "bg-brand-blue-light text-secondary" },
     { icon: ArrowUpRight, title: t("calculators.stepUpTitle"), description: t("calculators.stepUpDesc"), path: "/calculators/step-up-sip", color: "bg-brand-green-light text-brand-green" },
@@ -35,11 +36,14 @@ const Calculators = () => {
         <div className="container">
           <div className="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {calculators.map((calc, i) => (
-              <motion.div key={calc.path} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08, duration: 0.5 }}>
+              <motion.div key={calc.path} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06, duration: 0.5 }}>
                 <Link to={calc.path}>
-                  <Card className="group h-full border-border/60 transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
+                  <Card className={`group h-full transition-all hover:shadow-lg hover:shadow-primary/5 ${calc.featured ? "border-primary/40 bg-gradient-to-br from-brand-orange-light to-background" : "border-border/60 hover:border-primary/30"}`}>
                     <CardContent className="flex h-full flex-col gap-4 p-6">
-                      <div className={`inline-flex h-11 w-11 items-center justify-center rounded-lg ${calc.color}`}><calc.icon className="h-5 w-5" /></div>
+                      <div className="flex items-center justify-between">
+                        <div className={`inline-flex h-11 w-11 items-center justify-center rounded-lg ${calc.color}`}><calc.icon className="h-5 w-5" /></div>
+                        {calc.featured && <span className="rounded-full bg-primary px-2 py-0.5 text-xs font-semibold text-primary-foreground">New</span>}
+                      </div>
                       <h3 className="font-display text-lg font-semibold text-foreground group-hover:text-primary">{calc.title}</h3>
                       <p className="flex-1 text-sm leading-relaxed text-muted-foreground">{calc.description}</p>
                       <span className="flex items-center text-sm font-medium text-primary">{t("calculators.calculate")} <ArrowRight className="ml-1 h-4 w-4" /></span>

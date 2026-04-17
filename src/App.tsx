@@ -30,6 +30,7 @@ const EmergencyFundCalculator = lazy(() => import("./pages/calculators/Emergency
 
 const FinancialHealthCheck = lazy(() => import("./pages/tools/FinancialHealthCheck"));
 const RiskProfiler = lazy(() => import("./pages/tools/RiskProfiler"));
+const SIPGoalVisualizer = lazy(() => import("./pages/tools/SIPGoalVisualizer"));
 
 const Education = lazy(() => import("./pages/Education"));
 const HomemakersEducation = lazy(() => import("./pages/education/HomemakersEducation"));
@@ -155,6 +156,7 @@ const App = () => (
                         {/* Assessment Tools */}
                         <Route path="/tools/health-check" element={<FinancialHealthCheck />} />
                         <Route path="/tools/risk-profile" element={<RiskProfiler />} />
+                        <Route path="/tools/sip-goal" element={<SIPGoalVisualizer />} />
                         {/* Education & Insights */}
                         <Route path="/education" element={<Education />} />
                         <Route path="/education/homemakers" element={<HomemakersEducation />} />
