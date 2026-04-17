@@ -69,6 +69,11 @@ const AdminLeads = lazy(() => import("./pages/admin/AdminLeads"));
 const AdminSettings = lazy(() => import("./pages/admin/AdminSettings"));
 const AdminIntegrations = lazy(() => import("./pages/admin/AdminIntegrations"));
 const AdminSiteSettings = lazy(() => import("./pages/admin/AdminSiteSettings"));
+const AdminBlog = lazy(() => import("./pages/admin/AdminBlog"));
+
+// Public blog
+const BlogIndex = lazy(() => import("./pages/blog/BlogIndex"));
+const BlogPost = lazy(() => import("./pages/blog/BlogPost"));
 
 // Optimized QueryClient with caching
 const queryClient = new QueryClient({
@@ -114,6 +119,7 @@ const App = () => (
                   <Route path="leads" element={<AdminLeads />} />
                   <Route path="integrations" element={<AdminIntegrations />} />
                   <Route path="site-settings" element={<AdminSiteSettings />} />
+                  <Route path="blog" element={<AdminBlog />} />
                   <Route path="settings" element={<AdminSettings />} />
                 </Route>
 
@@ -146,6 +152,11 @@ const App = () => (
                         <Route path="/education/homemakers" element={<HomemakersEducation />} />
                         <Route path="/education/kids" element={<KidsEducation />} />
                         <Route path="/insights" element={<MarketInsights />} />
+                        {/* Blog */}
+                        <Route path="/blog" element={<BlogIndex audience="all" />} />
+                        <Route path="/blog/investor" element={<BlogIndex audience="investor" />} />
+                        <Route path="/blog/partner" element={<BlogIndex audience="partner" />} />
+                        <Route path="/blog/:slug" element={<BlogPost />} />
                         {/* Partner */}
                         <Route path="/partner" element={<Partner />} />
                         <Route path="/partner/dashboard" element={<PartnerDashboard />} />
