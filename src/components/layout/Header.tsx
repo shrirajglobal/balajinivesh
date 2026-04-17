@@ -152,27 +152,32 @@ const Header = () => {
 
         {/* Right side: Language + CTA + Hamburger */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Language Toggle */}
-          <div className="flex items-center rounded-full border border-border bg-card text-xs font-medium">
-            <button
-              onClick={() => setLanguage("en")}
-              className={cn(
-                "rounded-full px-2 py-1 transition-colors sm:px-2.5",
-                language === "en" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              EN
-            </button>
-            <button
-              onClick={() => setLanguage("hi")}
-              className={cn(
-                "rounded-full px-2 py-1 transition-colors sm:px-2.5",
-                language === "hi" ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              हिं
-            </button>
-          </div>
+          {/* Language Toggle (EN / हिं / বাং) */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                className="flex items-center gap-1 rounded-full border border-border bg-card px-2.5 py-1 text-xs font-semibold text-foreground transition-colors hover:border-primary/40"
+                aria-label="Change language"
+              >
+                <Globe className="h-3.5 w-3.5 text-muted-foreground" />
+                {LANGUAGE_LABELS[language]}
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-32">
+              {(Object.keys(LANGUAGE_LABELS) as Language[]).map((lang) => (
+                <DropdownMenuItem
+                  key={lang}
+                  onClick={() => setLanguage(lang)}
+                  className={cn("cursor-pointer", language === lang && "bg-accent text-primary font-semibold")}
+                >
+                  {LANGUAGE_LABELS[lang]}
+                  <span className="ml-auto text-xs text-muted-foreground">
+                    {lang === "en" ? "English" : lang === "hi" ? "हिन्दी" : "বাংলা"}
+                  </span>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
 
           {/* Login / User Menu */}
           {user ? (
