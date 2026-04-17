@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import logo from "@/assets/logo.jpeg";
 
 const Footer = () => {
