@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import HeroBanner from "@/components/layout/HeroBanner";
+import NewsletterSignup from "@/components/newsletter/NewsletterSignup";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
@@ -182,6 +183,13 @@ const Index = () => {
               <Link to="/partner">Become a Partner <ArrowRight className="ml-1 h-4 w-4" /></Link>
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* Newsletter */}
+      <section className="py-12 sm:py-16 lg:py-20">
+        <div className="container max-w-3xl">
+          <NewsletterSignup source="homepage" variant="card" />
         </div>
       </section>
 
