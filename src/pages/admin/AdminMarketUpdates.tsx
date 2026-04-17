@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { scanContentForCompliance } from "@/lib/complianceScanner";
+import { scanContent } from "@/lib/complianceScanner";
 import { toast } from "sonner";
 
 interface MU {
@@ -93,9 +93,10 @@ const AdminMarketUpdates = () => {
   };
 
   const approve = async (mu: MU) => {
-    const scan = scanContentForCompliance([mu.headline, mu.summary, mu.what_it_means ?? ""].join("\n"));
-    if (!scan.passed) {
-      toast.error(`Compliance check failed: ${scan.violations[0]?.matched}`);
+    const violations = scanContent([mu.headline, mu.summary, mu.what_it_means ?? ""].join("\n"));
+    const blocking = violations.filter((v) => v.severity === "block");
+    if (blocking.length > 0) {
+      toast.error(`Compliance check failed: "${blocking[0].phrase}" — ${blocking[0].reason}`);
       return;
     }
     const { error } = await supabase
