@@ -29,3 +29,15 @@ verify_jwt = false
 
 [functions.generate-academy-content]
 verify_jwt = true
+
+[functions.subscribe-newsletter]
+verify_jwt = false
+
+[functions.confirm-subscription]
+verify_jwt = false
+
+[functions.unsubscribe]
+verify_jwt = false
+
+[functions.send-newsletter]
+verify_jwt = true
