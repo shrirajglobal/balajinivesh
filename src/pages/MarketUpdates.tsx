@@ -5,7 +5,7 @@ import { TrendingUp, TrendingDown, Minus, Calendar, ArrowRight } from "lucide-re
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+
 import { Skeleton } from "@/components/ui/skeleton";
 import HeroBanner from "@/components/layout/HeroBanner";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
