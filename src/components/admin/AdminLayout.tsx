@@ -30,6 +30,8 @@ import {
   Globe,
   Newspaper,
   TrendingUp,
+  Mail,
+  Inbox,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -48,6 +50,8 @@ const menuItems = [
   { title: "Blog CMS", path: "/admin/blog", icon: Newspaper },
   { title: "Market Updates", path: "/admin/market-updates", icon: TrendingUp },
   { title: "Academy CMS", path: "/admin/academy", icon: GraduationCap },
+  { title: "Newsletter", path: "/admin/newsletter", icon: Mail },
+  { title: "CRM Inbox", path: "/admin/crm", icon: Inbox },
   { title: "Integrations", path: "/admin/integrations", icon: Plug },
   { title: "Site Settings", path: "/admin/site-settings", icon: Globe },
   { title: "Settings", path: "/admin/settings", icon: Settings },

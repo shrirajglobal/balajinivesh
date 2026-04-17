@@ -3,6 +3,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
+import NewsletterSignup from "@/components/newsletter/NewsletterSignup";
 import logo from "@/assets/logo.jpeg";
 
 const Footer = () => {
@@ -28,6 +29,12 @@ const Footer = () => {
             </Link>
             <p className="text-sm leading-relaxed text-muted-foreground">{t("footer.tagline")}</p>
             <p className="text-xs font-medium text-muted-foreground">{arnLine}</p>
+            <div className="pt-2">
+              <h4 className="mb-2 font-display text-sm font-semibold text-foreground">
+                Daily market updates in your inbox
+              </h4>
+              <NewsletterSignup source="footer" variant="inline" bare />
+            </div>
           </div>
 
           {/* Quick Links */}

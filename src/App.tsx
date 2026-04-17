@@ -77,10 +77,17 @@ const AdminSiteSettings = lazy(() => import("./pages/admin/AdminSiteSettings"));
 const AdminBlog = lazy(() => import("./pages/admin/AdminBlog"));
 const AdminMarketUpdates = lazy(() => import("./pages/admin/AdminMarketUpdates"));
 const AdminAcademy = lazy(() => import("./pages/admin/AdminAcademy"));
+const AdminNewsletter = lazy(() => import("./pages/admin/AdminNewsletter"));
+const AdminCRM = lazy(() => import("./pages/admin/AdminCRM"));
 
 // Public blog
 const BlogIndex = lazy(() => import("./pages/blog/BlogIndex"));
 const BlogPost = lazy(() => import("./pages/blog/BlogPost"));
+
+// Subscribe
+const Subscribe = lazy(() => import("./pages/subscribe/Subscribe"));
+const ConfirmSubscription = lazy(() => import("./pages/subscribe/ConfirmSubscription"));
+const Unsubscribe = lazy(() => import("./pages/subscribe/Unsubscribe"));
 
 // Optimized QueryClient with caching
 const queryClient = new QueryClient({
@@ -129,6 +136,8 @@ const App = () => (
                   <Route path="blog" element={<AdminBlog />} />
                   <Route path="market-updates" element={<AdminMarketUpdates />} />
                   <Route path="academy" element={<AdminAcademy />} />
+                  <Route path="newsletter" element={<AdminNewsletter />} />
+                  <Route path="crm" element={<AdminCRM />} />
                   <Route path="settings" element={<AdminSettings />} />
                 </Route>
 
@@ -180,6 +189,10 @@ const App = () => (
                         <Route path="/partner/academy/:moduleSlug/quiz" element={<PartnerAcademyQuiz />} />
                         <Route path="/partner/academy/:moduleSlug/:chapterSlug" element={<PartnerAcademyChapter />} />
                         <Route path="/partner/toolkit" element={<PartnerToolkit />} />
+                        {/* Subscribe */}
+                        <Route path="/subscribe" element={<Subscribe />} />
+                        <Route path="/subscribe/confirm" element={<ConfirmSubscription />} />
+                        <Route path="/subscribe/unsubscribe" element={<Unsubscribe />} />
                         {/* Auth */}
                         <Route path="/auth" element={<Auth />} />
                         {/* Static Pages */}

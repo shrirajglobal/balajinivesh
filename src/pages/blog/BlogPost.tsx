@@ -11,6 +11,7 @@ import { Loader2, Calendar, Clock, ChevronLeft } from "lucide-react";
 import { format } from "date-fns";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import ShareButtons from "@/components/share/ShareButtons";
+import NewsletterSignup from "@/components/newsletter/NewsletterSignup";
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -143,6 +144,15 @@ const BlogPost = () => {
           title={`${post.title} — ${post.excerpt}`}
           campaign="blog_post"
           content={post.slug}
+        />
+      </div>
+
+      <div className="mt-10">
+        <NewsletterSignup
+          source="blog_post"
+          variant="card"
+          heading="Liked this read? Get one short email every market day."
+          description="Daily Sensex, Nifty, gold and USD/INR explained in plain language. Free, double opt-in, unsubscribe anytime."
         />
       </div>
 

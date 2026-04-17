@@ -10,6 +10,7 @@ import HeroBanner from "@/components/layout/HeroBanner";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import SEO from "@/components/seo/SEO";
 import ShareButtons from "@/components/share/ShareButtons";
+import NewsletterSignup from "@/components/newsletter/NewsletterSignup";
 
 interface MarketUpdate {
   id: string;
@@ -208,6 +209,10 @@ const MarketUpdates = () => {
                   )}
                 </CardContent>
               </Card>
+
+              <div className="mt-8">
+                <NewsletterSignup source="market_updates" variant="card" />
+              </div>
 
               <div className="mt-6">
                 <SebiDisclaimer variant="compact" />
