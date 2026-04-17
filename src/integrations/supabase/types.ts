@@ -382,6 +382,157 @@ export type Database = {
         }
         Relationships: []
       }
+      learning_certificates: {
+        Row: {
+          certificate_number: string
+          id: string
+          issued_at: string
+          module_id: string
+          module_title: string
+          pdf_url: string | null
+          score_pct: number | null
+          user_id: string
+        }
+        Insert: {
+          certificate_number: string
+          id?: string
+          issued_at?: string
+          module_id: string
+          module_title: string
+          pdf_url?: string | null
+          score_pct?: number | null
+          user_id: string
+        }
+        Update: {
+          certificate_number?: string
+          id?: string
+          issued_at?: string
+          module_id?: string
+          module_title?: string
+          pdf_url?: string | null
+          score_pct?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learning_certificates_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "learning_modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      learning_chapters: {
+        Row: {
+          bengali_glossary: Json | null
+          content_markdown: string
+          created_at: string
+          display_order: number
+          estimated_minutes: number
+          exam_traps: string | null
+          id: string
+          is_published: boolean
+          module_id: string
+          slug: string
+          summary: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          bengali_glossary?: Json | null
+          content_markdown?: string
+          created_at?: string
+          display_order?: number
+          estimated_minutes?: number
+          exam_traps?: string | null
+          id?: string
+          is_published?: boolean
+          module_id: string
+          slug: string
+          summary?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          bengali_glossary?: Json | null
+          content_markdown?: string
+          created_at?: string
+          display_order?: number
+          estimated_minutes?: number
+          exam_traps?: string | null
+          id?: string
+          is_published?: boolean
+          module_id?: string
+          slug?: string
+          summary?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "learning_chapters_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "learning_modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      learning_modules: {
+        Row: {
+          audience: string
+          certificate_label: string | null
+          cover_emoji: string | null
+          created_at: string
+          description: string | null
+          display_order: number
+          id: string
+          is_published: boolean
+          issues_certificate: boolean
+          pass_percentage: number
+          slug: string
+          subtitle: string | null
+          title: string
+          total_chapters: number
+          updated_at: string
+        }
+        Insert: {
+          audience?: string
+          certificate_label?: string | null
+          cover_emoji?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          is_published?: boolean
+          issues_certificate?: boolean
+          pass_percentage?: number
+          slug: string
+          subtitle?: string | null
+          title: string
+          total_chapters?: number
+          updated_at?: string
+        }
+        Update: {
+          audience?: string
+          certificate_label?: string | null
+          cover_emoji?: string | null
+          created_at?: string
+          description?: string | null
+          display_order?: number
+          id?: string
+          is_published?: boolean
+          issues_certificate?: boolean
+          pass_percentage?: number
+          slug?: string
+          subtitle?: string | null
+          title?: string
+          total_chapters?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       market_updates: {
         Row: {
           ai_generated: boolean
@@ -595,6 +746,45 @@ export type Database = {
           },
         ]
       }
+      partner_chapter_progress: {
+        Row: {
+          chapter_id: string
+          completed_at: string
+          id: string
+          module_id: string
+          user_id: string
+        }
+        Insert: {
+          chapter_id: string
+          completed_at?: string
+          id?: string
+          module_id: string
+          user_id: string
+        }
+        Update: {
+          chapter_id?: string
+          completed_at?: string
+          id?: string
+          module_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_chapter_progress_chapter_id_fkey"
+            columns: ["chapter_id"]
+            isOneToOne: false
+            referencedRelation: "learning_chapters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "partner_chapter_progress_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "learning_modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       partner_clients: {
         Row: {
           client_name: string
@@ -715,6 +905,53 @@ export type Database = {
           },
         ]
       }
+      partner_module_progress: {
+        Row: {
+          best_quiz_score_pct: number | null
+          chapters_completed: number
+          completed_at: string | null
+          created_at: string
+          id: string
+          last_activity_at: string
+          module_id: string
+          quiz_score_pct: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          best_quiz_score_pct?: number | null
+          chapters_completed?: number
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          last_activity_at?: string
+          module_id: string
+          quiz_score_pct?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          best_quiz_score_pct?: number | null
+          chapters_completed?: number
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          last_activity_at?: string
+          module_id?: string
+          quiz_score_pct?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_module_progress_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "learning_modules"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       partners: {
         Row: {
           arn_number: string | null
@@ -774,6 +1011,133 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      quiz_attempts: {
+        Row: {
+          chapter_id: string | null
+          created_at: string
+          ease_factor: number
+          id: string
+          interval_days: number
+          is_correct: boolean
+          module_id: string
+          next_review_at: string | null
+          question_id: string
+          response_seconds: number | null
+          selected_index: number
+          user_id: string
+        }
+        Insert: {
+          chapter_id?: string | null
+          created_at?: string
+          ease_factor?: number
+          id?: string
+          interval_days?: number
+          is_correct: boolean
+          module_id: string
+          next_review_at?: string | null
+          question_id: string
+          response_seconds?: number | null
+          selected_index: number
+          user_id: string
+        }
+        Update: {
+          chapter_id?: string | null
+          created_at?: string
+          ease_factor?: number
+          id?: string
+          interval_days?: number
+          is_correct?: boolean
+          module_id?: string
+          next_review_at?: string | null
+          question_id?: string
+          response_seconds?: number | null
+          selected_index?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_attempts_chapter_id_fkey"
+            columns: ["chapter_id"]
+            isOneToOne: false
+            referencedRelation: "learning_chapters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quiz_attempts_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "learning_modules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quiz_attempts_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "quiz_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      quiz_questions: {
+        Row: {
+          chapter_id: string | null
+          correct_index: number
+          created_at: string
+          difficulty: string
+          explanation: string | null
+          id: string
+          is_active: boolean
+          module_id: string
+          options: Json
+          question: string
+          tags: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          chapter_id?: string | null
+          correct_index: number
+          created_at?: string
+          difficulty?: string
+          explanation?: string | null
+          id?: string
+          is_active?: boolean
+          module_id: string
+          options: Json
+          question: string
+          tags?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          chapter_id?: string | null
+          correct_index?: number
+          created_at?: string
+          difficulty?: string
+          explanation?: string | null
+          id?: string
+          is_active?: boolean
+          module_id?: string
+          options?: Json
+          question?: string
+          tags?: string[] | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "quiz_questions_chapter_id_fkey"
+            columns: ["chapter_id"]
+            isOneToOne: false
+            referencedRelation: "learning_chapters"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quiz_questions_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "learning_modules"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       rta_uploads: {
         Row: {
