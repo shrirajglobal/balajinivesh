@@ -42,7 +42,7 @@ const HomemakersEducation = lazy(() => import("./pages/education/HomemakersEduca
 const KidsEducation = lazy(() => import("./pages/education/KidsEducation"));
 
 const Auth = lazy(() => import("./pages/Auth"));
-const MarketInsights = lazy(() => import("./pages/MarketInsights"));
+// MarketInsights merged into /market-updates (Phase 6 CRO)
 const MarketUpdates = lazy(() => import("./pages/MarketUpdates"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
