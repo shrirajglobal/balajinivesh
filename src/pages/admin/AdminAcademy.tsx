@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { GraduationCap, Plus, Sparkles, Trash2, Loader2, Brain, Pencil, Save, X, Upload } from "lucide-react";
+import { GraduationCap, Plus, Sparkles, Trash2, Loader2, Brain, Pencil, Save, X, Upload, FileJson } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -201,6 +202,9 @@ const AdminAcademy = () => {
                 <p className="text-xs text-muted-foreground">Pass mark {activeMod.pass_percentage}% · {activeMod.issues_certificate ? "Issues certificate" : "No certificate"}</p>
               </div>
               <div className="flex gap-2">
+                <Button size="sm" variant="outline" asChild>
+                  <Link to="/admin/academy/import"><FileJson className="h-4 w-4" /> Bulk Import JSON</Link>
+                </Button>
                 <Button size="sm" variant="outline" onClick={() => setAiOpen(true)}>
                   <Sparkles className="h-4 w-4" /> AI Generate
                 </Button>

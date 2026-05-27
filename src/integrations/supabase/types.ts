@@ -697,14 +697,21 @@ export type Database = {
       learning_chapters: {
         Row: {
           bengali_glossary: Json | null
+          chapter_number: number | null
           content_markdown: string
           created_at: string
           display_order: number
           estimated_minutes: number
           exam_traps: string | null
+          exam_traps_list: Json
           id: string
           is_published: boolean
+          last_updated: string | null
           module_id: string
+          module_key: string | null
+          plain_english: string | null
+          quick_recap: Json
+          real_world: string | null
           slug: string
           summary: string | null
           title: string
@@ -712,14 +719,21 @@ export type Database = {
         }
         Insert: {
           bengali_glossary?: Json | null
+          chapter_number?: number | null
           content_markdown?: string
           created_at?: string
           display_order?: number
           estimated_minutes?: number
           exam_traps?: string | null
+          exam_traps_list?: Json
           id?: string
           is_published?: boolean
+          last_updated?: string | null
           module_id: string
+          module_key?: string | null
+          plain_english?: string | null
+          quick_recap?: Json
+          real_world?: string | null
           slug: string
           summary?: string | null
           title: string
@@ -727,14 +741,21 @@ export type Database = {
         }
         Update: {
           bengali_glossary?: Json | null
+          chapter_number?: number | null
           content_markdown?: string
           created_at?: string
           display_order?: number
           estimated_minutes?: number
           exam_traps?: string | null
+          exam_traps_list?: Json
           id?: string
           is_published?: boolean
+          last_updated?: string | null
           module_id?: string
+          module_key?: string | null
+          plain_english?: string | null
+          quick_recap?: Json
+          real_world?: string | null
           slug?: string
           summary?: string | null
           title?: string
@@ -761,6 +782,7 @@ export type Database = {
           id: string
           is_published: boolean
           issues_certificate: boolean
+          module_key: string | null
           pass_percentage: number
           slug: string
           subtitle: string | null
@@ -778,6 +800,7 @@ export type Database = {
           id?: string
           is_published?: boolean
           issues_certificate?: boolean
+          module_key?: string | null
           pass_percentage?: number
           slug: string
           subtitle?: string | null
@@ -795,6 +818,7 @@ export type Database = {
           id?: string
           is_published?: boolean
           issues_certificate?: boolean
+          module_key?: string | null
           pass_percentage?: number
           slug?: string
           subtitle?: string | null
