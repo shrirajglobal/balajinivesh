@@ -33,6 +33,7 @@ const CalculatorLeadCapture = ({
   const { toast } = useToast();
   const { data: settings } = useSiteSettings();
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [whatsappOk, setWhatsappOk] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
@@ -51,17 +52,17 @@ const CalculatorLeadCapture = ({
     }
     setSubmitting(true);
     try {
-      // Save to leads table (best-effort; non-blocking on failure)
-      await supabase.from("leads").insert({
+      await supabase.from("contact_submissions").insert({
+        name: "Calculator lead",
+        email: email.trim() || `lead-${phone.replace(/\D/g, "")}@no-email.local`,
         phone: phone.trim(),
+        subject: `Calculator: ${source}`,
+        message: `${context}\nWhatsApp consent: ${whatsappOk ? "yes" : "no"}`,
         source,
-        message: `[${source}] ${context}`,
-        consent_whatsapp: whatsappOk,
-      } as any);
+      });
       setSent(true);
-      toast({ title: "Got it!", description: "Our advisor will WhatsApp you shortly." });
+      toast({ title: "Got it!", description: "Our advisor will reach out shortly." });
     } catch {
-      // Even on insert failure, treat as sent — user already converted intent.
       setSent(true);
       toast({ title: "Thanks!", description: "We'll be in touch shortly." });
     } finally {
@@ -105,19 +106,24 @@ const CalculatorLeadCapture = ({
             </p>
           </div>
           <form onSubmit={handleSubmit} className="space-y-3">
-            <div className="flex gap-2">
-              <Input
-                type="tel"
-                placeholder="Your mobile number"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-                className="bg-background"
-              />
-              <Button type="submit" disabled={submitting} className="shrink-0">
-                {submitting ? "..." : "Get plan"}
-              </Button>
-            </div>
+            <Input
+              type="tel"
+              placeholder="Your mobile number *"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+              className="bg-background"
+            />
+            <Input
+              type="email"
+              placeholder="Email (optional, for PDF report)"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="bg-background"
+            />
+            <Button type="submit" disabled={submitting} className="w-full">
+              {submitting ? "Sending..." : "Get my personalised plan"}
+            </Button>
             <label className="flex items-center gap-2 text-xs text-muted-foreground cursor-pointer">
               <Checkbox checked={whatsappOk} onCheckedChange={(v) => setWhatsappOk(v === true)} />
               Reach me on WhatsApp (preferred)
