@@ -5,6 +5,7 @@ import { ArrowRight, Clock, AlertTriangle, Users, HelpCircle } from "lucide-reac
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import HeroBanner from "@/components/layout/HeroBanner";
+import SEO from "@/components/seo/SEO";
 import {
   Accordion,
   AccordionContent,
@@ -52,6 +53,10 @@ const SolutionPageTemplate = ({
 }: SolutionPageProps) => {
   return (
     <div>
+      <SEO
+        title={`${title} — ${subtitle} | Balaji Nivesh`}
+        description={description.length > 160 ? `${description.slice(0, 157)}...` : description}
+      />
       {/* Hero */}
       <HeroBanner>
         <motion.div

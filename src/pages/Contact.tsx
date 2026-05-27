@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import HeroBanner from "@/components/layout/HeroBanner";
+import SEO from "@/components/seo/SEO";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -27,6 +28,10 @@ const Contact = () => {
 
   return (
     <div>
+      <SEO
+        title="Contact Balaji Nivesh — Talk to an AMFI-Registered MFD"
+        description="Reach Balaji Nivesh for SIP, mutual fund, insurance and financial planning queries. Call, email or visit our office — we typically reply within one business day."
+      />
       <HeroBanner>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mx-auto max-w-3xl text-center">
           <h1 className="font-display text-4xl font-extrabold text-foreground sm:text-5xl">{t("contact.title")}</h1>

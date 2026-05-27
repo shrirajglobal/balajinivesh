@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import HeroBanner from "@/components/layout/HeroBanner";
+import SEO from "@/components/seo/SEO";
 import logo from "@/assets/logo.jpeg";
 
 const About = () => {
@@ -19,6 +20,10 @@ const About = () => {
 
   return (
     <div>
+      <SEO
+        title="About Balaji Nivesh — AMFI-Registered MFD in India"
+        description="Meet Balaji Nivesh: AMFI-registered mutual fund distributor helping Indian investors plan SIPs, retirement and goals with transparent, education-first guidance."
+      />
       <HeroBanner>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mx-auto max-w-3xl text-center">
           <h1 className="font-display text-4xl font-extrabold text-foreground sm:text-5xl">
