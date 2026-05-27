@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { GraduationCap, Plus, Sparkles, Trash2, Loader2, Brain, Pencil, Save, X, Upload } from "lucide-react";
+import { GraduationCap, Plus, Sparkles, Trash2, Loader2, Brain, Pencil, Save, X, Upload, FileJson } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

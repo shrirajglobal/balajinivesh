@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, ArrowRight, AlertTriangle, CheckCircle2, Languages, Brain } from "lucide-react";
+import { ArrowLeft, ArrowRight, AlertTriangle, CheckCircle2, Languages, Brain, BookOpen, Lightbulb, ListChecks } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import PartnerLayout from "@/components/partner/PartnerLayout";
@@ -15,6 +15,11 @@ interface Chap {
   id: string; slug: string; title: string; summary: string | null;
   content_markdown: string; bengali_glossary: Record<string, string>;
   exam_traps: string | null; estimated_minutes: number; display_order: number;
+  chapter_number: number | null;
+  plain_english: string | null;
+  real_world: string | null;
+  quick_recap: string[] | null;
+  exam_traps_list: string[] | null;
 }
 
 const AcademyChapter = () => {
@@ -95,6 +100,9 @@ const AcademyChapter = () => {
       </Link>
 
       <article className="mt-4 max-w-3xl">
+        {chap.chapter_number && (
+          <Badge className="mb-2 bg-primary/10 text-primary hover:bg-primary/10">Chapter {chap.chapter_number}</Badge>
+        )}
         <h1 className="font-display text-3xl font-bold text-foreground">{chap.title}</h1>
         {chap.summary && <p className="mt-2 text-muted-foreground">{chap.summary}</p>}
 
@@ -122,22 +130,74 @@ const AcademyChapter = () => {
           </Card>
         )}
 
-        <div className="mt-6">
-          <Markdown content={chap.content_markdown || "_Chapter content coming soon._"} />
-        </div>
+        {/* Block 1: Plain English */}
+        {chap.plain_english ? (
+          <section className="mt-8">
+            <div className="flex items-center gap-2 mb-3">
+              <BookOpen className="h-4 w-4 text-primary" />
+              <h2 className="font-display font-semibold text-foreground">Plain English</h2>
+            </div>
+            <div className="text-foreground/90 leading-relaxed space-y-3">
+              {chap.plain_english.split(/\n\n+/).map((p, i) => <p key={i}>{p}</p>)}
+            </div>
+          </section>
+        ) : (
+          <div className="mt-6">
+            <Markdown content={chap.content_markdown || "_Chapter content coming soon._"} />
+          </div>
+        )}
 
-        {chap.exam_traps && (
-          <Card className="mt-6 border-amber-500/30 bg-amber-500/5">
-            <CardContent className="p-4">
-              <div className="flex items-start gap-2">
-                <AlertTriangle className="h-5 w-5 shrink-0 text-amber-600" />
-                <div>
-                  <p className="font-display font-semibold text-foreground">Common Exam Traps</p>
-                  <div className="mt-1 text-sm text-foreground/90 whitespace-pre-line">{chap.exam_traps}</div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Block 2: Real-World */}
+        {chap.real_world && (
+          <section className="mt-8">
+            <div className="flex items-center gap-2 mb-3">
+              <Lightbulb className="h-4 w-4 text-orange-500" />
+              <h2 className="font-display font-semibold text-foreground">Real-World Application</h2>
+            </div>
+            <Card className="border-orange-500/20 bg-orange-500/5">
+              <CardContent className="p-4 text-sm text-foreground/90 leading-relaxed whitespace-pre-line">{chap.real_world}</CardContent>
+            </Card>
+          </section>
+        )}
+
+        {/* Block 3: Exam Traps */}
+        {((chap.exam_traps_list && chap.exam_traps_list.length > 0) || chap.exam_traps) && (
+          <section className="mt-8">
+            <div className="flex items-center gap-2 mb-3">
+              <AlertTriangle className="h-4 w-4 text-amber-600" />
+              <h2 className="font-display font-semibold text-foreground">Common Exam Traps</h2>
+            </div>
+            <Card className="border-amber-500/30 bg-amber-500/5">
+              <CardContent className="p-4">
+                {chap.exam_traps_list && chap.exam_traps_list.length > 0 ? (
+                  <ol className="space-y-2 text-sm text-foreground/90 list-decimal pl-5">
+                    {chap.exam_traps_list.map((t, i) => <li key={i}>{t}</li>)}
+                  </ol>
+                ) : (
+                  <div className="text-sm text-foreground/90 whitespace-pre-line">{chap.exam_traps}</div>
+                )}
+              </CardContent>
+            </Card>
+          </section>
+        )}
+
+        {/* Block 4: Quick Recap */}
+        {chap.quick_recap && chap.quick_recap.length > 0 && (
+          <section className="mt-8">
+            <div className="flex items-center gap-2 mb-3">
+              <ListChecks className="h-4 w-4 text-emerald-600" />
+              <h2 className="font-display font-semibold text-foreground">Quick Recap</h2>
+            </div>
+            <Card className="border-emerald-500/20 bg-emerald-500/5">
+              <CardContent className="p-4">
+                <ul className="space-y-1.5 text-sm text-foreground/90">
+                  {chap.quick_recap.map((r, i) => (
+                    <li key={i} className="flex gap-2"><CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600 mt-0.5" />{r}</li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </section>
         )}
       </article>
 
