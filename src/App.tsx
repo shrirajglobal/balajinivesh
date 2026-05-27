@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, ComponentType } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -6,12 +6,17 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
-import Layout from "@/components/layout/Layout";
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import PageSkeleton from "@/components/ui/page-skeleton";
 
 // Critical path - load immediately
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+
+// Auth-critical: must be eager
+import AdminGuard from "./components/admin/AdminGuard";
+import AdminLayout from "./components/admin/AdminLayout";
 
 // Lazy load non-critical routes
 const MutualFunds = lazy(() => import("./pages/solutions/MutualFunds"));
@@ -57,9 +62,7 @@ const PartnerAcademyChapter = lazy(() => import("./pages/partner/AcademyChapter"
 const PartnerAcademyQuiz = lazy(() => import("./pages/partner/AcademyQuiz"));
 const PartnerToolkit = lazy(() => import("./pages/partner/Toolkit"));
 
-// Admin
-const AdminGuard = lazy(() => import("./components/admin/AdminGuard"));
-const AdminLayout = lazy(() => import("./components/admin/AdminLayout"));
+// Admin pages
 const AdminDashboard = lazy(() => import("./pages/admin/AdminDashboard"));
 const AdminPartners = lazy(() => import("./pages/admin/Partners"));
 const AdminActivePartners = lazy(() => import("./pages/admin/AdminActivePartners"));
@@ -99,12 +102,19 @@ const AdminVideos = lazy(() => import("./pages/admin/AdminVideos"));
 const AdminForum = lazy(() => import("./pages/admin/AdminForum"));
 const AdminLocator = lazy(() => import("./pages/admin/AdminLocator"));
 
+// Reusable wrapper that provides per-route Suspense for lazy components
+const LazyRoute = ({ component: Comp, ...props }: { component: ComponentType<any>; [k: string]: any }) => (
+  <Suspense fallback={<PageSkeleton />}>
+    <Comp {...props} />
+  </Suspense>
+);
+
 // Optimized QueryClient with caching
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
-      gcTime: 1000 * 60 * 30, // 30 minutes (formerly cacheTime)
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 30,
       retry: 1,
       refetchOnWindowFocus: false,
     },
@@ -112,14 +122,14 @@ const queryClient = new QueryClient({
 });
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider delayDuration={300}>
-      <LanguageProvider>
-        <AuthProvider>
-          <Toaster />
-          <Sonner position="top-center" />
-          <BrowserRouter>
-            <Suspense fallback={<PageSkeleton />}>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider delayDuration={300}>
+        <LanguageProvider>
+          <AuthProvider>
+            <Toaster />
+            <Sonner position="top-center" />
+            <BrowserRouter>
               <Routes>
                 {/* Admin routes — no main Layout wrapper */}
                 <Route
@@ -130,110 +140,103 @@ const App = () => (
                     </AdminGuard>
                   }
                 >
-                  <Route index element={<AdminDashboard />} />
-                  <Route path="partners" element={<AdminPartners />} />
-                  <Route path="partners/active" element={<AdminActivePartners />} />
-                  <Route path="rta-upload" element={<AdminRTAUpload />} />
-                  <Route path="clients" element={<AdminClients />} />
-                  <Route path="commissions" element={<AdminCommissions />} />
-                  <Route path="aum" element={<AdminAUM />} />
-                  <Route path="users" element={<AdminUsers />} />
-                  <Route path="gifts" element={<AdminGifts />} />
-                  <Route path="certificates" element={<AdminCertificates />} />
-                  <Route path="leads" element={<AdminLeads />} />
-                  <Route path="integrations" element={<AdminIntegrations />} />
-                  <Route path="site-settings" element={<AdminSiteSettings />} />
-                  <Route path="blog" element={<AdminBlog />} />
-                  <Route path="market-updates" element={<AdminMarketUpdates />} />
-                  <Route path="academy" element={<AdminAcademy />} />
-                  <Route path="newsletter" element={<AdminNewsletter />} />
-                  <Route path="crm" element={<AdminCRM />} />
-                  <Route path="embeddings" element={<AdminEmbeddings />} />
-                  <Route path="videos" element={<AdminVideos />} />
-                  <Route path="forum" element={<AdminForum />} />
-                  <Route path="locator" element={<AdminLocator />} />
-                  <Route path="settings" element={<AdminSettings />} />
+                  <Route index element={<LazyRoute component={AdminDashboard} />} />
+                  <Route path="partners" element={<LazyRoute component={AdminPartners} />} />
+                  <Route path="partners/active" element={<LazyRoute component={AdminActivePartners} />} />
+                  <Route path="rta-upload" element={<LazyRoute component={AdminRTAUpload} />} />
+                  <Route path="clients" element={<LazyRoute component={AdminClients} />} />
+                  <Route path="commissions" element={<LazyRoute component={AdminCommissions} />} />
+                  <Route path="aum" element={<LazyRoute component={AdminAUM} />} />
+                  <Route path="users" element={<LazyRoute component={AdminUsers} />} />
+                  <Route path="gifts" element={<LazyRoute component={AdminGifts} />} />
+                  <Route path="certificates" element={<LazyRoute component={AdminCertificates} />} />
+                  <Route path="leads" element={<LazyRoute component={AdminLeads} />} />
+                  <Route path="integrations" element={<LazyRoute component={AdminIntegrations} />} />
+                  <Route path="site-settings" element={<LazyRoute component={AdminSiteSettings} />} />
+                  <Route path="blog" element={<LazyRoute component={AdminBlog} />} />
+                  <Route path="market-updates" element={<LazyRoute component={AdminMarketUpdates} />} />
+                  <Route path="academy" element={<LazyRoute component={AdminAcademy} />} />
+                  <Route path="newsletter" element={<LazyRoute component={AdminNewsletter} />} />
+                  <Route path="crm" element={<LazyRoute component={AdminCRM} />} />
+                  <Route path="embeddings" element={<LazyRoute component={AdminEmbeddings} />} />
+                  <Route path="videos" element={<LazyRoute component={AdminVideos} />} />
+                  <Route path="forum" element={<LazyRoute component={AdminForum} />} />
+                  <Route path="locator" element={<LazyRoute component={AdminLocator} />} />
+                  <Route path="settings" element={<LazyRoute component={AdminSettings} />} />
                 </Route>
 
-                {/* Main site routes */}
-                <Route
-                  path="*"
-                  element={
-                    <Layout>
-                      <Routes>
-                        <Route path="/" element={<Index />} />
-                        {/* Investment Solutions */}
-                        <Route path="/solutions/mutual-funds" element={<MutualFunds />} />
-                        <Route path="/solutions/bonds" element={<Bonds />} />
-                        <Route path="/solutions/insurance" element={<Insurance />} />
-                        <Route path="/solutions/ipo" element={<IPO />} />
-                        <Route path="/solutions/fixed-deposits" element={<FixedDeposits />} />
-                        {/* Calculators */}
-                        <Route path="/calculators" element={<Calculators />} />
-                        <Route path="/calculators/sip" element={<SIPCalculator />} />
-                        <Route path="/calculators/lumpsum" element={<LumpsumCalculator />} />
-                        <Route path="/calculators/step-up-sip" element={<StepUpSIPCalculator />} />
-                        <Route path="/calculators/retirement" element={<RetirementPlanner />} />
-                        <Route path="/calculators/sip-vs-fd" element={<SIPvsFD />} />
-                        <Route path="/calculators/emergency-fund" element={<EmergencyFundCalculator />} />
-                        {/* Assessment Tools */}
-                        <Route path="/tools/health-check" element={<FinancialHealthCheck />} />
-                        <Route path="/tools/risk-profile" element={<RiskProfiler />} />
-                        <Route path="/tools/sip-goal" element={<SIPGoalVisualizer />} />
-                        {/* Education & Insights */}
-                        <Route path="/education" element={<Education />} />
-                        <Route path="/education/homemakers" element={<HomemakersEducation />} />
-                        <Route path="/education/kids" element={<KidsEducation />} />
-                        <Route path="/insights" element={<MarketInsights />} />
-                        <Route path="/market-updates" element={<MarketUpdates />} />
-                        <Route path="/market-updates/:date" element={<MarketUpdates />} />
-                        {/* Blog */}
-                        <Route path="/blog" element={<BlogIndex audience="all" />} />
-                        <Route path="/blog/investor" element={<BlogIndex audience="investor" />} />
-                        <Route path="/blog/partner" element={<BlogIndex audience="partner" />} />
-                        <Route path="/blog/:slug" element={<BlogPost />} />
-                        {/* Partner */}
-                        <Route path="/partner" element={<Partner />} />
-                        <Route path="/partner/dashboard" element={<PartnerDashboard />} />
-                        <Route path="/partner/commissions" element={<PartnerCommissions />} />
-                        <Route path="/partner/clients" element={<PartnerClients />} />
-                        <Route path="/partner/leads" element={<PartnerLeads />} />
-                        <Route path="/partner/academy" element={<PartnerAcademy />} />
-                        <Route path="/partner/academy/:moduleSlug" element={<PartnerAcademyModule />} />
-                        <Route path="/partner/academy/:moduleSlug/quiz" element={<PartnerAcademyQuiz />} />
-                        <Route path="/partner/academy/:moduleSlug/:chapterSlug" element={<PartnerAcademyChapter />} />
-                        <Route path="/partner/toolkit" element={<PartnerToolkit />} />
-                        {/* Engagement & Community (Phase 6) */}
-                        <Route path="/locator" element={<Locator />} />
-                        <Route path="/videos" element={<Videos />} />
-                        <Route path="/forum" element={<ForumIndex />} />
-                        <Route path="/forum/:slug" element={<ForumThread />} />
-                        {/* Subscribe */}
-                        <Route path="/subscribe" element={<Subscribe />} />
-                        <Route path="/subscribe/confirm" element={<ConfirmSubscription />} />
-                        <Route path="/subscribe/unsubscribe" element={<Unsubscribe />} />
-                        {/* Auth */}
-                        <Route path="/auth" element={<Auth />} />
-                        {/* Static Pages */}
-                        <Route path="/about" element={<About />} />
-                        <Route path="/contact" element={<Contact />} />
-                        <Route path="/resources" element={<Resources />} />
-                        <Route path="/privacy" element={<PrivacyPolicy />} />
-                        <Route path="/terms" element={<TermsOfUse />} />
-                        <Route path="/disclaimer" element={<Disclaimer />} />
-                        {/* Catch-all */}
-                        <Route path="*" element={<NotFound />} />
-                      </Routes>
-                    </Layout>
-                  }
-                />
+                {/* Main site routes — flat layout route, no nested Routes */}
+                <Route element={<LayoutWrapper />}>
+                  <Route path="/" element={<Index />} />
+                  {/* Investment Solutions */}
+                  <Route path="/solutions/mutual-funds" element={<LazyRoute component={MutualFunds} />} />
+                  <Route path="/solutions/bonds" element={<LazyRoute component={Bonds} />} />
+                  <Route path="/solutions/insurance" element={<LazyRoute component={Insurance} />} />
+                  <Route path="/solutions/ipo" element={<LazyRoute component={IPO} />} />
+                  <Route path="/solutions/fixed-deposits" element={<LazyRoute component={FixedDeposits} />} />
+                  {/* Calculators */}
+                  <Route path="/calculators" element={<LazyRoute component={Calculators} />} />
+                  <Route path="/calculators/sip" element={<LazyRoute component={SIPCalculator} />} />
+                  <Route path="/calculators/lumpsum" element={<LazyRoute component={LumpsumCalculator} />} />
+                  <Route path="/calculators/step-up-sip" element={<LazyRoute component={StepUpSIPCalculator} />} />
+                  <Route path="/calculators/retirement" element={<LazyRoute component={RetirementPlanner} />} />
+                  <Route path="/calculators/sip-vs-fd" element={<LazyRoute component={SIPvsFD} />} />
+                  <Route path="/calculators/emergency-fund" element={<LazyRoute component={EmergencyFundCalculator} />} />
+                  {/* Assessment Tools */}
+                  <Route path="/tools/health-check" element={<LazyRoute component={FinancialHealthCheck} />} />
+                  <Route path="/tools/risk-profile" element={<LazyRoute component={RiskProfiler} />} />
+                  <Route path="/tools/sip-goal" element={<LazyRoute component={SIPGoalVisualizer} />} />
+                  {/* Education & Insights */}
+                  <Route path="/education" element={<LazyRoute component={Education} />} />
+                  <Route path="/education/homemakers" element={<LazyRoute component={HomemakersEducation} />} />
+                  <Route path="/education/kids" element={<LazyRoute component={KidsEducation} />} />
+                  <Route path="/insights" element={<LazyRoute component={MarketInsights} />} />
+                  <Route path="/market-updates" element={<LazyRoute component={MarketUpdates} />} />
+                  <Route path="/market-updates/:date" element={<LazyRoute component={MarketUpdates} />} />
+                  {/* Blog */}
+                  <Route path="/blog" element={<LazyRoute component={BlogIndex} audience="all" />} />
+                  <Route path="/blog/investor" element={<LazyRoute component={BlogIndex} audience="investor" />} />
+                  <Route path="/blog/partner" element={<LazyRoute component={BlogIndex} audience="partner" />} />
+                  <Route path="/blog/:slug" element={<LazyRoute component={BlogPost} />} />
+                  {/* Partner */}
+                  <Route path="/partner" element={<LazyRoute component={Partner} />} />
+                  <Route path="/partner/dashboard" element={<LazyRoute component={PartnerDashboard} />} />
+                  <Route path="/partner/commissions" element={<LazyRoute component={PartnerCommissions} />} />
+                  <Route path="/partner/clients" element={<LazyRoute component={PartnerClients} />} />
+                  <Route path="/partner/leads" element={<LazyRoute component={PartnerLeads} />} />
+                  <Route path="/partner/academy" element={<LazyRoute component={PartnerAcademy} />} />
+                  <Route path="/partner/academy/:moduleSlug" element={<LazyRoute component={PartnerAcademyModule} />} />
+                  <Route path="/partner/academy/:moduleSlug/quiz" element={<LazyRoute component={PartnerAcademyQuiz} />} />
+                  <Route path="/partner/academy/:moduleSlug/:chapterSlug" element={<LazyRoute component={PartnerAcademyChapter} />} />
+                  <Route path="/partner/toolkit" element={<LazyRoute component={PartnerToolkit} />} />
+                  {/* Engagement & Community (Phase 6) */}
+                  <Route path="/locator" element={<LazyRoute component={Locator} />} />
+                  <Route path="/videos" element={<LazyRoute component={Videos} />} />
+                  <Route path="/forum" element={<LazyRoute component={ForumIndex} />} />
+                  <Route path="/forum/:slug" element={<LazyRoute component={ForumThread} />} />
+                  {/* Subscribe */}
+                  <Route path="/subscribe" element={<LazyRoute component={Subscribe} />} />
+                  <Route path="/subscribe/confirm" element={<LazyRoute component={ConfirmSubscription} />} />
+                  <Route path="/subscribe/unsubscribe" element={<LazyRoute component={Unsubscribe} />} />
+                  {/* Auth */}
+                  <Route path="/auth" element={<LazyRoute component={Auth} />} />
+                  {/* Static Pages */}
+                  <Route path="/about" element={<LazyRoute component={About} />} />
+                  <Route path="/contact" element={<LazyRoute component={Contact} />} />
+                  <Route path="/resources" element={<LazyRoute component={Resources} />} />
+                  <Route path="/privacy" element={<LazyRoute component={PrivacyPolicy} />} />
+                  <Route path="/terms" element={<LazyRoute component={TermsOfUse} />} />
+                  <Route path="/disclaimer" element={<LazyRoute component={Disclaimer} />} />
+                  {/* Catch-all */}
+                  <Route path="*" element={<NotFound />} />
+                </Route>
               </Routes>
-            </Suspense>
-          </BrowserRouter>
-        </AuthProvider>
-      </LanguageProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
+            </BrowserRouter>
+          </AuthProvider>
+        </LanguageProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;
