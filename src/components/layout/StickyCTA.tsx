@@ -66,7 +66,7 @@ const StickyCTA = () => {
           "flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition-all sm:h-16 sm:w-16",
           open
             ? "bg-foreground text-background shadow-foreground/30 rotate-90"
-            : "bg-primary text-primary-foreground shadow-primary/40 animate-pulse-once"
+            : "bg-primary text-primary-foreground shadow-primary/40 ring-4 ring-primary/20"
         )}
       >
         {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6 sm:h-7 sm:w-7" />}
