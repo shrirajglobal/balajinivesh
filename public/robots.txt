@@ -9,6 +9,4 @@ Disallow: /partner/academy
 Disallow: /partner/toolkit
 Disallow: /auth
 
-Sitemap: https://balajinivesh.lovable.app/sitemap.xml
-Sitemap: https://xkyuyukppeaencmhakbu.supabase.co/functions/v1/sitemap
-
+Sitemap: https://balajinivesh.studydna.in/sitemap.xml
