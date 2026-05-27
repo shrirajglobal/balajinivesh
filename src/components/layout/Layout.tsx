@@ -1,6 +1,7 @@
 import { memo, ReactNode } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import StickyCTA from "./StickyCTA";
 import ChatWidget from "@/components/chatbot/ChatWidget";
 
 interface LayoutProps {
@@ -13,6 +14,7 @@ const Layout = memo(({ children }: LayoutProps) => {
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
+      <StickyCTA />
       <ChatWidget />
     </div>
   );

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import HeroBanner from "@/components/layout/HeroBanner";
+import AuthorityStrip from "@/components/layout/AuthorityStrip";
 import NewsletterSignup from "@/components/newsletter/NewsletterSignup";
 
 const fadeInUp = {
@@ -74,6 +75,8 @@ const Index = () => {
           </motion.div>
         </div>
       </HeroBanner>
+
+      <AuthorityStrip />
 
       {/* Features Grid */}
       <section className="py-12 sm:py-16 lg:py-24">
