@@ -1,12 +1,13 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent } from "@/components/ui/card";
+import CalculatorLeadCapture from "@/components/leads/CalculatorLeadCapture";
 import {
   AreaChart,
   Area,
@@ -119,10 +120,13 @@ const SIPCalculator = () => {
                 </CardContent>
               </Card>
 
-              <div className="mt-4 text-center">
-                <Button asChild>
-                  <Link to="/contact">Get Personalized SIP Plan <ArrowRight className="ml-1 h-4 w-4" /></Link>
-                </Button>
+              <div className="mt-6">
+                <CalculatorLeadCapture
+                  source="sip_goal"
+                  context={`SIP of ${formatCurrency(monthly)}/month for ${years} years @ ${rate}% — projected ${formatCurrency(result.wealth)}`}
+                  title="Want a personalised SIP plan?"
+                  subtitle="We'll review your goal, suggest 2–3 funds matching your risk profile, and send a PDF — no charges, no pressure."
+                />
               </div>
             </div>
           </div>
