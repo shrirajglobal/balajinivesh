@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
@@ -190,7 +190,7 @@ const App = () => (
                   <Route path="/education" element={<LazyRoute component={Education} />} />
                   <Route path="/education/homemakers" element={<LazyRoute component={HomemakersEducation} />} />
                   <Route path="/education/kids" element={<LazyRoute component={KidsEducation} />} />
-                  <Route path="/insights" element={<LazyRoute component={MarketInsights} />} />
+                  <Route path="/insights" element={<Navigate to="/market-updates" replace />} />
                   <Route path="/market-updates" element={<LazyRoute component={MarketUpdates} />} />
                   <Route path="/market-updates/:date" element={<LazyRoute component={MarketUpdates} />} />
                   {/* Blog */}
