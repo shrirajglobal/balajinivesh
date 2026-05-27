@@ -1,0 +1,40 @@
+# Balaji Nivesh
+
+> AMFI-registered mutual fund distributor in India offering financial planning tools, calculators, investor education, and distribution of mutual funds, bonds, insurance, IPOs and fixed deposits. Educational content only — not investment advice.
+
+## Pages
+
+- [Home](/): Overview of services, calculators and educational content.
+- [About](/about): Company story, mission, values and AMFI/ARN credentials.
+- [Contact](/contact): Office address, phone, email and contact form.
+- [Calculators](/calculators): Index of all financial planning calculators.
+- [SIP Calculator](/calculators/sip): Estimate wealth from monthly SIP investments.
+- [Lumpsum Calculator](/calculators/lumpsum): Project growth of a one-time investment.
+- [Step-up SIP Calculator](/calculators/step-up-sip): Model SIPs that increase annually.
+- [Retirement Planner](/calculators/retirement): Plan a retirement corpus and monthly SIP.
+- [SIP vs FD](/calculators/sip-vs-fd): Compare SIP returns with a fixed deposit.
+- [Emergency Fund Calculator](/calculators/emergency-fund): Size your emergency reserve.
+- [Mutual Funds](/solutions/mutual-funds): Educational overview of equity, debt and hybrid funds.
+- [Bonds](/solutions/bonds): Government and corporate bonds explained.
+- [Insurance](/solutions/insurance): Term, health and other insurance basics.
+- [IPO](/solutions/ipo): How initial public offerings work for retail investors.
+- [Fixed Deposits](/solutions/fixed-deposits): Bank and corporate FD essentials.
+- [Education Hub](/education): Learning paths with certifications and rewards.
+- [Homemakers Education](/education/homemakers): Personal finance modules for homemakers.
+- [Kids Education](/education/kids): Money basics for children.
+- [Market Insights](/insights): Curated market updates and commentary.
+- [Financial Health Check](/tools/health-check): Quick assessment of financial readiness.
+- [Risk Profiler](/tools/risk-profile): Identify your investor risk profile.
+- [Blog](/blog): Articles on investing, planning and markets.
+- [Videos](/videos): Educational video library.
+- [Find an MFD](/locator): Locate a Balaji Nivesh sub-distributor near you.
+- [Community Forum](/forum): Moderated Q&A community for investors.
+- [Newsletter](/subscribe): Subscribe to the daily market email.
+- [Resources](/resources): Downloadable KYC, nomination, SIP and planning forms.
+- [Partner with Us](/partner): Become a sub-distributor.
+
+## Optional
+
+- [Privacy Policy](/privacy): How user data is collected and used.
+- [Terms of Use](/terms): Site usage terms.
+- [Disclaimer](/disclaimer): SEBI/AMFI disclaimers and risk disclosures.
