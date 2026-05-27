@@ -67,12 +67,15 @@ const Index = () => {
           </motion.p>
           <motion.div initial="hidden" animate="visible" variants={fadeInUp} custom={3} className="mt-6 flex flex-col items-center gap-3 sm:mt-8 sm:flex-row sm:justify-center">
             <Button size="lg" asChild className="w-full sm:w-auto">
-              <Link to="/calculators">{t("home.exploreCalc")} <ArrowRight className="ml-1 h-4 w-4" /></Link>
+              <Link to="/contact">Book a free 15-min call <ArrowRight className="ml-1 h-4 w-4" /></Link>
             </Button>
             <Button size="lg" variant="outline" asChild className="w-full sm:w-auto">
-              <Link to="/contact">{t("home.getFreeCheck")}</Link>
+              <Link to="/calculators">Try the SIP calculator first</Link>
             </Button>
           </motion.div>
+          <motion.p initial="hidden" animate="visible" variants={fadeInUp} custom={4} className="mt-4 text-xs text-muted-foreground sm:text-sm">
+            No fees · No pressure · SEBI-compliant AMFI-registered distributor
+          </motion.p>
         </div>
       </HeroBanner>
 

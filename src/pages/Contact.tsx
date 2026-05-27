@@ -1,77 +1,135 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { supabase } from "@/integrations/supabase/client";
 import HeroBanner from "@/components/layout/HeroBanner";
 import SEO from "@/components/seo/SEO";
+
+const INTEREST_OPTIONS = [
+  "Start a SIP",
+  "Retirement planning",
+  "Tax-saving (ELSS)",
+  "Child's education planning",
+  "Insurance review",
+  "Lumpsum investment",
+  "Become a partner",
+  "Something else",
+];
 
 const Contact = () => {
   const { toast } = useToast();
   const { t } = useLanguage();
+  const { data: settings } = useSiteSettings();
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [interest, setInterest] = useState("");
+  const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const waNumber = (settings?.map.contact_whatsapp || settings?.map.contact_phone || "").replace(/[^\d]/g, "");
+  const waHref = waNumber
+    ? `https://wa.me/${waNumber}?text=${encodeURIComponent("Hi Balaji Nivesh, I'd like to book a free 15-min call.")}`
+    : "#";
+  const phoneDisplay = settings?.map.contact_phone || "+91 XXXXX XXXXX";
+  const emailDisplay = settings?.map.contact_email || "info@balajinivesh.com";
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!name.trim() || !/^\+?\d[\d\s-]{7,}$/.test(phone)) {
+      toast({ title: "Check your details", description: "Please enter your name and a valid mobile number." });
+      return;
+    }
     setIsSubmitting(true);
-    setTimeout(() => {
+    try {
+      await supabase.from("contact_submissions").insert({
+        name: name.trim(),
+        email: email.trim() || `lead-${phone.replace(/\D/g, "")}@no-email.local`,
+        phone: phone.trim(),
+        subject: interest || "General enquiry",
+        message: message.trim() || `Interested in: ${interest || "general consultation"}`,
+        source: "contact_page",
+      });
+      toast({ title: "We'll be in touch!", description: "An advisor will WhatsApp you within one business day." });
+      setName(""); setPhone(""); setEmail(""); setInterest(""); setMessage("");
+    } catch {
+      toast({ title: "Something went wrong", description: "Please try WhatsApp or call us directly." });
+    } finally {
       setIsSubmitting(false);
-      toast({ title: t("contact.toastTitle"), description: t("contact.toastDesc") });
-      (e.target as HTMLFormElement).reset();
-    }, 1000);
+    }
   };
 
   return (
     <div>
       <SEO
         title="Contact Balaji Nivesh — Talk to an AMFI-Registered MFD"
-        description="Reach Balaji Nivesh for SIP, mutual fund, insurance and financial planning queries. Call, email or visit our office — we typically reply within one business day."
+        description="Reach Balaji Nivesh for SIP, mutual fund, insurance and financial planning queries. Call, WhatsApp or book a free 15-min consultation."
       />
       <HeroBanner>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="mx-auto max-w-3xl text-center">
           <h1 className="font-display text-4xl font-extrabold text-foreground sm:text-5xl">{t("contact.title")}</h1>
-          <p className="mt-4 text-lg text-muted-foreground">{t("contact.subtitle")}</p>
+          <p className="mt-4 text-lg text-muted-foreground">Free 15-min call · No fees · No pressure · SEBI-compliant</p>
+          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Button asChild size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white w-full sm:w-auto">
+              <a href={waHref} target={waNumber ? "_blank" : undefined} rel="noopener noreferrer">
+                <MessageCircle className="mr-2 h-5 w-5" /> WhatsApp us now
+              </a>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="w-full sm:w-auto">
+              <a href={`tel:${phoneDisplay.replace(/\s+/g, "")}`}>
+                <Phone className="mr-2 h-5 w-5" /> Call {phoneDisplay}
+              </a>
+            </Button>
+          </div>
         </motion.div>
       </HeroBanner>
 
-      <section className="py-16 lg:py-20">
+      <section className="py-12 lg:py-16">
         <div className="container">
           <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-5">
             <div className="lg:col-span-3">
               <Card className="border-border/60">
                 <CardContent className="p-6 sm:p-8">
-                  <h2 className="font-display text-xl font-bold text-foreground">{t("contact.formTitle")}</h2>
-                  <p className="mt-2 text-sm text-muted-foreground">{t("contact.formSubtitle")}</p>
+                  <h2 className="font-display text-xl font-bold text-foreground">Prefer we call you back?</h2>
+                  <p className="mt-2 text-sm text-muted-foreground">Just your name + number is enough. We'll WhatsApp you within one business day.</p>
                   <form onSubmit={handleSubmit} className="mt-6 space-y-5">
                     <div className="grid gap-5 sm:grid-cols-2">
                       <div className="space-y-2">
-                        <Label htmlFor="name">{t("contact.fullName")}</Label>
-                        <Input id="name" required placeholder={t("contact.fullName")} />
+                        <Label htmlFor="name">Your name *</Label>
+                        <Input id="name" required value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Priya Sharma" />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="phone">{t("contact.phone")}</Label>
-                        <Input id="phone" type="tel" required placeholder="+91 XXXXX XXXXX" />
+                        <Label htmlFor="phone">Mobile number *</Label>
+                        <Input id="phone" type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 XXXXX XXXXX" />
                       </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email">{t("contact.email")}</Label>
-                      <Input id="email" type="email" required placeholder="your@email.com" />
+                      <Label htmlFor="interest">What do you need help with?</Label>
+                      <Select value={interest} onValueChange={setInterest}>
+                        <SelectTrigger id="interest"><SelectValue placeholder="Select a topic (optional)" /></SelectTrigger>
+                        <SelectContent>
+                          {INTEREST_OPTIONS.map((opt) => <SelectItem key={opt} value={opt}>{opt}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="interest">{t("contact.interest")}</Label>
-                      <Input id="interest" placeholder={t("contact.interestPlaceholder")} />
+                      <Label htmlFor="email">Email <span className="text-muted-foreground font-normal">(optional)</span></Label>
+                      <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="message">{t("contact.message")}</Label>
-                      <Textarea id="message" rows={4} placeholder={t("contact.messagePlaceholder")} />
+                      <Label htmlFor="message">Anything else? <span className="text-muted-foreground font-normal">(optional)</span></Label>
+                      <Input id="message" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="e.g. I want to start ₹5,000/month SIP" />
                     </div>
-                    <Button type="submit" className="w-full" disabled={isSubmitting}>
-                      {isSubmitting ? t("contact.sending") : (<>{t("contact.sendMessage")} <Send className="ml-1 h-4 w-4" /></>)}
+                    <Button type="submit" className="w-full" disabled={isSubmitting} size="lg">
+                      {isSubmitting ? "Sending..." : (<>Request a call back <Send className="ml-1 h-4 w-4" /></>)}
                     </Button>
                     <p className="text-xs text-muted-foreground">{t("contact.formDisclaimer")}</p>
                   </form>
@@ -79,12 +137,24 @@ const Contact = () => {
               </Card>
             </div>
             <div className="space-y-6 lg:col-span-2">
+              <Card className="border-brand-green/30 bg-brand-green-light/40">
+                <CardContent className="flex items-start gap-4 p-6">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-green text-white"><MessageCircle className="h-5 w-5" /></div>
+                  <div className="flex-1">
+                    <h3 className="font-display text-sm font-semibold text-foreground">WhatsApp (fastest)</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">Most clients prefer WhatsApp. Tap and chat — no forms.</p>
+                    <Button asChild size="sm" className="mt-2 bg-brand-green hover:bg-brand-green/90 text-white">
+                      <a href={waHref} target={waNumber ? "_blank" : undefined} rel="noopener noreferrer">Open WhatsApp</a>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
               <Card className="border-border/60">
                 <CardContent className="flex items-start gap-4 p-6">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-orange-light text-primary"><Phone className="h-5 w-5" /></div>
                   <div>
                     <h3 className="font-display text-sm font-semibold text-foreground">{t("contact.callUs")}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">+91 XXXXX XXXXX</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{phoneDisplay}</p>
                     <p className="text-xs text-muted-foreground">{t("contact.monSat")}</p>
                   </div>
                 </CardContent>
@@ -94,7 +164,7 @@ const Contact = () => {
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-blue-light text-secondary"><Mail className="h-5 w-5" /></div>
                   <div>
                     <h3 className="font-display text-sm font-semibold text-foreground">{t("contact.emailUs")}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">info@balajinivesh.com</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{emailDisplay}</p>
                     <p className="text-xs text-muted-foreground">{t("contact.respondTime")}</p>
                   </div>
                 </CardContent>
@@ -108,7 +178,6 @@ const Contact = () => {
                   </div>
                 </CardContent>
               </Card>
-              {/* Google Maps Embed */}
               <Card className="border-border/60 overflow-hidden">
                 <div className="aspect-[4/3] w-full">
                   <iframe
