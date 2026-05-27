@@ -1,0 +1,1 @@
+REVOKE EXECUTE ON FUNCTION public.trigger_embed_content(text, uuid) FROM PUBLIC, anon, authenticated;
