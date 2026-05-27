@@ -202,6 +202,9 @@ const AdminAcademy = () => {
                 <p className="text-xs text-muted-foreground">Pass mark {activeMod.pass_percentage}% · {activeMod.issues_certificate ? "Issues certificate" : "No certificate"}</p>
               </div>
               <div className="flex gap-2">
+                <Button size="sm" variant="outline" asChild>
+                  <Link to="/admin/academy/import"><FileJson className="h-4 w-4" /> Bulk Import JSON</Link>
+                </Button>
                 <Button size="sm" variant="outline" onClick={() => setAiOpen(true)}>
                   <Sparkles className="h-4 w-4" /> AI Generate
                 </Button>

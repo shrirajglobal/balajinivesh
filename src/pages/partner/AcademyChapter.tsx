@@ -7,6 +7,7 @@ import PartnerLayout from "@/components/partner/PartnerLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
 import Markdown from "@/components/blog/Markdown";
 import { toast } from "sonner";
 
