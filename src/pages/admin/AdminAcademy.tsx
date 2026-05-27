@@ -203,10 +203,13 @@ const AdminAcademy = () => {
               </div>
               <div className="flex gap-2">
                 <Button size="sm" variant="outline" asChild>
+                  <Link to="/admin/academy/generate"><Sparkles className="h-4 w-4" /> AI Generate 42 Chapters</Link>
+                </Button>
+                <Button size="sm" variant="outline" asChild>
                   <Link to="/admin/academy/import"><FileJson className="h-4 w-4" /> Bulk Import JSON</Link>
                 </Button>
                 <Button size="sm" variant="outline" onClick={() => setAiOpen(true)}>
-                  <Sparkles className="h-4 w-4" /> AI Generate
+                  <Sparkles className="h-4 w-4" /> Custom AI Topic
                 </Button>
               </div>
             </div>
