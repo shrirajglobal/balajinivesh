@@ -81,6 +81,7 @@ const AdminBlog = lazy(() => import("./pages/admin/AdminBlog"));
 const AdminMarketUpdates = lazy(() => import("./pages/admin/AdminMarketUpdates"));
 const AdminAcademy = lazy(() => import("./pages/admin/AdminAcademy"));
 const AdminAcademyImport = lazy(() => import("./pages/admin/AdminAcademyImport"));
+const AdminAcademyGenerate = lazy(() => import("./pages/admin/AdminAcademyGenerate"));
 const AdminNewsletter = lazy(() => import("./pages/admin/AdminNewsletter"));
 const AdminCRM = lazy(() => import("./pages/admin/AdminCRM"));
 
@@ -158,6 +159,7 @@ const App = () => (
                   <Route path="market-updates" element={<LazyRoute component={AdminMarketUpdates} />} />
                   <Route path="academy" element={<LazyRoute component={AdminAcademy} />} />
                   <Route path="academy/import" element={<LazyRoute component={AdminAcademyImport} />} />
+                  <Route path="academy/generate" element={<LazyRoute component={AdminAcademyGenerate} />} />
                   <Route path="newsletter" element={<LazyRoute component={AdminNewsletter} />} />
                   <Route path="crm" element={<LazyRoute component={AdminCRM} />} />
                   <Route path="embeddings" element={<LazyRoute component={AdminEmbeddings} />} />
