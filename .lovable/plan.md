@@ -1,117 +1,100 @@
-## Goal
+# Partner University — Structure Fix + Chapter UX Overhaul
 
-Fill all 4 Partner Academy modules with practical, exam-ready, real-world balanced content so partners can (a) pass NISM Series V-A, (b) speak confidently to real clients, (c) handle compliance & objections, and (d) earn certificates that actually mean something.
+Two distinct problems, one plan.
 
-Today every module shows "0 chapters / Coming soon". Database tables (`learning_modules`, `learning_chapters`, `quiz_questions`, progress + certificate tables) and the admin authoring UI already exist — only content is missing.
+---
 
-## Content philosophy (the "balance" you asked for)
+## Problem 1 — Module ↔ Book mismatch
 
-Every chapter follows the same 4-block structure so partners get exam marks AND real practice value:
+The Academy card for **Investment Landscape** says *"Chapters 1–5"* but only 3 chapters are mapped to it. Other modules likely drift from the official NISM V-A workbook unit boundaries too.
 
-1. **Concept in plain English** (with a Bengali/Hindi analogy where useful)
-2. **Real-world application** — a worked example, mini-script, or client situation
-3. **Exam Traps** — the 3-5 wording tricks NISM uses on this topic
-4. **Quick Recap** — bullet takeaways
+### Root cause
+`src/data/bibleChapters.ts` is the source of truth for which of the 42 chapters belong to which module. The current mapping was authored manually and does not match the official NISM V-A workbook unit boundaries. Module card descriptions (e.g. "Chapters 1–5", "Chapters 6–10") were written assuming a different mapping.
 
-Each chapter ends with **3-5 MCQs** (NISM-style: 4 options, single correct, 1-line explanation), plus a **20-question module-final quiz** for certificate.
+### Fix
+Re-map all 42 chapters to follow the **official NISM V-A workbook** unit structure, then republish so each module shows the correct chapter count. Concretely:
 
-Tone: senior mentor, Class-10 readability, fully SEBI/AMFI compliant — Distributor never Adviser, no scheme/AMC names, no "guaranteed/best/risk-free" language.
+1. **Audit the NISM V-A workbook table of contents** (latest edition) and lock the canonical unit → chapter list. The workbook is organised into 10 units; our 13 DB modules collapse some units (e.g. "Risk, Return & Performance") and split others. I will produce a single mapping table that:
+   - Lists all 42 chapter slugs in book order
+   - Assigns each to the correct `module_key` matching the existing `learning_modules` rows
+   - Renumbers `n` (chapter_number) so chapters within a module are sequential (1..N per module) **and** also keeps a globally unique `display_order` for sorting
+2. **Update `src/data/bibleChapters.ts`** with the corrected mapping.
+3. **Update card descriptions** on `learning_modules` (the "Chapters X–Y" text in `subtitle`/`description`) via migration so they exactly match the new counts.
+4. **Re-run the bible generator** only for chapters whose `module_key` changed (so they get re-inserted under the right module). Old rows under the wrong module are deleted in the same migration to avoid duplicates.
+5. Verify on `/partner/academy` that every card's "X chapters" count = the number in its description.
 
-## Module-by-module chapter plan
+I will share the proposed mapping table for your approval **before** running the regeneration, since this is a content-structure decision.
 
-### Module 1 — NISM V-A Mutual Fund Distributors Prep (12 chapters, certificate)
-Aligned to the official NISM-V-A syllabus units:
-1. Investment Landscape & Why Mutual Funds Exist
-2. Concept, Role & Structure of Mutual Funds in India
-3. Legal Structure: Sponsor, Trustee, AMC, RTA, Custodian
-4. Types of Schemes — Equity, Debt, Hybrid, Solution-oriented, Others
-5. Scheme-Related Information — SID, SAI, KIM, fact sheet
-6. NAV, Total Expense Ratio & Pricing of Units
-7. Performance Measurement — Returns (Absolute, CAGR, XIRR, Rolling)
-8. Risk, Return & Benchmarking — Std Dev, Beta, Sharpe, Alpha
-9. Mutual Fund Taxation (latest FY rules — equity, debt, STT, LTCG, indexation removal)
-10. Investor Services — KYC, transactions, nomination, consolidation
-11. Regulatory Framework — SEBI MF Regulations 1996, AMFI, codes of conduct
-12. Recommending Funds — Risk profiling, asset allocation, model portfolios (educational)
+---
 
-### Module 2 — Product Knowledge Mastery (10 chapters, certificate)
-Deep-dive product literacy, not exam-only:
-1. Equity Funds — Large/Mid/Small/Flexi/Focused/ELSS (when each fits which life-stage)
-2. Sector & Thematic Funds — Why concentration cuts both ways
-3. Index Funds & ETFs — Tracking error, iNAV, when passive wins
-4. Debt Funds Decoded — Liquid, Overnight, Ultra-Short, Short, Corporate Bond, Gilt
-5. Credit Risk & Duration — Macaulay vs Modified, YTM, accrual vs duration strategies
-6. Hybrid Funds — Aggressive, Balanced Advantage, Multi-Asset, Equity Savings, Arbitrage
-7. International / Fund-of-Funds & Gold/Silver ETFs — Diversification + taxation
-8. Solution-Oriented & Retirement Funds — Lock-in, suitability
-9. SIP, STP, SWP, Switch — Mechanics, taxation, and the real client use-cases
-10. Reading a Factsheet Like a Pro — Portfolio, ratios, churn, expense, exit load
+## Problem 2 — Chapter content is a wall of text
 
-### Module 3 — Sales & Pitching Conversations (12 chapters, certificate)
-Pure practice. Each chapter = one realistic client scenario with full dialogue script + objection handling + compliant close.
-1. First-Meeting Discovery — questions that build trust in 10 minutes
-2. The First-Time SIP Investor (₹500/month from a young salaried Bengali professional)
-3. The FD-Only Saver Aged 55+ (safety bias, taxation reality)
-4. The Market-Correction Panic Call (script for -15% week)
-5. The "My Friend Got 30% Last Year" Investor (managing return expectations)
-6. The Retirement Planner Aged 45 (gap analysis on a napkin)
-7. The Homemaker Investor (joint-holding, nomination, household budgeting)
-8. The Small-Business Owner with Lumpy Income (STP from liquid, surplus parking)
-9. The NRI Client (FATCA, repatriable vs non-repatriable basics)
-10. The Goal-Based Conversation — Child education / marriage / home down-payment
-11. Cross-Selling Beyond MF — Insurance gap, emergency fund, will & nominee hygiene
-12. Asking for Referrals Without Sounding Pushy
+`src/pages/partner/AcademyChapter.tsx` already has scaffolding for 4 styled blocks (Plain English, Real-World, Exam Traps, Quick Recap) but the live page renders them as plain prose with tiny headings and no visual hierarchy. The reading experience feels like a copy-paste PDF.
 
-### Module 4 — Compliance & Ethics for Distributors (8 chapters, certificate)
-1. Distributor vs Adviser — The Line You Must Never Cross
-2. KYC & CKYC — Documents, in-person verification, re-KYC triggers
-3. Suitability & Risk Profiling — Why "best fund" is a banned phrase
-4. AMFI Code of Conduct & Advertisement Code (Reg. 30 + Sixth Schedule)
-5. Mis-Selling Red Flags — Real SEBI enforcement cases
-6. ARN, EUIN & NISM Renewal — CPE, validity, brokerage implications
-7. Grievance Redressal — SCORES, Ombudsman, RIA-vs-MFD complaints
-8. Data Privacy & WhatsApp Communication Rules (recordkeeping, opt-in, DPDP Act)
+### Redesign goals (CRO + mentor feel)
+- Make a partner *want* to finish the chapter
+- Reduce cognitive load: scan-friendly, chunked, visual
+- Reinforce learning: glossary on hover, mini-recall checkpoints, clear "next action"
+- Mobile-first reading rhythm
 
-**Total: 42 chapters + ~210 chapter MCQs + 80 final-quiz MCQs = ~290 questions.**
+### Concrete UX changes to `AcademyChapter.tsx`
 
-## How content gets created
+**a. Reading shell**
+- Sticky top bar with: chapter number, title (truncated), live **reading progress %** based on scroll, "Mark complete" pill, prev/next arrows
+- Two-column on desktop ≥1024px: left = sticky **chapter outline** (jump links to Plain English / Real-World / Traps / Recap / Glossary), right = content. Single column on mobile.
+- Estimated read-time badge + difficulty dot at top
+- Breadcrumb: Academy › Module › Chapter
 
-To keep this manageable and high-quality, I'll do this in **two waves**:
+**b. Content blocks (visual upgrade)**
+- **Plain English** — large readable prose (`prose-lg`), drop-cap on first paragraph, key terms auto-highlighted (underline-dotted) and clickable to open a glossary popover pulled from `bengali_glossary`
+- **Real-World Application** — coloured "story" card with a small avatar/icon, monospace numbers for ₹ amounts, side-by-side comparison table when the content contrasts two options (Aman vs Biren style)
+- **Exam Traps** — numbered red-bordered cards, each trap = one card with a "⚠ Trap" pill, "Common error" sub-line, "Watch for" sub-line — parsed from the existing list
+- **Quick Recap** — checklist with checkboxes the partner can tick (state stored locally per chapter), plus a one-tap "Generate flashcards" link that opens a 5-card review
+- **Mini-check** — after Plain English, insert one self-check question pulled from the chapter's quiz pool (just show the question + reveal answer on tap). Lightweight, no scoring.
 
-### Wave 1 — Foundation (this build)
-- Seed **all 42 chapters** as fully-written Markdown via a single SQL migration (content authored manually for accuracy, not AI-generated, so SEBI tone and NISM alignment are guaranteed).
-- Seed **5 MCQs per chapter** (210 questions) in the same migration.
-- Update `learning_modules.total_chapters` to match.
-- Verify the existing `AcademyModule` / `AcademyChapter` / `AcademyQuiz` pages render the new content correctly — small UI polish only if needed (no design changes).
-- Mark Module 3 (Sales & Pitching) as `issues_certificate = true` so all four modules now grant certificates.
+**c. Glossary**
+- Replace the standalone "Show Bengali glossary" button with an inline floating "Aa" toggle in the sticky bar that switches all known terms in the page to show Bengali in parentheses, e.g. *inflation (मुद्रास्फीति / মুদ্রাস্ফীতি)*
+- Keep the dictionary card at the bottom as a reference
 
-Realistic content size note: 42 chapters × ~800 words = ~33k words. To keep the migration reviewable, I'll split it into 4 migration files (one per module) submitted sequentially.
+**d. Completion + next action**
+- When the partner hits "Mark complete":
+   - Confetti micro-animation (framer-motion, 1.2s)
+   - Replace the button area with a **next-chapter preview card** (title, summary, "Continue →") OR, if it's the last chapter, a "Take module quiz" card
+- Persist scroll position per chapter in `localStorage` so reopening resumes where they left off
 
-### Wave 2 — Polish & enrichment (separate follow-up turn after you review Wave 1)
-- Add **20-question final-exam pool** per module (the existing UI already runs `AcademyQuiz`).
-- Add downloadable **1-page cheat sheets** (PDF or printable HTML) for each module.
-- Add **Bengali glossary** entries (the `learning_chapters.bengali_glossary` jsonb field already exists but is unused) — exam terms with Bengali translation for West-Bengal partners.
-- Wire a "Mock NISM Test" button on the NISM-V-A module that pulls 100 random questions, 2-hour timer, 60% pass — mirrors the actual exam.
+**e. Typography & theme**
+- Use `prose prose-neutral dark:prose-invert max-w-none` on Plain English
+- Body line-height 1.7, max-width 68ch
+- All semantic tokens, no hardcoded colours — orange for accents, blue for info, amber for traps, emerald for recap (already in design system)
 
-## My suggestions (beyond what you asked)
+### Files to touch
+- `src/pages/partner/AcademyChapter.tsx` — full rewrite of the article body (state, sticky bar, outline, block components)
+- `src/components/partner/academy/ChapterOutline.tsx` *(new)* — sticky desktop TOC
+- `src/components/partner/academy/ReadingProgress.tsx` *(new)* — scroll-based progress bar
+- `src/components/partner/academy/GlossaryToggle.tsx` *(new)* — inline bilingual toggle
+- `src/components/partner/academy/MiniCheck.tsx` *(new)* — one-question self-check
+- `src/data/bibleChapters.ts` — remapped module assignments
+- One migration to update `learning_modules.subtitle/description` text + delete stale chapter rows that moved modules
 
-1. **CPE-style refresher reminders** — once a partner finishes a module, schedule a 30-day spaced-repetition email with 5 tricky MCQs from that module (the `spacedRepetition.ts` lib already exists in the codebase).
-2. **Roleplay audio** — for Module 3, record (or TTS-generate) the client dialogues as short audio clips so partners can practice while commuting. Cheap, high-retention.
-3. **"Submit your own objection" form** — partners send a real objection they couldn't handle; we publish a vetted script the next week. Builds community + content engine.
-4. **Leaderboard inside Academy** — top quiz-scorers this month get a featured badge on `/locator`. Drives both learning AND lead-gen for them.
-5. **Tie certificate completion to perks** — finish all 4 modules → unlock a free co-branded brochure pack in `/partner/toolkit`. Aligns training with the toolkit page that's currently "Coming Soon".
+### Out of scope (call out)
+- Rewriting the AI prompt in `generate-bible-chapter` — current output is good quality, only presentation is weak. Will only re-run generation for chapters whose module assignment changes.
+- Quiz UX changes — separate task.
 
-Items 1-5 are suggestions only — I won't build them in Wave 1 unless you greenlight.
+---
 
-## Out of scope (won't touch)
+## Execution order (after you approve)
 
-- Existing UI design, colors, routes, or schema changes beyond `learning_modules.total_chapters` count and one boolean flip on Module 3.
-- Admin authoring UI (`AdminAcademy.tsx`) — already works, no changes needed.
-- The AI generator edge function — keep it for future admin use; we are authoring content directly for quality.
+1. I post the proposed **NISM V-A module → chapter mapping table** for your sign-off
+2. After sign-off: migration (module text + cleanup) → update `bibleChapters.ts` → regenerate only the moved chapters
+3. Build the new chapter reading UI components and rewrite `AcademyChapter.tsx`
+4. Spot-check 3 chapters across 3 modules in the preview, on desktop + mobile widths
 
-## What I need from you before Wave 1
+---
 
-1. **Confirm scope** — proceed with all 42 chapters in Wave 1, or start with one module first as a sample for you to review tone/depth?
-2. **Bengali coverage** — full Bengali translations of every chapter (doubles content size + migration count), OR just a Bengali glossary of key terms per chapter? I recommend the latter.
-3. **NISM rules reference** — should I write to the latest NISM-V-A workbook (Oct-2024 edition with the post-Apr-2023 debt-fund taxation, no indexation on debt held >3y rule)? Confirm so we don't ship stale tax content.
-4. **Any of suggestions 1-5 above to include in Wave 1** instead of deferring?
+## Question for you before I start
+
+Do you want me to:
+- **(A)** Strictly mirror the official NISM V-A workbook unit structure (10 units → may need to merge/rename some current modules), **or**
+- **(B)** Keep the current 13 module cards as-is and just rebalance which of the 42 chapters belong to each so counts match the descriptions?
+
+(A) is more "true to book", (B) is faster and keeps your current navigation intact.
