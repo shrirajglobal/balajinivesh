@@ -105,7 +105,7 @@ const AcademyChapter = () => {
   const outline = useMemo(() => {
     if (!chap) return [];
     const items: { id: string; label: string }[] = [];
-    if (chap.plain_english) items.push({ id: "block-plain", label: "Plain English" });
+    if (chap.plain_english) items.push({ id: "block-plain", label: "Core Concept" });
     if (chap.real_world) items.push({ id: "block-real", label: "Real-World" });
     if ((chap.exam_traps_list && chap.exam_traps_list.length) || chap.exam_traps) items.push({ id: "block-traps", label: "Exam Traps" });
     if (chap.quick_recap && chap.quick_recap.length) items.push({ id: "block-recap", label: "Quick Recap" });
@@ -225,12 +225,12 @@ const AcademyChapter = () => {
             </motion.div>
           )}
 
-          {/* Block 1: Plain English */}
+          {/* Block 1: Core Concept */}
           {chap.plain_english ? (
             <motion.section id="block-plain" initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} className="mt-10 scroll-mt-32">
               <div className="mb-4 flex items-center gap-2">
                 <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary"><BookOpen className="h-4 w-4" /></span>
-                <h2 className="font-display text-xl font-semibold text-foreground">Plain English</h2>
+                <h2 className="font-display text-xl font-semibold text-foreground">Core Concept</h2>
               </div>
               <GlossaryText text={chap.plain_english} glossary={glossary} className="chapter-prose" />
             </motion.section>
