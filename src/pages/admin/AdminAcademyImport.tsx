@@ -129,7 +129,7 @@ const AdminAcademyImport = () => {
 
         const summary = c.summary ?? c.plain_english.split(/[.!?]/)[0]?.slice(0, 180) ?? null;
         const content_markdown = [
-          `## Plain English\n\n${c.plain_english}`,
+          `## Core Concept\n\n${c.plain_english}`,
           `## Real-World Application\n\n${c.real_world}`,
           `## Exam Traps\n\n${c.exam_traps.map((t, i) => `${i + 1}. ${t}`).join("\n")}`,
           `## Quick Recap\n\n${c.quick_recap.map((r) => `- ${r}`).join("\n")}`,
