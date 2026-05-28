@@ -153,4 +153,22 @@
   .pt-safe {
     padding-top: env(safe-area-inset-top, 0px);
   }
+
+  /* Chapter reading experience */
+  .chapter-prose p:first-of-type::first-letter {
+    @apply font-display float-left text-5xl font-bold mr-2 mt-1 leading-none text-primary;
+  }
+  .chapter-prose p {
+    @apply leading-[1.75] text-foreground/90;
+  }
+  .chapter-prose p + p {
+    @apply mt-4;
+  }
+  .glossary-term {
+    @apply border-b border-dashed border-primary/60 cursor-help text-foreground;
+  }
+  .rupee-mono {
+    font-variant-numeric: tabular-nums;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
 }
