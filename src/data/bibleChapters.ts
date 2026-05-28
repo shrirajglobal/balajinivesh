@@ -1,61 +1,78 @@
-// NISM V-A Content Bible — fixed 42-chapter list (do not improvise)
+// NISM V-A Content Bible — 42 chapters mapped to the 12 official units of the
+// NISM V-A Mutual Fund Distributors workbook (FY 2024-25 syllabus).
+// Do not improvise; the structure mirrors the official table of contents.
+
 export interface BibleChapter {
-  n: number;
+  n: number;          // global chapter number 1..42 (drives display_order)
   slug: string;
   title: string;
-  module_key: string;
+  module_key: string; // must match learning_modules.module_key
 }
 
 export const BIBLE_CHAPTERS: BibleChapter[] = [
-  // Investment Landscape (1–3)
-  { n: 1, slug: "investment-landscape-introduction", title: "Introduction to Investment Landscape", module_key: "investment_landscape" },
-  { n: 2, slug: "concept-and-role-of-mutual-fund", title: "Concept and Role of a Mutual Fund", module_key: "investment_landscape" },
-  { n: 3, slug: "classification-of-mutual-funds", title: "Classification of Mutual Funds", module_key: "investment_landscape" },
-  // Regulatory Framework (4–8)
-  { n: 4, slug: "regulatory-framework-sebi", title: "Regulatory Framework — SEBI", module_key: "legal_regulatory" },
-  { n: 5, slug: "amfi-and-self-regulation", title: "AMFI and Self-Regulation", module_key: "legal_regulatory" },
-  { n: 6, slug: "structure-of-mutual-funds-in-india", title: "Structure of Mutual Funds in India", module_key: "mutual_fund_structure" },
-  { n: 7, slug: "key-constituents-sponsor-trustee-amc", title: "Key Constituents: Sponsor, Trustee, AMC", module_key: "mutual_fund_structure" },
-  { n: 8, slug: "service-providers-rta-custodian-auditor", title: "Service Providers: RTA, Custodian, Auditor", module_key: "mutual_fund_structure" },
-  // Legal & Compliance (9–13)
-  { n: 9, slug: "legal-structure-trust-and-deed", title: "Legal Structure: Trust and Trust Deed", module_key: "legal_regulatory" },
-  { n: 10, slug: "investment-restrictions-and-regulations", title: "Investment Restrictions and Regulations", module_key: "legal_regulatory" },
-  { n: 11, slug: "kyc-and-pmla-compliance", title: "KYC and PMLA Compliance", module_key: "legal_regulatory" },
-  { n: 12, slug: "fatca-and-crs-reporting", title: "FATCA and CRS Reporting", module_key: "legal_regulatory" },
-  { n: 13, slug: "investor-protection-and-grievance-redressal", title: "Investor Protection and Grievance Redressal", module_key: "legal_regulatory" },
-  // Offer Documents (14–18)
-  { n: 14, slug: "scheme-information-document-sid", title: "Scheme Information Document (SID)", module_key: "offer_documents" },
-  { n: 15, slug: "statement-of-additional-information-sai", title: "Statement of Additional Information (SAI)", module_key: "offer_documents" },
-  { n: 16, slug: "key-information-memorandum-kim", title: "Key Information Memorandum (KIM)", module_key: "offer_documents" },
-  { n: 17, slug: "nfo-process-and-timelines", title: "NFO Process and Timelines", module_key: "offer_documents" },
-  { n: 18, slug: "addendum-and-disclosures", title: "Addendum and Continuous Disclosures", module_key: "offer_documents" },
-  // Scheme Types (19–24)
-  { n: 19, slug: "equity-funds", title: "Equity Funds", module_key: "scheme_types" },
-  { n: 20, slug: "debt-funds", title: "Debt Funds", module_key: "scheme_types" },
-  { n: 21, slug: "hybrid-funds", title: "Hybrid Funds", module_key: "scheme_types" },
-  { n: 22, slug: "solution-oriented-and-other-schemes", title: "Solution-Oriented and Other Schemes", module_key: "scheme_types" },
-  { n: 23, slug: "index-funds-and-etfs", title: "Index Funds and ETFs", module_key: "scheme_types" },
-  { n: 24, slug: "fund-of-funds-and-international-funds", title: "Fund of Funds and International Funds", module_key: "scheme_types" },
-  // Risk, Return, Performance (25–29)
-  { n: 25, slug: "measuring-mutual-fund-returns", title: "Measuring Mutual Fund Returns", module_key: "risk_return_performance" },
-  { n: 26, slug: "risk-measures-standard-deviation-beta", title: "Risk Measures: Standard Deviation, Beta", module_key: "risk_return_performance" },
-  { n: 27, slug: "risk-adjusted-returns-sharpe-treynor", title: "Risk-Adjusted Returns: Sharpe, Treynor", module_key: "risk_return_performance" },
-  { n: 28, slug: "benchmarking-and-scheme-performance", title: "Benchmarking and Scheme Performance", module_key: "risk_return_performance" },
-  { n: 29, slug: "factors-affecting-fund-performance", title: "Factors Affecting Fund Performance", module_key: "risk_return_performance" },
-  // Financial Planning (30–34)
-  { n: 30, slug: "financial-planning-fundamentals", title: "Financial Planning Fundamentals", module_key: "financial_planning" },
-  { n: 31, slug: "goal-setting-and-life-stages", title: "Goal Setting and Life Stages", module_key: "financial_planning" },
-  { n: 32, slug: "asset-allocation-strategies", title: "Asset Allocation Strategies", module_key: "financial_planning" },
-  { n: 33, slug: "model-portfolios-and-rebalancing", title: "Model Portfolios and Rebalancing", module_key: "financial_planning" },
-  { n: 34, slug: "investment-vs-speculation", title: "Investment vs Speculation", module_key: "financial_planning" },
-  // Distribution & Channels (35–39)
-  { n: 35, slug: "distribution-channels-overview", title: "Distribution Channels Overview", module_key: "distribution_operations" },
-  { n: 36, slug: "arn-euin-registration-process", title: "ARN and EUIN Registration Process", module_key: "distribution_operations" },
-  { n: 37, slug: "commission-structures-and-trail", title: "Commission Structures and Trail", module_key: "distribution_operations" },
-  { n: 38, slug: "code-of-conduct-for-distributors", title: "Code of Conduct for Distributors", module_key: "distribution_operations" },
-  { n: 39, slug: "transaction-processing-and-cut-off", title: "Transaction Processing and Cut-Off Timings", module_key: "distribution_operations" },
-  // Taxation & Accounting (40–42)
-  { n: 40, slug: "taxation-of-equity-and-debt-funds", title: "Taxation of Equity and Debt Funds", module_key: "taxation_accounting" },
-  { n: 41, slug: "dividend-and-stt-treatment", title: "Dividend (IDCW) and STT Treatment", module_key: "taxation_accounting" },
-  { n: 42, slug: "fund-accounting-expense-ratio", title: "Fund Accounting and Expense Ratio", module_key: "taxation_accounting" },
+  // Unit 1 — Investment Landscape (4)
+  { n: 1, slug: "investment-landscape-introduction", title: "Introduction to the Investment Landscape", module_key: "investment_landscape" },
+  { n: 2, slug: "investors-and-financial-goals",      title: "Investors and Their Financial Goals",     module_key: "investment_landscape" },
+  { n: 3, slug: "savings-vs-investments-asset-classes", title: "Savings vs Investments & Asset Classes", module_key: "investment_landscape" },
+  { n: 4, slug: "risk-return-spectrum",               title: "The Risk-Return Spectrum",                 module_key: "investment_landscape" },
+
+  // Unit 2 — Concept & Role of a Mutual Fund (3)
+  { n: 5, slug: "concept-of-a-mutual-fund",           title: "Concept of a Mutual Fund",                 module_key: "concept_role_mf" },
+  { n: 6, slug: "role-and-growth-of-mutual-funds",    title: "Role and Growth of Mutual Funds in India", module_key: "concept_role_mf" },
+  { n: 7, slug: "classification-of-mutual-funds",     title: "Classification of Mutual Funds",           module_key: "concept_role_mf" },
+
+  // Unit 3 — Legal Structure of Mutual Funds in India (4)
+  { n: 8,  slug: "three-tier-structure-of-mutual-funds", title: "Three-Tier Structure of Mutual Funds",   module_key: "legal_structure" },
+  { n: 9,  slug: "sponsor-trustee-amc",                  title: "Key Constituents: Sponsor, Trustee, AMC", module_key: "legal_structure" },
+  { n: 10, slug: "rta-custodian-auditor-distributors",   title: "Service Providers: RTA, Custodian, Auditor, Distributors", module_key: "legal_structure" },
+  { n: 11, slug: "role-of-sebi-and-amfi",                title: "Role of SEBI and AMFI as Regulators",    module_key: "legal_structure" },
+
+  // Unit 4 — Legal & Regulatory Framework (4)
+  { n: 12, slug: "sebi-mf-regulations-overview",      title: "SEBI (Mutual Funds) Regulations — Overview", module_key: "legal_regulatory" },
+  { n: 13, slug: "investment-restrictions",           title: "Investment Restrictions for Mutual Funds",   module_key: "legal_regulatory" },
+  { n: 14, slug: "kyc-pmla-aml-cft",                  title: "KYC, PMLA and AML/CFT Compliance",          module_key: "legal_regulatory" },
+  { n: 15, slug: "fatca-crs-investor-protection",     title: "FATCA, CRS and Investor Protection",        module_key: "legal_regulatory" },
+
+  // Unit 5 — Scheme Related Information (4)
+  { n: 16, slug: "scheme-information-document-sid",   title: "Scheme Information Document (SID)",         module_key: "scheme_related_info" },
+  { n: 17, slug: "statement-of-additional-information-sai", title: "Statement of Additional Information (SAI)", module_key: "scheme_related_info" },
+  { n: 18, slug: "key-information-memorandum-kim",    title: "Key Information Memorandum (KIM)",          module_key: "scheme_related_info" },
+  { n: 19, slug: "nfo-process-and-addendums",         title: "NFO Process, Addendums and Disclosures",    module_key: "scheme_related_info" },
+
+  // Unit 6 — Fund Distribution & Channel Management (4)
+  { n: 20, slug: "distribution-channels-overview",    title: "Distribution Channels Overview",            module_key: "fund_distribution" },
+  { n: 21, slug: "arn-euin-registration",             title: "ARN and EUIN Registration Process",         module_key: "fund_distribution" },
+  { n: 22, slug: "commission-structures-trail-upfront", title: "Commission Structures: Trail vs Upfront", module_key: "fund_distribution" },
+  { n: 23, slug: "amfi-code-of-conduct",              title: "AMFI Code of Conduct for Distributors",     module_key: "fund_distribution" },
+
+  // Unit 7 — NAV, TER & Pricing of Units (3)
+  { n: 24, slug: "nav-calculation",                   title: "Net Asset Value (NAV) — Calculation",       module_key: "nav_ter_pricing" },
+  { n: 25, slug: "total-expense-ratio-ter",           title: "Total Expense Ratio (TER) and SEBI Limits", module_key: "nav_ter_pricing" },
+  { n: 26, slug: "pricing-and-cut-off-timings",       title: "Pricing of Units and Cut-Off Timings",      module_key: "nav_ter_pricing" },
+
+  // Unit 8 — Taxation (3)
+  { n: 27, slug: "taxation-equity-vs-debt-funds",     title: "Taxation of Equity vs Debt Funds",          module_key: "taxation" },
+  { n: 28, slug: "idcw-dividend-and-stt",             title: "IDCW (Dividend) Treatment and STT",         module_key: "taxation" },
+  { n: 29, slug: "capital-gains-set-off-carry-forward", title: "Capital Gains, Set-Off and Carry-Forward", module_key: "taxation" },
+
+  // Unit 9 — Investor Services (4)
+  { n: 30, slug: "transaction-processing",            title: "Transaction Processing for Mutual Funds",   module_key: "investor_services" },
+  { n: 31, slug: "sip-swp-stp-systematic-plans",      title: "SIP, SWP and STP — Systematic Plans",       module_key: "investor_services" },
+  { n: 32, slug: "folio-operations-and-nominations",  title: "Folio Operations, Nominations and KYC Updates", module_key: "investor_services" },
+  { n: 33, slug: "investor-grievance-redressal-scores", title: "Investor Grievance Redressal and SCORES", module_key: "investor_services" },
+
+  // Unit 10 — Risk, Return & Performance of Funds (3)
+  { n: 34, slug: "measuring-returns-absolute-cagr-xirr", title: "Measuring Returns: Absolute, CAGR and XIRR", module_key: "risk_return_performance" },
+  { n: 35, slug: "risk-measures-standard-deviation-beta", title: "Risk Measures: Standard Deviation and Beta", module_key: "risk_return_performance" },
+  { n: 36, slug: "risk-adjusted-returns-sharpe-treynor",  title: "Risk-Adjusted Returns: Sharpe and Treynor",  module_key: "risk_return_performance" },
+
+  // Unit 11 — Mutual Fund Scheme Performance (3)
+  { n: 37, slug: "benchmarking-and-tracking-error",   title: "Benchmarking and Tracking Error",           module_key: "scheme_performance" },
+  { n: 38, slug: "factors-affecting-fund-performance", title: "Factors Affecting Fund Performance",       module_key: "scheme_performance" },
+  { n: 39, slug: "scheme-performance-evaluation",     title: "Evaluating Scheme Performance Over Time",   module_key: "scheme_performance" },
+
+  // Unit 12 — Mutual Fund Scheme Selection (3)
+  { n: 40, slug: "scheme-selection-criteria",         title: "Scheme Selection Criteria for Distributors", module_key: "scheme_selection" },
+  { n: 41, slug: "asset-allocation-strategies",       title: "Asset Allocation Strategies",               module_key: "scheme_selection" },
+  { n: 42, slug: "model-portfolios-and-rebalancing",  title: "Model Portfolios and Rebalancing",          module_key: "scheme_selection" },
 ];
