@@ -148,13 +148,13 @@ const Index = () => {
                 </ul>
               </div>
               <div className="rounded-2xl border border-border bg-gradient-to-br from-brand-orange-light to-brand-blue-light p-6 text-center sm:p-8 lg:p-12">
-                <p className="font-display text-4xl font-extrabold text-primary sm:text-5xl">10+</p>
+                <p className="font-display text-4xl font-extrabold text-primary sm:text-5xl">5+</p>
                 <p className="mt-1 text-xs text-muted-foreground sm:mt-2 sm:text-sm">{t("home.yearsExp")}</p>
                 <div className="my-4 h-px bg-border sm:my-6" />
-                <p className="font-display text-4xl font-extrabold text-secondary sm:text-5xl">1000+</p>
+                <p className="font-display text-4xl font-extrabold text-secondary sm:text-5xl">2,500+</p>
                 <p className="mt-1 text-xs text-muted-foreground sm:mt-2 sm:text-sm">{t("home.happyInvestors")}</p>
                 <div className="my-4 h-px bg-border sm:my-6" />
-                <p className="font-display text-4xl font-extrabold text-brand-green sm:text-5xl">₹50Cr+</p>
+                <p className="font-display text-4xl font-extrabold text-brand-green sm:text-5xl">₹310Cr+</p>
                 <p className="mt-1 text-xs text-muted-foreground sm:mt-2 sm:text-sm">{t("home.aum")}</p>
               </div>
             </div>

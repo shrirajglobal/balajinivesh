@@ -82,7 +82,9 @@ const About = () => {
           <div className="mx-auto max-w-2xl rounded-2xl border border-border bg-card p-8 text-center">
             <h2 className="font-display text-xl font-bold text-foreground">{t("about.regTitle")}</h2>
             <div className="mt-6 space-y-3 text-sm text-muted-foreground">
-              <p><strong className="text-foreground">{t("about.arnNumber")}</strong> XXXXXX</p>
+              <p><strong className="text-foreground">Legal Name:</strong> Balaji Nivesh Private Limited</p>
+              <p><strong className="text-foreground">Founded:</strong> October 2020</p>
+              <p><strong className="text-foreground">{t("about.arnNumber")}</strong> ARN-173142</p>
               <p><strong className="text-foreground">{t("about.amfiReg")}</strong> {t("about.amfiRegVal")}</p>
               <p><strong className="text-foreground">{t("about.type")}</strong> {t("about.typeVal")}</p>
               <p><strong className="text-foreground">{t("about.sebiComp")}</strong> {t("about.sebiCompVal")}</p>

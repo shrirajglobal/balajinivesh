@@ -12,7 +12,7 @@ const Footer = () => {
   const arnLine = settings?.map.arn_number
     ? `${settings.map.arn_number}${settings.map.arn_holder_name ? ` · ${settings.map.arn_holder_name}` : ""}`
     : t("footer.arn");
-  const contactPhone = settings?.map.contact_phone || "+91 XXXXX XXXXX";
+  const contactPhone = settings?.map.contact_phone || "+91 93300 79717";
   const contactEmail = settings?.map.contact_email || "info@balajinivesh.com";
 
   return (
@@ -92,7 +92,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-2.5 text-sm text-muted-foreground">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <span>No 320, 1 R N Mukherjee Road, 3rd Floor, Kolkata, West Bengal 700001</span>
+                <span>1 R. N. Mukherjee Road, 3rd Floor, Room No. 320, Kolkata, West Bengal – 700001</span>
               </li>
             </ul>
           </div>

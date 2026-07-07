@@ -8,7 +8,7 @@ const PrivacyPolicy = () => {
         <section>
           <h2>1. Introduction</h2>
           <p>
-            Balaji Nivesh ("we", "us", or "our"), an AMFI-registered Mutual Fund Distributor (ARN – XXXXXX), is committed to protecting the privacy of individuals who visit our website and use our services. This Privacy Policy explains how we collect, use, store, and disclose your personal information in compliance with the Information Technology Act, 2000 and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011, as well as applicable SEBI and AMFI guidelines.
+            Balaji Nivesh Private Limited ("we", "us", or "our"), an AMFI-registered Mutual Fund Distributor (ARN – 173142), is committed to protecting the privacy of individuals who visit our website and use our services. This Privacy Policy explains how we collect, use, store, and disclose your personal information in compliance with the Information Technology Act, 2000 and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011, as well as applicable SEBI and AMFI guidelines.
           </p>
         </section>
 
@@ -102,8 +102,8 @@ const PrivacyPolicy = () => {
           <p className="mt-2">
             <strong>Grievance Officer:</strong> [Name of Grievance Officer]<br />
             <strong>Email:</strong> info@balajinivesh.com<br />
-            <strong>Phone:</strong> +91 XXXXX XXXXX<br />
-            <strong>Address:</strong> Your Office Address, City, State, India
+            <strong>Phone:</strong> +91 93300 79717<br />
+            <strong>Address:</strong> 1 R. N. Mukherjee Road, 3rd Floor, Room No. 320, Kolkata, West Bengal – 700001
           </p>
         </section>
 
@@ -119,7 +119,7 @@ const PrivacyPolicy = () => {
           <p>
             For any questions or concerns about this Privacy Policy, please contact us at:<br />
             <strong>Email:</strong> info@balajinivesh.com<br />
-            <strong>Phone:</strong> +91 XXXXX XXXXX
+            <strong>Phone:</strong> +91 93300 79717
           </p>
         </section>
       </div>
