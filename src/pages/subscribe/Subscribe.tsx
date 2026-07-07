@@ -23,7 +23,7 @@ const Subscribe = () => (
           </p>
         </motion.div>
         <div className="mx-auto mt-10 max-w-2xl">
-          <NewsletterSignup source="subscribe_page" variant="card" heading="Join 1,000+ smart investors" />
+          <NewsletterSignup source="subscribe_page" variant="card" heading="Join 2,500+ smart investors" />
         </div>
       </div>
     </section>
