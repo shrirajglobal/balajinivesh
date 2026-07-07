@@ -9,7 +9,7 @@ const Disclaimer = () => {
         <section className="rounded-lg border border-primary/20 bg-primary/5 p-6">
           <h2>Regulatory Status</h2>
           <p>
-            Balaji Nivesh is an <strong>AMFI-registered Mutual Fund Distributor</strong> bearing ARN – XXXXXX. We are <strong>not</strong> a SEBI-registered Investment Adviser under the SEBI (Investment Advisers) Regulations, 2013, nor a SEBI-registered Research Analyst under the SEBI (Research Analysts) Regulations, 2014, nor a SEBI-registered Portfolio Manager under the SEBI (Portfolio Managers) Regulations, 2020.
+            Balaji Nivesh Private Limited is an <strong>AMFI-registered Mutual Fund Distributor</strong> bearing ARN – 173142. We are <strong>not</strong> a SEBI-registered Investment Adviser under the SEBI (Investment Advisers) Regulations, 2013, nor a SEBI-registered Research Analyst under the SEBI (Research Analysts) Regulations, 2014, nor a SEBI-registered Portfolio Manager under the SEBI (Portfolio Managers) Regulations, 2020.
           </p>
         </section>
 

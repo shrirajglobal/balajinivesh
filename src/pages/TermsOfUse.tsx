@@ -8,7 +8,7 @@ const TermsOfUse = () => {
         <section>
           <h2>1. Acceptance of Terms</h2>
           <p>
-            By accessing and using the website of Balaji Nivesh ("we", "us", or "our"), an AMFI-registered Mutual Fund Distributor (ARN – XXXXXX), you agree to be bound by these Terms of Use. If you do not agree with any part of these terms, please do not use this website.
+            By accessing and using the website of Balaji Nivesh Private Limited ("we", "us", or "our"), an AMFI-registered Mutual Fund Distributor (ARN – 173142), you agree to be bound by these Terms of Use. If you do not agree with any part of these terms, please do not use this website.
           </p>
         </section>
 
@@ -126,7 +126,7 @@ const TermsOfUse = () => {
           <p>
             For questions about these Terms of Use, please contact us at:<br />
             <strong>Email:</strong> info@balajinivesh.com<br />
-            <strong>Phone:</strong> +91 XXXXX XXXXX
+            <strong>Phone:</strong> +91 93300 79717
           </p>
         </section>
       </div>

@@ -1,68 +1,52 @@
-# Chapter Reading Experience Redesign
+# Update Site with Balaji Nivesh Official Info
 
-Transform `src/pages/partner/AcademyChapter.tsx` from a plain copy-paste read into a guided, enjoyable study session. Module list and chapter data are already correct (NISM V-A mirror is done); this plan is purely about the in-chapter reading UX.
+Apply the confirmed data from the uploaded document across the entire site. Blank fields in the doc (contact email, social links, story/mission/team, lead-capture email, gift-capture email, signature) will be left as-is per your decision.
 
-## Goals
-- Make every chapter feel like a designed lesson, not a wall of text
-- Give learners orientation (where am I, how much is left, what's next)
-- Break content into scannable, themed blocks with clear hierarchy
-- Add light interactivity so reading sticks (recap checks, mini self-check, glossary)
-- Celebrate completion to drive next-chapter pull-through
+## Confirmed data being applied
 
-## What the user will see
+| Field | Value |
+|---|---|
+| Legal name | Balaji Nivesh Private Limited |
+| Entity type | Private Limited |
+| ARN | 173142 (displayed as `ARN-173142`) |
+| Phone | +91 93300 79717 |
+| Address | 1 R. N. Mukherjee Road, 3rd Floor, Room No. 320, Kolkata – 700001 |
+| Founded | October 2020 (→ "5+ years experience") |
+| Clients | 2,500+ |
+| AUD | ₹310 Cr+ |
 
-**Sticky reading shell (top)**
-- Chapter number + title on the left
-- Live progress bar (scroll %) under the title
-- Estimated read time + prev/next chapter arrows
-- "Mark complete" pill, glossary "Aa" toggle
+## Changes
 
-**Two-column layout (desktop ≥1024px)**
-- Left rail: auto-generated outline from H2s with scroll-spy active state
-- Right column: chapter content
-- Mobile: outline collapses into a single column; sticky shell stays
+**1. Database (site_settings) — single source of truth**
+- `arn_number` → `ARN-173142`
+- `contact_phone` → `+91 93300 79717`
+- Add new public keys: `contact_address`, `company_legal_name`, `company_entity_type`, `year_founded`, `clients_count`, `aud_value`, `years_experience`
 
-**Four content blocks rendered as styled cards**
-1. Plain English — drop-cap first letter, auto-highlighted key terms
-2. Real-World Example — coloured story card, monospace ₹ amounts
-3. Exam Traps — red-bordered numbered cards with ⚠ pills
-4. Quick Recap — interactive checklist (localStorage persistence) + "Generate flashcards" link
+**2. Hardcoded placeholders replaced with real values**
+- `src/pages/Index.tsx` — hero stats: 10+ → **5+**, 1000+ → **2,500+**, ₹50Cr+ → **₹310Cr+**
+- `src/components/layout/AuthorityStrip.tsx` — "10+ years experience" → **"5+ years experience"**, "1,000+ families served" → **"2,500+ families served"**
+- `src/pages/About.tsx` — ARN placeholder `XXXXXX` → **173142**; add legal name + founded year
+- `src/pages/Contact.tsx` — default phone fallback + address block use real values from settings
+- `src/components/layout/Footer.tsx` — phone fallback → real number; add address line
+- `src/pages/PrivacyPolicy.tsx` — ARN `XXXXXX` → `173142`; phone/address placeholders → real values (3 occurrences)
+- `src/pages/TermsOfUse.tsx` — ARN + phone placeholders → real values (2 occurrences)
+- `src/pages/Disclaimer.tsx` — ARN placeholder → `173142`
 
-**Mini self-check**
-- One random question from existing `quiz_questions` pool
-- Inline reveal of correct answer + explanation, no scoring
+**3. Not touched (per your decision to leave blanks)**
+- Contact email, social media links, About page story/mission/team profiles, lead-capture email, gift-capture email, senior team signature/stamp, Google Maps embed.
+- Homepage statistics wording (Years / Clients / AUD labels) stays, only the numbers update.
+- Admin/backoffice pages, locales (`en.json`/`hi.json`/`bn.json`) will keep existing labels — only visible placeholder values change.
 
-**Bengali glossary**
-- Inline highlighted terms with hover tooltips from chapter's `bengali_glossary` JSONB
-- Full glossary card at the bottom of the chapter
+## Files edited
+- `src/pages/Index.tsx`
+- `src/components/layout/AuthorityStrip.tsx`
+- `src/pages/About.tsx`
+- `src/pages/Contact.tsx`
+- `src/components/layout/Footer.tsx`
+- `src/pages/PrivacyPolicy.tsx`
+- `src/pages/TermsOfUse.tsx`
+- `src/pages/Disclaimer.tsx`
+- `site_settings` table (data update + new rows)
 
-**Completion moment**
-- Confetti animation on "Mark complete"
-- Next-chapter preview card with title + 1-line teaser
-- Scroll position saved to localStorage per chapter
-
-## Technical details
-
-**Files**
-- Rewrite: `src/pages/partner/AcademyChapter.tsx`
-- Add tokens to: `src/index.css` (block colours, drop-cap, recap pill)
-- New components under `src/components/academy/`:
-  - `ChapterShell.tsx` (sticky header + progress + nav)
-  - `ChapterOutline.tsx` (left rail, scroll-spy)
-  - `ContentBlock.tsx` (themed card wrapper for the 4 block types)
-  - `RecapChecklist.tsx`
-  - `MiniCheck.tsx`
-  - `GlossaryToggle.tsx` + `GlossaryCard.tsx`
-  - `ChapterComplete.tsx`
-
-**Dependencies**
-- `framer-motion` (already used elsewhere in project — reuse)
-- `canvas-confetti` (~3kb, new)
-
-**Out of scope (not touched in this pass)**
-- AI content generation
-- Quiz/exam UX
-- Module/chapter list page
-- Database schema or chapter data
-
-Once approved I'll build it in one pass and verify on a sample chapter.
+## Verification
+Grep for remaining `XXXXX`, `1000+`, `₹50Cr`, `10+ years`, `Your Office Address` after edits — expect zero hits in user-facing pages.

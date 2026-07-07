@@ -39,7 +39,7 @@ const Contact = () => {
   const waHref = waNumber
     ? `https://wa.me/${waNumber}?text=${encodeURIComponent("Hi Balaji Nivesh, I'd like to book a free 15-min call.")}`
     : "#";
-  const phoneDisplay = settings?.map.contact_phone || "+91 XXXXX XXXXX";
+  const phoneDisplay = settings?.map.contact_phone || "+91 93300 79717";
   const emailDisplay = settings?.map.contact_email || "info@balajinivesh.com";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -174,7 +174,7 @@ const Contact = () => {
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-green-light text-brand-green"><MapPin className="h-5 w-5" /></div>
                   <div>
                     <h3 className="font-display text-sm font-semibold text-foreground">{t("contact.visitUs")}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">No 320, 1 R N Mukherjee Road<br />3rd Floor Room, Kolkata<br />West Bengal 700001</p>
+                    <p className="mt-1 text-sm text-muted-foreground">1 R. N. Mukherjee Road<br />3rd Floor, Room No. 320<br />Kolkata, West Bengal – 700001</p>
                   </div>
                 </CardContent>
               </Card>
