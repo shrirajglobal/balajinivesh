@@ -283,7 +283,7 @@ const Header = () => {
           )}
 
           <Button asChild size="sm" className="hidden sm:inline-flex bg-brand-green hover:bg-brand-green/90 text-white">
-            <a href={whatsappHref} target={whatsappNumber ? "_blank" : undefined} rel="noopener noreferrer" className="flex items-center gap-1.5">
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5">
               <MessageCircle className="h-4 w-4" />
               Talk to us
             </a>
@@ -361,7 +361,7 @@ const Header = () => {
             )}
             <div className="mt-4 px-3 flex flex-col gap-2">
               <Button asChild className="w-full bg-brand-green hover:bg-brand-green/90 text-white">
-                <a href={whatsappHref} target={whatsappNumber ? "_blank" : undefined} rel="noopener noreferrer" className="flex items-center justify-center gap-2">
+                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2">
                   <MessageCircle className="h-4 w-4" /> Talk to us on WhatsApp
                 </a>
               </Button>
