@@ -22,12 +22,12 @@ const SIPvsFD = () => {
     const invested = monthly * years * 12;
 
     // SIP
-    const r = sipReturn / 100 / 12;
+    const r = Math.max(sipReturn, 0.01) / 100 / 12;
     const n = years * 12;
     const sipValue = Math.round(monthly * ((Math.pow(1 + r, n) - 1) / r) * (1 + r));
 
     // FD equivalent (monthly deposits compounded annually)
-    const fdR = fdRate / 100 / 12;
+    const fdR = Math.max(fdRate, 0.01) / 100 / 12;
     const fdValue = Math.round(monthly * ((Math.pow(1 + fdR, n) - 1) / fdR) * (1 + fdR));
 
     const data = [];

@@ -24,18 +24,22 @@ const RetirementPlanner = () => {
     const yearsToRetire = retireAge - age;
     const retirementYears = 25; // plan for 25 years post retirement
 
+    const safePreRate = Math.max(returnRate, 0.01);
+    const safePostRate = Math.max(postRetireReturn, 0.01);
+    const safeInflation = Math.max(inflation, 0.01);
+
     // Future monthly expense at retirement
-    const futureMonthly = monthlyExpense * Math.pow(1 + inflation / 100, yearsToRetire);
+    const futureMonthly = monthlyExpense * Math.pow(1 + safeInflation / 100, yearsToRetire);
     const futureAnnual = futureMonthly * 12;
 
     // Corpus needed (present value of annuity at retirement)
-    const realReturn = ((1 + postRetireReturn / 100) / (1 + inflation / 100)) - 1;
-    const corpus = realReturn > 0
+    const realReturn = ((1 + safePostRate / 100) / (1 + safeInflation / 100)) - 1;
+    const corpus = Math.abs(realReturn) > 1e-9
       ? futureAnnual * (1 - Math.pow(1 + realReturn, -retirementYears)) / realReturn
       : futureAnnual * retirementYears;
 
     // Monthly SIP needed
-    const r = returnRate / 100 / 12;
+    const r = safePreRate / 100 / 12;
     const n = yearsToRetire * 12;
     const sipNeeded = n > 0 ? corpus / (((Math.pow(1 + r, n) - 1) / r) * (1 + r)) : corpus;
 

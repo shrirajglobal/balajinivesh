@@ -41,7 +41,6 @@ const SIPCalculator = () => {
       const months = y * 12;
       const inv = monthly * months;
       const fv = months === 0 ? 0 : monthly * ((Math.pow(1 + r, months) - 1) / r) * (1 + r);
-      void safeRate;
       data.push({ year: `Yr ${y}`, invested: Math.round(inv), value: Math.round(fv) });
     }
 
