@@ -47,11 +47,21 @@ const AdminPartners = () => {
     }
 
     setApproving(true);
+    if (!approveDialog.user_id) {
+      toast({
+        title: "Cannot approve yet",
+        description: "This application has no linked user account. Ask the applicant to sign in and re-submit their application, or contact them to create an account first.",
+        variant: "destructive",
+      });
+      setApproving(false);
+      return;
+    }
+
     const partnerData: any = {
       arn_number: arnNumber.trim().toUpperCase(),
       euin: euin.trim() || null,
       status: "active",
-      user_id: approveDialog.user_id || user.id,
+      user_id: approveDialog.user_id,
     };
 
     const { error: partnerError } = await supabase.from("partners").insert([partnerData]);
