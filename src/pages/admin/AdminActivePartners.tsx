@@ -24,6 +24,7 @@ const AdminActivePartners = () => {
   const [editPartner, setEditPartner] = useState<Partner | null>(null);
   const [arn, setArn] = useState("");
   const [euin, setEuin] = useState("");
+  const [userId, setUserId] = useState("");
   const [saving, setSaving] = useState(false);
 
   useEffect(() => { fetchPartners(); }, []);
@@ -38,12 +39,27 @@ const AdminActivePartners = () => {
     setEditPartner(p);
     setArn(p.arn_number || "");
     setEuin(p.euin || "");
+    setUserId(p.user_id || "");
   };
 
   const handleSave = async () => {
     if (!editPartner) return;
+    const trimmedUserId = userId.trim();
+    if (!trimmedUserId) {
+      toast({ title: "Linked User ID required", description: "A partner must be linked to a user account.", variant: "destructive" });
+      return;
+    }
+    const uuidRe = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRe.test(trimmedUserId)) {
+      toast({ title: "Invalid User ID", description: "Enter a valid UUID for the linked user.", variant: "destructive" });
+      return;
+    }
     setSaving(true);
-    const { error } = await supabase.from("partners").update({ arn_number: arn.trim() || null, euin: euin.trim() || null }).eq("id", editPartner.id);
+    const { error } = await supabase.from("partners").update({
+      arn_number: arn.trim() || null,
+      euin: euin.trim() || null,
+      user_id: trimmedUserId,
+    }).eq("id", editPartner.id);
     setSaving(false);
     if (error) { toast({ title: "Error", description: error.message, variant: "destructive" }); return; }
     toast({ title: "Partner updated" });
