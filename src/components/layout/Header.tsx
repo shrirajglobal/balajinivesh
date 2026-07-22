@@ -41,10 +41,7 @@ const Header = () => {
   const { data: settings } = useSiteSettings();
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const whatsappNumber = (settings?.map.contact_whatsapp || settings?.map.contact_phone || "").replace(/[^\d]/g, "");
-  const whatsappHref = whatsappNumber
-    ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hi Balaji Nivesh, I'd like to talk to an advisor.")}`
-    : "/contact";
+  const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to talk to an advisor.");
 
   useEffect(() => {
     if (!user) { setIsAdmin(false); setIsPartner(false); return; }
