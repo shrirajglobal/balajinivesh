@@ -44,23 +44,6 @@ const Header = () => {
 
   const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to talk to an advisor.");
 
-  // Publish live header height as a CSS variable so mobile drawer,
-  // sticky bars, and anchor scroll offsets can all use --header-h.
-  useLayoutEffect(() => {
-    const el = headerRef.current;
-    if (!el) return;
-    const set = () => {
-      document.documentElement.style.setProperty("--header-h", `${el.offsetHeight}px`);
-    };
-    set();
-    const ro = new ResizeObserver(set);
-    ro.observe(el);
-    window.addEventListener("resize", set);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", set);
-    };
-  }, []);
 
   useEffect(() => {
     if (!user) { setIsAdmin(false); setIsPartner(false); return; }
