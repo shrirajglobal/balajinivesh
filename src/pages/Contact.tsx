@@ -36,10 +36,7 @@ const Contact = () => {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const waNumber = (settings?.map.contact_whatsapp || settings?.map.contact_phone || "").replace(/[^\d]/g, "");
-  const waHref = waNumber
-    ? `https://wa.me/${waNumber}?text=${encodeURIComponent("Hi Balaji Nivesh, I'd like to book a free 15-min call.")}`
-    : "#";
+  const waHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to book a free 15-min call.");
   const phoneDisplay = settings?.map.contact_phone || "+91 93300 79717";
   const emailDisplay = settings?.map.contact_email || "info@balajinivesh.com";
 
