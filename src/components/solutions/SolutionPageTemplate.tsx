@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import HeroBanner from "@/components/layout/HeroBanner";
 import SEO from "@/components/seo/SEO";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import {
   Accordion,
   AccordionContent,
