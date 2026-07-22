@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { supabase } from "@/integrations/supabase/client";
+import { useWhatsAppContactHref } from "@/lib/whatsapp";
 import HeroBanner from "@/components/layout/HeroBanner";
 import SEO from "@/components/seo/SEO";
 
@@ -35,10 +36,7 @@ const Contact = () => {
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const waNumber = (settings?.map.contact_whatsapp || settings?.map.contact_phone || "").replace(/[^\d]/g, "");
-  const waHref = waNumber
-    ? `https://wa.me/${waNumber}?text=${encodeURIComponent("Hi Balaji Nivesh, I'd like to book a free 15-min call.")}`
-    : "#";
+  const waHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to book a free 15-min call.");
   const phoneDisplay = settings?.map.contact_phone || "+91 93300 79717";
   const emailDisplay = settings?.map.contact_email || "info@balajinivesh.com";
 
@@ -79,7 +77,7 @@ const Contact = () => {
           <p className="mt-4 text-lg text-muted-foreground">Free 15-min call · No fees · No pressure · SEBI-compliant</p>
           <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button asChild size="lg" className="bg-brand-green hover:bg-brand-green/90 text-white w-full sm:w-auto">
-              <a href={waHref} target={waNumber ? "_blank" : undefined} rel="noopener noreferrer">
+              <a href={waHref} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="mr-2 h-5 w-5" /> WhatsApp us now
               </a>
             </Button>
@@ -144,7 +142,7 @@ const Contact = () => {
                     <h3 className="font-display text-sm font-semibold text-foreground">WhatsApp (fastest)</h3>
                     <p className="mt-1 text-sm text-muted-foreground">Most clients prefer WhatsApp. Tap and chat — no forms.</p>
                     <Button asChild size="sm" className="mt-2 bg-brand-green hover:bg-brand-green/90 text-white">
-                      <a href={waHref} target={waNumber ? "_blank" : undefined} rel="noopener noreferrer">Open WhatsApp</a>
+                      <a href={waHref} target="_blank" rel="noopener noreferrer">Open WhatsApp</a>
                     </Button>
                   </div>
                 </CardContent>

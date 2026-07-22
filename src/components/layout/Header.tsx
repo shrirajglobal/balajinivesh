@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { useLanguage, LANGUAGE_LABELS, type Language } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { useWhatsAppContactHref } from "@/lib/whatsapp";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.jpeg";
 import {
@@ -40,10 +41,7 @@ const Header = () => {
   const { data: settings } = useSiteSettings();
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const whatsappNumber = (settings?.map.contact_whatsapp || settings?.map.contact_phone || "").replace(/[^\d]/g, "");
-  const whatsappHref = whatsappNumber
-    ? `https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hi Balaji Nivesh, I'd like to talk to an advisor.")}`
-    : "/contact";
+  const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to talk to an advisor.");
 
   useEffect(() => {
     if (!user) { setIsAdmin(false); setIsPartner(false); return; }
@@ -285,7 +283,7 @@ const Header = () => {
           )}
 
           <Button asChild size="sm" className="hidden sm:inline-flex bg-brand-green hover:bg-brand-green/90 text-white">
-            <a href={whatsappHref} target={whatsappNumber ? "_blank" : undefined} rel="noopener noreferrer" className="flex items-center gap-1.5">
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5">
               <MessageCircle className="h-4 w-4" />
               Talk to us
             </a>
@@ -363,7 +361,7 @@ const Header = () => {
             )}
             <div className="mt-4 px-3 flex flex-col gap-2">
               <Button asChild className="w-full bg-brand-green hover:bg-brand-green/90 text-white">
-                <a href={whatsappHref} target={whatsappNumber ? "_blank" : undefined} rel="noopener noreferrer" className="flex items-center justify-center gap-2">
+                <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2">
                   <MessageCircle className="h-4 w-4" /> Talk to us on WhatsApp
                 </a>
               </Button>

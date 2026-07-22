@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { supabase } from "@/integrations/supabase/client";
+import { useWhatsAppContactHref } from "@/lib/whatsapp";
 
 interface Props {
   /** Short context to pre-fill the lead, e.g. "SIP of ₹10,000/month for 10 years" */
@@ -38,10 +39,7 @@ const CalculatorLeadCapture = ({
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
 
-  const waNumber = (settings?.map.contact_whatsapp || settings?.map.contact_phone || "").replace(/[^\d]/g, "");
-  const waHref = waNumber
-    ? `https://wa.me/${waNumber}?text=${encodeURIComponent(`Hi Balaji Nivesh, I just calculated: ${context}. Can you help me start?`)}`
-    : "/contact";
+  const waHref = useWhatsAppContactHref(`Hi Balaji Nivesh, I just calculated: ${context}. Can you help me start?`);
   const callHref = settings?.map.contact_phone ? `tel:${settings.map.contact_phone.replace(/\s+/g, "")}` : "/contact";
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -81,7 +79,7 @@ const CalculatorLeadCapture = ({
           </p>
           <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
             <Button asChild size="sm" className="bg-brand-green hover:bg-brand-green/90 text-white">
-              <a href={waHref} target={waNumber ? "_blank" : undefined} rel="noopener noreferrer">
+              <a href={waHref} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="mr-1.5 h-4 w-4" /> WhatsApp now
               </a>
             </Button>
@@ -129,7 +127,7 @@ const CalculatorLeadCapture = ({
               Reach me on WhatsApp (preferred)
             </label>
             <div className="flex flex-wrap items-center gap-3 pt-1 text-xs">
-              <a href={waHref} target={waNumber ? "_blank" : undefined} rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-brand-green hover:underline">
+              <a href={waHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-brand-green hover:underline">
                 <MessageCircle className="h-3.5 w-3.5" /> Or WhatsApp directly
               </a>
               <span className="text-muted-foreground">·</span>

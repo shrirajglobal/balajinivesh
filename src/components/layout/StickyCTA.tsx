@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { MessageCircle, Phone, CalendarClock, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { useWhatsAppContactHref } from "@/lib/whatsapp";
 
 /**
  * Sticky floating action button — primary CRO lead-capture surface.
@@ -15,10 +16,7 @@ const StickyCTA = () => {
   const { data: settings } = useSiteSettings();
 
   const phone = (settings?.map.contact_phone || "").trim();
-  const whatsapp = ((settings?.map.contact_whatsapp || settings?.map.contact_phone || "").replace(/[^\d]/g, ""));
-  const whatsappHref = whatsapp
-    ? `https://wa.me/${whatsapp}?text=${encodeURIComponent("Hi Balaji Nivesh, I'd like to speak with an advisor.")}`
-    : "/contact";
+  const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to speak with an advisor.");
   const callHref = phone ? `tel:${phone.replace(/\s+/g, "")}` : "/contact";
 
   // Auto-hide on admin/partner routes
@@ -35,7 +33,7 @@ const StickyCTA = () => {
         <div className="mb-1 flex flex-col gap-2 animate-in fade-in slide-in-from-bottom-2 duration-200">
           <a
             href={whatsappHref}
-            target={whatsapp ? "_blank" : undefined}
+            target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center gap-3 rounded-full bg-brand-green pl-4 pr-5 py-3 text-white shadow-lg shadow-brand-green/30 transition-transform hover:scale-105"
           >
