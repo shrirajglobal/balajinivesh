@@ -21,7 +21,21 @@ const translations: Record<Language, Record<string, any>> = { en, hi, bn };
 
 const getNestedValue = (obj: any, path: string): string => {
   const value = path.split(".").reduce((current, key) => current?.[key], obj);
-  return typeof value === "string" ? value : path;
+  if (typeof value === "string") return value;
+
+  // Fall back to English if the key is missing in the current language
+  const enValue = path.split(".").reduce((current, key) => current?.[key], translations.en);
+  if (typeof enValue === "string") {
+    if (import.meta.env.DEV) {
+      console.warn(`[i18n] Missing translation for "${path}" — falling back to English.`);
+    }
+    return enValue;
+  }
+
+  if (import.meta.env.DEV) {
+    console.warn(`[i18n] Missing translation for "${path}" in ALL languages, including English.`);
+  }
+  return path;
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);

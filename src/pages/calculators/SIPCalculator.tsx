@@ -28,7 +28,8 @@ const SIPCalculator = () => {
   const [rate, setRate] = useState(12);
 
   const result = useMemo(() => {
-    const r = rate / 100 / 12;
+    const safeRate = Math.max(rate, 0.01);
+    const r = safeRate / 100 / 12;
     const n = years * 12;
     const invested = monthly * n;
     const futureValue = monthly * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
@@ -40,6 +41,7 @@ const SIPCalculator = () => {
       const months = y * 12;
       const inv = monthly * months;
       const fv = months === 0 ? 0 : monthly * ((Math.pow(1 + r, months) - 1) / r) * (1 + r);
+      void safeRate;
       data.push({ year: `Yr ${y}`, invested: Math.round(inv), value: Math.round(fv) });
     }
 
@@ -82,7 +84,7 @@ const SIPCalculator = () => {
               </div>
               <div className="space-y-3">
                 <Label>Expected Annual Return (%)</Label>
-                <Input type="number" value={rate} onChange={(e) => setRate(Number(e.target.value))} min={1} max={30} step={0.5} />
+                <Input type="number" value={rate} onChange={(e) => setRate(Math.max(1, Number(e.target.value) || 1))} min={1} max={30} step={0.5} />
                 <Slider value={[rate]} onValueChange={([v]) => setRate(v)} min={1} max={30} step={0.5} />
               </div>
 
