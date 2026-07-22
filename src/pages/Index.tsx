@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useLanguage } from "@/contexts/LanguageContext";
 import HeroBanner from "@/components/layout/HeroBanner";
 import AuthorityStrip from "@/components/layout/AuthorityStrip";
+import HowItWorks from "@/components/layout/HowItWorks";
 import NewsletterSignup from "@/components/newsletter/NewsletterSignup";
 
 const fadeInUp = {
@@ -79,6 +80,7 @@ const Index = () => {
         </div>
       </HeroBanner>
 
+      <HowItWorks />
       <AuthorityStrip />
 
       {/* Features Grid */}
