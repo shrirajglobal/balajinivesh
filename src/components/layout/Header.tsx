@@ -322,7 +322,10 @@ const Header = () => {
 
       {/* Mobile Nav */}
       {mobileOpen && (
-        <div className="fixed inset-x-0 top-14 bottom-0 z-50 overflow-y-auto overscroll-contain border-t border-border bg-background sm:top-16 lg:hidden">
+        <div
+          className="fixed inset-x-0 bottom-0 z-50 overflow-y-auto overscroll-contain border-t border-border bg-background lg:hidden"
+          style={{ top: "var(--header-h, 3.5rem)" }}
+        >
           <nav className="container flex flex-col gap-1 py-4 pb-24">
             {navItems.map((item) =>
               item.mega ? (
