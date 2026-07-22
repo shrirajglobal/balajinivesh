@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { MessageCircle, Phone, CalendarClock, X } from "lucide-react";
+import { MessageCircle, Phone, CalendarClock, Sparkles, X, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { useWhatsAppContactHref } from "@/lib/whatsapp";
+import { chatBus } from "@/lib/chatBus";
 
 /**
  * Sticky floating action button — primary CRO lead-capture surface.
@@ -28,7 +29,7 @@ const StickyCTA = () => {
   if (hidden) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-40 flex flex-col items-end gap-2 sm:bottom-6 sm:right-6">
+    <div className="fixed bottom-20 right-4 z-40 flex flex-col items-end gap-2 sm:bottom-6 sm:right-6">
       {open && (
         <div className="mb-1 flex flex-col gap-2 animate-in fade-in slide-in-from-bottom-2 duration-200">
           <a
@@ -54,12 +55,19 @@ const StickyCTA = () => {
             <CalendarClock className="h-5 w-5" />
             <span className="text-sm font-semibold">Book a free call</span>
           </Link>
+          <button
+            onClick={() => { setOpen(false); chatBus.open(); }}
+            className="group flex items-center gap-3 rounded-full bg-gradient-to-br from-primary to-secondary pl-4 pr-5 py-3 text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:scale-105"
+          >
+            <Sparkles className="h-5 w-5" />
+            <span className="text-sm font-semibold">Ask our AI assistant</span>
+          </button>
         </div>
       )}
 
       <button
         onClick={() => setOpen((v) => !v)}
-        aria-label={open ? "Close contact menu" : "Talk to an advisor"}
+        aria-label={open ? "Close contact menu" : "Talk to an advisor or ask a question"}
         className={cn(
           "flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition-all sm:h-16 sm:w-16",
           open
@@ -67,12 +75,12 @@ const StickyCTA = () => {
             : "bg-primary text-primary-foreground shadow-primary/40 ring-4 ring-primary/20"
         )}
       >
-        {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6 sm:h-7 sm:w-7" />}
+        {open ? <X className="h-6 w-6" /> : <HelpCircle className="h-6 w-6 sm:h-7 sm:w-7" />}
       </button>
 
       {!open && (
         <span className="hidden sm:inline-block rounded-full bg-foreground/90 px-3 py-1 text-[11px] font-semibold text-background shadow-md">
-          Talk to an advisor
+          Need help? Talk to us
         </span>
       )}
     </div>

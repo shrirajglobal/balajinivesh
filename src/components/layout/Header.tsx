@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useLayoutEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Menu, X, ChevronDown, ChevronRight, Shield, LogIn, LogOut, Globe,
@@ -23,7 +23,7 @@ import {
 
 type MegaColumn = {
   title: string;
-  items: { label: string; path: string; icon?: any; desc?: string }[];
+  items: { label: string; path: string; icon?: any; desc?: string; sub?: string }[];
 };
 type NavItem =
   | { label: string; path: string; mega?: undefined }
@@ -40,8 +40,27 @@ const Header = () => {
   const { user, signOut } = useAuth();
   const { data: settings } = useSiteSettings();
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
 
   const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to talk to an advisor.");
+
+  // Publish live header height as a CSS variable so mobile drawer,
+  // sticky bars, and anchor scroll offsets can all use --header-h.
+  useLayoutEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const set = () => {
+      document.documentElement.style.setProperty("--header-h", `${el.offsetHeight}px`);
+    };
+    set();
+    const ro = new ResizeObserver(set);
+    ro.observe(el);
+    window.addEventListener("resize", set);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", set);
+    };
+  }, []);
 
   useEffect(() => {
     if (!user) { setIsAdmin(false); setIsPartner(false); return; }
@@ -77,22 +96,22 @@ const Header = () => {
       path: "/solutions",
       mega: [
         {
-          title: "Solutions",
+          title: "Where to invest",
           items: [
-            { label: t("nav.mutualFunds"), path: "/solutions/mutual-funds", icon: Briefcase, desc: "SIPs, ELSS, debt & hybrid funds" },
-            { label: t("nav.bonds"), path: "/solutions/bonds", icon: Briefcase, desc: "Govt & corporate bonds" },
-            { label: t("nav.insurance"), path: "/solutions/insurance", icon: Shield, desc: "Term & health protection" },
-            { label: t("nav.ipo"), path: "/solutions/ipo", icon: TrendingUp, desc: "Primary market access" },
-            { label: t("nav.fixedDeposits"), path: "/solutions/fixed-deposits", icon: Briefcase, desc: "Corporate FDs" },
+            { label: "Grow with SIPs", sub: "Mutual Funds", path: "/solutions/mutual-funds", icon: Briefcase, desc: "SIPs, ELSS, debt & hybrid funds" },
+            { label: "Steady income", sub: "Bonds", path: "/solutions/bonds", icon: Briefcase, desc: "Govt & corporate bonds" },
+            { label: "Protect your family", sub: "Insurance", path: "/solutions/insurance", icon: Shield, desc: "Term & health protection" },
+            { label: "New listings", sub: "IPO", path: "/solutions/ipo", icon: TrendingUp, desc: "Primary market access" },
+            { label: "Safer parking", sub: "Fixed Deposits", path: "/solutions/fixed-deposits", icon: Briefcase, desc: "Corporate FDs" },
           ],
         },
         {
-          title: "Plan & Calculate",
+          title: "Plan for a goal",
           items: [
-            { label: "All Calculators", path: "/calculators", icon: Calculator, desc: "SIP, lumpsum, retirement & more" },
-            { label: "Financial Health Check", path: "/tools/health-check", icon: Shield, desc: "Score your finances in 2 min" },
-            { label: "Risk Profile", path: "/tools/risk-profile", icon: TrendingUp, desc: "Find your investor personality" },
-            { label: "Goal Visualizer", path: "/tools/sip-goal", icon: Calculator, desc: "Plan for a specific dream" },
+            { label: "Do the math", sub: "All Calculators", path: "/calculators", icon: Calculator, desc: "SIP, lumpsum, retirement & more" },
+            { label: "Am I on track?", sub: "Financial Health Check", path: "/tools/health-check", icon: Shield, desc: "Score your finances in 2 min" },
+            { label: "What kind of investor am I?", sub: "Risk Profile", path: "/tools/risk-profile", icon: TrendingUp, desc: "Find your investor personality" },
+            { label: "How much for my dream?", sub: "Goal Visualizer", path: "/tools/sip-goal", icon: Calculator, desc: "Plan for a specific goal" },
           ],
         },
       ],
@@ -102,20 +121,20 @@ const Header = () => {
       path: "/education",
       mega: [
         {
-          title: "Education Hub",
+          title: "Learn from scratch",
           items: [
-            { label: "Investor Education", path: "/education", icon: GraduationCap, desc: "Modules for every level" },
-            { label: "For Homemakers", path: "/education/homemakers", icon: GraduationCap, desc: "Money basics, made simple" },
-            { label: "For Kids", path: "/education/kids", icon: GraduationCap, desc: "Fun money lessons" },
-            { label: "Community Forum", path: "/forum", icon: MessagesSquare, desc: "Ask, discuss, share" },
+            { label: "Start here", sub: "Investor Education", path: "/education", icon: GraduationCap, desc: "Modules for every level" },
+            { label: "Money at home", sub: "For Homemakers", path: "/education/homemakers", icon: GraduationCap, desc: "Money basics, made simple" },
+            { label: "Money for kids", sub: "For Kids", path: "/education/kids", icon: GraduationCap, desc: "Fun money lessons" },
+            { label: "Ask the community", sub: "Forum", path: "/forum", icon: MessagesSquare, desc: "Ask, discuss, share" },
           ],
         },
         {
-          title: "Insights & Stories",
+          title: "News & stories",
           items: [
-            { label: "Blog", path: "/blog", icon: Newspaper, desc: "Guides & explainers" },
-            { label: "Market Updates", path: "/market-updates", icon: TrendingUp, desc: "Daily & weekly briefs" },
-            { label: "Videos", path: "/videos", icon: Video, desc: "Watch & learn" },
+            { label: "Read", sub: "Blog", path: "/blog", icon: Newspaper, desc: "Guides & explainers" },
+            { label: "Today's market", sub: "Market Updates", path: "/market-updates", icon: TrendingUp, desc: "Daily & weekly briefs" },
+            { label: "Watch", sub: "Videos", path: "/videos", icon: Video, desc: "Watch & learn" },
           ],
         },
       ],
@@ -128,7 +147,8 @@ const Header = () => {
   const isActive = (path: string) => location.pathname === path || (path !== "/" && location.pathname.startsWith(path + "/"));
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header ref={headerRef} className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+
       <div className="bg-primary/5 text-center text-xs leading-tight text-muted-foreground">
         <div className="container px-4 py-1.5">
           <span className="font-medium text-foreground">Balaji Nivesh Private Limited</span> · AMFI-registered Mutual Fund Distributor · ARN – 173142 · <span className="italic hidden sm:inline">Not a SEBI-registered Investment Adviser</span>
@@ -186,6 +206,7 @@ const Header = () => {
                               )}
                               <span className="min-w-0">
                                 <span className="block font-medium text-foreground">{child.label}</span>
+                                {child.sub && <span className="block text-[11px] font-medium uppercase tracking-wide text-primary/70">{child.sub}</span>}
                                 {child.desc && <span className="block text-xs text-muted-foreground">{child.desc}</span>}
                               </span>
                             </Link>
@@ -301,7 +322,10 @@ const Header = () => {
 
       {/* Mobile Nav */}
       {mobileOpen && (
-        <div className="fixed inset-x-0 top-14 bottom-0 z-50 overflow-y-auto overscroll-contain border-t border-border bg-background sm:top-16 lg:hidden">
+        <div
+          className="fixed inset-x-0 bottom-0 z-50 overflow-y-auto overscroll-contain border-t border-border bg-background lg:hidden"
+          style={{ top: "var(--header-h, 3.5rem)" }}
+        >
           <nav className="container flex flex-col gap-1 py-4 pb-24">
             {navItems.map((item) =>
               item.mega ? (

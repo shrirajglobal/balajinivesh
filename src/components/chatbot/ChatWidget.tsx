@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Loader2, Sparkles, ExternalLink } from "lucide-react";
+import { X, Send, Loader2, Sparkles, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
 import Markdown from "@/components/blog/Markdown";
+import { chatBus } from "@/lib/chatBus";
 
 type Msg = { role: "user" | "assistant"; content: string; citations?: Citation[] };
 type Citation = { title: string; url: string | null; source_type: string };
@@ -42,6 +43,11 @@ const ChatWidget = () => {
   const sessionId = useRef(getOrCreateSession());
 
   const hidden = HIDDEN_ROUTES.some((p) => location.pathname.startsWith(p));
+
+  useEffect(() => {
+    const unsub = chatBus.subscribe(setOpen);
+    return () => { unsub(); };
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -128,17 +134,7 @@ const ChatWidget = () => {
 
   return (
     <>
-      {/* FAB */}
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className={cn(
-          "fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-all hover:scale-105",
-          "bg-gradient-to-br from-primary to-secondary text-primary-foreground",
-        )}
-        aria-label="Ask Balaji Nivesh"
-      >
-        {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
-      </button>
+      {/* Launcher removed — ChatWidget is now opened from the merged StickyCTA fan-out. */}
 
       <AnimatePresence>
         {open && (
@@ -156,6 +152,13 @@ const ChatWidget = () => {
                 <p className="font-display text-sm font-semibold text-foreground">Ask Balaji Nivesh</p>
                 <p className="text-[11px] text-muted-foreground">Education only · not investment advice</p>
               </div>
+              <button
+                onClick={() => chatBus.close()}
+                className="rounded-md p-1 text-muted-foreground hover:bg-accent hover:text-foreground"
+                aria-label="Close chat"
+              >
+                <X className="h-4 w-4" />
+              </button>
             </div>
 
             {/* Messages */}
