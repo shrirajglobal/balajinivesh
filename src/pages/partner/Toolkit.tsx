@@ -1,4 +1,4 @@
-import { Download, Image, FileText, Share2 } from "lucide-react";
+import { Download, FileText } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import PartnerLayout from "@/components/partner/PartnerLayout";
@@ -8,9 +8,7 @@ const Toolkit = () => {
   const { t } = useLanguage();
 
   const materials = [
-    { icon: Image, title: t("partnerToolkit.socialTitle"), desc: t("partnerToolkit.socialDesc") },
     { icon: FileText, title: t("partnerToolkit.brochuresTitle"), desc: t("partnerToolkit.brochuresDesc") },
-    { icon: Share2, title: t("partnerToolkit.referralTitle"), desc: t("partnerToolkit.referralDesc") },
     { icon: Download, title: t("partnerToolkit.formsTitle"), desc: t("partnerToolkit.formsDesc") },
   ];
 

@@ -1,4 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import * as XLSX from "https://esm.sh/xlsx@0.18.5";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -17,14 +18,13 @@ interface ParsedRow {
   commission_amount: number;
 }
 
-function parseCSV(text: string): ParsedRow[] {
-  const lines = text.trim().split("\n");
-  if (lines.length < 2) return [];
+/** Normalize a raw header string to a stable lookup key. */
+function normalizeHeader(h: string): string {
+  return String(h ?? "").trim().toLowerCase().replace(/[^a-z0-9]/g, "_");
+}
 
-  // Normalize headers: lowercase, trim, replace spaces/special chars with underscore
-  const rawHeaders = lines[0].split(",").map((h) => h.trim().toLowerCase().replace(/[^a-z0-9]/g, "_"));
-
-  // Map common header variations to our expected field names
+/** Build a mapping from raw normalized header → canonical field name. */
+function buildHeaderMap(rawHeaders: string[]): Record<string, string> {
   const headerMap: Record<string, string> = {};
   for (const h of rawHeaders) {
     if (h.includes("arn") || h.includes("distributor_code") || h.includes("partner_code")) headerMap[h] = "partner_arn";
@@ -36,38 +36,31 @@ function parseCSV(text: string): ParsedRow[] {
     else if (h.includes("aum") || h.includes("market_value") || h.includes("current_value") || h.includes("nav_value")) headerMap[h] = "aum_amount";
     else if (h.includes("commission") || h.includes("brokerage")) headerMap[h] = "commission_amount";
   }
+  return headerMap;
+}
 
-  const rows: ParsedRow[] = [];
-  for (let i = 1; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
-
-    // Simple CSV parse (handles basic quoted fields)
-    const values = parseCSVLine(line);
-    if (values.length !== rawHeaders.length) continue;
-
-    const record: Record<string, string> = {};
-    rawHeaders.forEach((h, idx) => {
-      const mapped = headerMap[h];
-      if (mapped) record[mapped] = values[idx]?.trim() || "";
-    });
-
-    // Skip rows without essential data
-    if (!record.partner_arn && !record.client_name) continue;
-
-    rows.push({
-      partner_arn: record.partner_arn || "",
-      client_name: record.client_name || "",
-      folio_number: record.folio_number || "",
-      pan_number: record.pan_number || "",
-      amc_name: record.amc_name || "Unknown AMC",
-      scheme_name: record.scheme_name || "Unknown Scheme",
-      aum_amount: parseFloat(record.aum_amount?.replace(/,/g, "") || "0") || 0,
-      commission_amount: parseFloat(record.commission_amount?.replace(/,/g, "") || "0") || 0,
-    });
-  }
-
-  return rows;
+/** Convert an array of raw string/number values (one row) into a ParsedRow using the header map. */
+function rowValuesToParsedRow(rawHeaders: string[], headerMap: Record<string, string>, values: (string | number)[]): ParsedRow | null {
+  if (values.length === 0) return null;
+  const record: Record<string, string> = {};
+  rawHeaders.forEach((h, idx) => {
+    const mapped = headerMap[h];
+    if (mapped) {
+      const v = values[idx];
+      record[mapped] = v === undefined || v === null ? "" : String(v).trim();
+    }
+  });
+  if (!record.partner_arn && !record.client_name) return null;
+  return {
+    partner_arn: record.partner_arn || "",
+    client_name: record.client_name || "",
+    folio_number: record.folio_number || "",
+    pan_number: record.pan_number || "",
+    amc_name: record.amc_name || "Unknown AMC",
+    scheme_name: record.scheme_name || "Unknown Scheme",
+    aum_amount: parseFloat((record.aum_amount || "0").replace(/,/g, "")) || 0,
+    commission_amount: parseFloat((record.commission_amount || "0").replace(/,/g, "")) || 0,
+  };
 }
 
 function parseCSVLine(line: string): string[] {
@@ -89,13 +82,57 @@ function parseCSVLine(line: string): string[] {
   return result;
 }
 
+function parseCSV(text: string): ParsedRow[] {
+  const lines = text.trim().split("\n");
+  if (lines.length < 2) return [];
+  const rawHeaders = lines[0].split(",").map(normalizeHeader);
+  const headerMap = buildHeaderMap(rawHeaders);
+
+  const rows: ParsedRow[] = [];
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    const values = parseCSVLine(line);
+    if (values.length !== rawHeaders.length) continue;
+    const parsed = rowValuesToParsedRow(rawHeaders, headerMap, values);
+    if (parsed) rows.push(parsed);
+  }
+  return rows;
+}
+
+function parseExcel(buffer: ArrayBuffer): ParsedRow[] {
+  const workbook = XLSX.read(buffer, { type: "array" });
+  const firstSheetName = workbook.SheetNames[0];
+  if (!firstSheetName) return [];
+  const sheet = workbook.Sheets[firstSheetName];
+  const aoa = XLSX.utils.sheet_to_json<unknown[]>(sheet, { header: 1, blankrows: false, defval: "" });
+  if (aoa.length < 2) return [];
+
+  const rawHeaders = (aoa[0] as unknown[]).map((h) => normalizeHeader(String(h ?? "")));
+  const headerMap = buildHeaderMap(rawHeaders);
+
+  const rows: ParsedRow[] = [];
+  for (let i = 1; i < aoa.length; i++) {
+    const rowValues = aoa[i] as unknown[];
+    if (!rowValues || rowValues.length === 0) continue;
+    // Pad to match header length
+    const padded: (string | number)[] = [];
+    for (let j = 0; j < rawHeaders.length; j++) {
+      const v = rowValues[j];
+      padded.push(v === undefined || v === null ? "" : (typeof v === "number" ? v : String(v)));
+    }
+    const parsed = rowValuesToParsedRow(rawHeaders, headerMap, padded);
+    if (parsed) rows.push(parsed);
+  }
+  return rows;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    // Auth check
     const authHeader = req.headers.get("Authorization");
     if (!authHeader?.startsWith("Bearer ")) {
       return new Response(JSON.stringify({ error: "Unauthorized" }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
@@ -107,13 +144,11 @@ Deno.serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    // Get user from token
     const { data: { user }, error: userError } = await supabase.auth.getUser();
     if (userError || !user) {
       return new Response(JSON.stringify({ error: "Unauthorized", details: userError?.message }), { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    // Check admin role using service client (to bypass RLS on user_roles)
     const adminClient = createClient(
       Deno.env.get("SUPABASE_URL")!,
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
@@ -131,13 +166,12 @@ Deno.serve(async (req) => {
     }
 
     const body = await req.json();
-    const { upload_id, file_path, month_year } = body;
+    const { upload_id, file_path, month_year, file_name } = body;
 
     if (!upload_id || !file_path || !month_year) {
       return new Response(JSON.stringify({ error: "Missing upload_id, file_path, or month_year" }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    // Download file from storage
     const { data: fileData, error: downloadError } = await adminClient.storage
       .from("rta-statements")
       .download(file_path);
@@ -147,27 +181,34 @@ Deno.serve(async (req) => {
       return new Response(JSON.stringify({ error: "Failed to download file", details: downloadError?.message }), { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    const text = await fileData.text();
-    const rows = parseCSV(text);
+    // Branch on file extension
+    const rawName = String(file_name || file_path || "").toLowerCase();
+    const ext = rawName.substring(rawName.lastIndexOf("."));
+
+    let rows: ParsedRow[] = [];
+    if (ext === ".xlsx" || ext === ".xls") {
+      const buffer = await fileData.arrayBuffer();
+      rows = parseExcel(buffer);
+    } else {
+      // Default to CSV (preserves existing behaviour)
+      const text = await fileData.text();
+      rows = parseCSV(text);
+    }
 
     if (rows.length === 0) {
       await adminClient.from("rta_uploads").update({ status: "failed", records_processed: 0 }).eq("id", upload_id);
-      return new Response(JSON.stringify({ error: "No valid data rows found. Check CSV headers." }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      return new Response(JSON.stringify({ error: "No valid data rows found. Check file headers." }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    // Get all partners by ARN
     const { data: partners } = await adminClient.from("partners").select("id, arn_number");
     const arnToPartner = new Map<string, string>();
     (partners || []).forEach((p) => {
       if (p.arn_number) {
-        // Store multiple variations of ARN for matching
         const arn = p.arn_number.trim().toUpperCase();
         arnToPartner.set(arn, p.id);
-        // Also store without "ARN-" prefix if present
         if (arn.startsWith("ARN-")) {
           arnToPartner.set(arn.substring(4), p.id);
         }
-        // Also store with "ARN-" prefix if not present
         if (!arn.startsWith("ARN-") && !arn.startsWith("ARN")) {
           arnToPartner.set(`ARN-${arn}`, p.id);
         }
@@ -179,16 +220,15 @@ Deno.serve(async (req) => {
 
     for (const row of rows) {
       const rowArn = row.partner_arn.trim().toUpperCase();
-      const partnerId = arnToPartner.get(rowArn) || 
+      const partnerId = arnToPartner.get(rowArn) ||
         arnToPartner.get(rowArn.replace(/^ARN-?/, "")) ||
         arnToPartner.get(`ARN-${rowArn.replace(/^ARN-?/, "")}`);
-      
+
       if (!partnerId) {
         if (row.partner_arn) unmatchedArns.add(row.partner_arn);
         continue;
       }
 
-      // Upsert client
       let clientId: string | null = null;
       if (row.client_name) {
         const { data: existingClient } = await adminClient
@@ -200,7 +240,6 @@ Deno.serve(async (req) => {
 
         if (existingClient) {
           clientId = existingClient.id;
-          // Update folio/PAN if provided
           if (row.folio_number || row.pan_number) {
             const updates: Record<string, string> = {};
             if (row.folio_number) updates.folio_number = row.folio_number;
@@ -222,7 +261,6 @@ Deno.serve(async (req) => {
         }
       }
 
-      // Insert AUM data
       if (row.aum_amount > 0) {
         await adminClient.from("partner_aum_data").insert({
           partner_id: partnerId,
@@ -234,9 +272,7 @@ Deno.serve(async (req) => {
         });
       }
 
-      // Aggregate commission per AMC (insert per row)
       if (row.commission_amount > 0) {
-        // Check if commission record exists for this partner/amc/month
         const { data: existingComm } = await adminClient
           .from("partner_commissions")
           .select("id, commission_amount")
@@ -264,7 +300,6 @@ Deno.serve(async (req) => {
       recordsProcessed++;
     }
 
-    // Update upload status
     await adminClient.from("rta_uploads").update({
       status: "completed",
       records_processed: recordsProcessed,
