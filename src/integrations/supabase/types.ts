@@ -1264,37 +1264,94 @@ export type Database = {
           },
         ]
       }
+      partner_lead_activities: {
+        Row: {
+          activity_type: string
+          content: string
+          created_at: string
+          id: string
+          lead_id: string
+          partner_id: string
+        }
+        Insert: {
+          activity_type: string
+          content: string
+          created_at?: string
+          id?: string
+          lead_id: string
+          partner_id: string
+        }
+        Update: {
+          activity_type?: string
+          content?: string
+          created_at?: string
+          id?: string
+          lead_id?: string
+          partner_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_lead_activities_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "partner_leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "partner_lead_activities_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: false
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       partner_leads: {
         Row: {
           created_at: string
           email: string | null
+          expected_investment_amount: number | null
           id: string
+          last_contacted_at: string | null
           name: string
+          next_follow_up_date: string | null
           notes: string | null
           partner_id: string
           phone: string | null
+          priority: string
+          source: string | null
           status: string
           updated_at: string
         }
         Insert: {
           created_at?: string
           email?: string | null
+          expected_investment_amount?: number | null
           id?: string
+          last_contacted_at?: string | null
           name: string
+          next_follow_up_date?: string | null
           notes?: string | null
           partner_id: string
           phone?: string | null
+          priority?: string
+          source?: string | null
           status?: string
           updated_at?: string
         }
         Update: {
           created_at?: string
           email?: string | null
+          expected_investment_amount?: number | null
           id?: string
+          last_contacted_at?: string | null
           name?: string
+          next_follow_up_date?: string | null
           notes?: string | null
           partner_id?: string
           phone?: string | null
+          priority?: string
+          source?: string | null
           status?: string
           updated_at?: string
         }
