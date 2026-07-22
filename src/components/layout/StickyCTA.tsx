@@ -16,10 +16,7 @@ const StickyCTA = () => {
   const { data: settings } = useSiteSettings();
 
   const phone = (settings?.map.contact_phone || "").trim();
-  const whatsapp = ((settings?.map.contact_whatsapp || settings?.map.contact_phone || "").replace(/[^\d]/g, ""));
-  const whatsappHref = whatsapp
-    ? `https://wa.me/${whatsapp}?text=${encodeURIComponent("Hi Balaji Nivesh, I'd like to speak with an advisor.")}`
-    : "/contact";
+  const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to speak with an advisor.");
   const callHref = phone ? `tel:${phone.replace(/\s+/g, "")}` : "/contact";
 
   // Auto-hide on admin/partner routes
