@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import HeroBanner from "@/components/layout/HeroBanner";
 import SEO from "@/components/seo/SEO";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 
 interface VideoRow {
   id: string;
@@ -176,6 +177,10 @@ const Videos = () => {
               })}
             </div>
           )}
+
+          <div className="mx-auto mt-10 max-w-3xl">
+            <SebiDisclaimer variant="compact" />
+          </div>
         </div>
       </section>
     </div>
