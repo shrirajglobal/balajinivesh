@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { useLanguage, LANGUAGE_LABELS, type Language } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { useWhatsAppContactHref } from "@/lib/whatsapp";
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.jpeg";
 import {
