@@ -7,6 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { supabase } from "@/integrations/supabase/client";
+import { useWhatsAppContactHref } from "@/lib/whatsapp";
 
 interface Props {
   /** Short context to pre-fill the lead, e.g. "SIP of ₹10,000/month for 10 years" */
