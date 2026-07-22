@@ -39,10 +39,7 @@ const CalculatorLeadCapture = ({
   const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
 
-  const waNumber = (settings?.map.contact_whatsapp || settings?.map.contact_phone || "").replace(/[^\d]/g, "");
-  const waHref = waNumber
-    ? `https://wa.me/${waNumber}?text=${encodeURIComponent(`Hi Balaji Nivesh, I just calculated: ${context}. Can you help me start?`)}`
-    : "/contact";
+  const waHref = useWhatsAppContactHref(`Hi Balaji Nivesh, I just calculated: ${context}. Can you help me start?`);
   const callHref = settings?.map.contact_phone ? `tel:${settings.map.contact_phone.replace(/\s+/g, "")}` : "/contact";
 
   const handleSubmit = async (e: React.FormEvent) => {
