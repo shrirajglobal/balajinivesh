@@ -130,7 +130,7 @@ const Header = () => {
   const isActive = (path: string) => location.pathname === path || (path !== "/" && location.pathname.startsWith(path + "/"));
 
   return (
-    <header ref={headerRef} className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header ref={headerRef} className="sticky top-0 z-50 relative border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
 
       <div className="bg-primary/5 text-center text-xs leading-tight text-muted-foreground">
         <div className="container px-4 py-1.5">
