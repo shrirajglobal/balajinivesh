@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { MessageCircle, Phone, CalendarClock, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { useWhatsAppContactHref } from "@/lib/whatsapp";
 
 /**
  * Sticky floating action button — primary CRO lead-capture surface.
