@@ -306,8 +306,7 @@ const Header = () => {
       {/* Mobile Nav */}
       {mobileOpen && (
         <div
-          className="fixed inset-x-0 bottom-0 z-50 overflow-y-auto overscroll-contain border-t border-border bg-background lg:hidden"
-          style={{ top: "var(--header-h, 3.5rem)" }}
+          className="absolute inset-x-0 top-full z-50 max-h-[calc(100vh-3.5rem)] overflow-y-auto overscroll-contain border-t border-border bg-background lg:hidden"
         >
           <nav className="container flex flex-col gap-1 py-4 pb-24">
             {navItems.map((item) =>
