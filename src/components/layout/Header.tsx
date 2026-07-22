@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Menu, X, ChevronDown, ChevronRight, Shield, LogIn, LogOut, Globe,
@@ -44,23 +44,6 @@ const Header = () => {
 
   const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to talk to an advisor.");
 
-  // Publish live header height as a CSS variable so mobile drawer,
-  // sticky bars, and anchor scroll offsets can all use --header-h.
-  useLayoutEffect(() => {
-    const el = headerRef.current;
-    if (!el) return;
-    const set = () => {
-      document.documentElement.style.setProperty("--header-h", `${el.offsetHeight}px`);
-    };
-    set();
-    const ro = new ResizeObserver(set);
-    ro.observe(el);
-    window.addEventListener("resize", set);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", set);
-    };
-  }, []);
 
   useEffect(() => {
     if (!user) { setIsAdmin(false); setIsPartner(false); return; }
@@ -147,7 +130,7 @@ const Header = () => {
   const isActive = (path: string) => location.pathname === path || (path !== "/" && location.pathname.startsWith(path + "/"));
 
   return (
-    <header ref={headerRef} className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header ref={headerRef} className="sticky top-0 z-50 relative border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
 
       <div className="bg-primary/5 text-center text-xs leading-tight text-muted-foreground">
         <div className="container px-4 py-1.5">
@@ -323,8 +306,7 @@ const Header = () => {
       {/* Mobile Nav */}
       {mobileOpen && (
         <div
-          className="fixed inset-x-0 bottom-0 z-50 overflow-y-auto overscroll-contain border-t border-border bg-background lg:hidden"
-          style={{ top: "var(--header-h, 3.5rem)" }}
+          className="absolute inset-x-0 top-full z-50 max-h-[calc(100vh-3.5rem)] overflow-y-auto overscroll-contain border-t border-border bg-background lg:hidden"
         >
           <nav className="container flex flex-col gap-1 py-4 pb-24">
             {navItems.map((item) =>
