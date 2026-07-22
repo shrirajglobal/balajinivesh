@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import HeroBanner from "@/components/layout/HeroBanner";
 import SEO from "@/components/seo/SEO";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import {
   Accordion,
   AccordionContent,
@@ -190,10 +191,9 @@ const SolutionPageTemplate = ({
               <Link to="/calculators">Try Our Calculators</Link>
             </Button>
           </div>
-          <p className="mx-auto mt-6 max-w-xl text-xs text-muted-foreground">
-            Mutual fund investments are subject to market risks. Read all scheme-related documents
-            carefully before investing.
-          </p>
+          <div className="mx-auto mt-8 max-w-2xl">
+            <SebiDisclaimer variant="compact" />
+          </div>
         </div>
       </section>
     </div>

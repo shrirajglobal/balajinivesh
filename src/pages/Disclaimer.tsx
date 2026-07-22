@@ -138,7 +138,7 @@ const Disclaimer = () => {
         <section>
           <h2>11. Governing Law</h2>
           <p>
-            This Disclaimer shall be governed by and construed in accordance with the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts in [City, State], India.
+            This Disclaimer shall be governed by and construed in accordance with the laws of India. Any disputes shall be subject to the exclusive jurisdiction of the courts in Kolkata, West Bengal, India.
           </p>
         </section>
 
