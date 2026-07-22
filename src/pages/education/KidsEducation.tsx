@@ -10,6 +10,7 @@ import { useEducationProgress } from "@/hooks/useEducationProgress";
 import ProgressTracker from "@/components/education/ProgressTracker";
 import CertificateModal from "@/components/education/CertificateModal";
 import GiftClaimForm from "@/components/education/GiftClaimForm";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 
 const missions = [
   {
@@ -236,10 +237,13 @@ const KidsEducation = () => {
       </section>
 
       <section className="bg-muted/40 py-10">
-        <div className="container text-center">
-          <p className="text-sm text-muted-foreground">
-            All content is for educational purposes only. Kids, always discuss financial decisions with your parents! 👨‍👩‍👧
-          </p>
+        <div className="container">
+          <div className="mx-auto max-w-3xl space-y-4">
+            <p className="text-center text-sm text-muted-foreground">
+              Kids, always discuss financial decisions with your parents! 👨‍👩‍👧
+            </p>
+            <SebiDisclaimer variant="compact" />
+          </div>
         </div>
       </section>
 

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 
 const categories = [
   "All",
@@ -269,10 +270,10 @@ const Education = () => {
       </section>
 
       <section className="bg-muted/40 py-10">
-        <div className="container text-center">
-          <p className="text-sm text-muted-foreground">
-            All content is for educational purposes only and does not constitute investment advice.
-          </p>
+        <div className="container">
+          <div className="mx-auto max-w-3xl">
+            <SebiDisclaimer variant="compact" />
+          </div>
         </div>
       </section>
     </div>

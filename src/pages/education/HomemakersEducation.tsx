@@ -10,6 +10,7 @@ import { useEducationProgress } from "@/hooks/useEducationProgress";
 import ProgressTracker from "@/components/education/ProgressTracker";
 import CertificateModal from "@/components/education/CertificateModal";
 import GiftClaimForm from "@/components/education/GiftClaimForm";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 
 const topics = [
   {
@@ -195,10 +196,10 @@ const HomemakersEducation = () => {
       </section>
 
       <section className="bg-muted/40 py-10">
-        <div className="container text-center">
-          <p className="text-sm text-muted-foreground">
-            All content is for educational purposes only and does not constitute investment advice.
-          </p>
+        <div className="container">
+          <div className="mx-auto max-w-3xl">
+            <SebiDisclaimer variant="compact" />
+          </div>
         </div>
       </section>
 

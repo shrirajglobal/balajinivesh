@@ -131,6 +131,11 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <div className="hidden bg-primary/5 text-center text-[11px] leading-tight text-muted-foreground sm:block">
+        <div className="container py-1.5">
+          <span className="font-medium text-foreground">Balaji Nivesh Private Limited</span> · AMFI-registered Mutual Fund Distributor · ARN – 173142 · <span className="italic">Not a SEBI-registered Investment Adviser</span>
+        </div>
+      </div>
       <div className="container flex h-14 items-center justify-between sm:h-16 lg:h-18">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
