@@ -44,6 +44,8 @@ const ChatWidget = () => {
 
   const hidden = HIDDEN_ROUTES.some((p) => location.pathname.startsWith(p));
 
+  useEffect(() => chatBus.subscribe(setOpen), []);
+
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -129,17 +131,7 @@ const ChatWidget = () => {
 
   return (
     <>
-      {/* FAB */}
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className={cn(
-          "fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-all hover:scale-105",
-          "bg-gradient-to-br from-primary to-secondary text-primary-foreground",
-        )}
-        aria-label="Ask Balaji Nivesh"
-      >
-        {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
-      </button>
+      {/* Launcher removed — ChatWidget is now opened from the merged StickyCTA fan-out. */}
 
       <AnimatePresence>
         {open && (
