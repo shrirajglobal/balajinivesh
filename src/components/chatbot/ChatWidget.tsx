@@ -152,6 +152,13 @@ const ChatWidget = () => {
                 <p className="font-display text-sm font-semibold text-foreground">Ask Balaji Nivesh</p>
                 <p className="text-[11px] text-muted-foreground">Education only · not investment advice</p>
               </div>
+              <button
+                onClick={() => chatBus.close()}
+                className="rounded-md p-1 text-muted-foreground hover:bg-accent hover:text-foreground"
+                aria-label="Close chat"
+              >
+                <X className="h-4 w-4" />
+              </button>
             </div>
 
             {/* Messages */}
