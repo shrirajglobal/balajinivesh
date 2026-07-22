@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useLayoutEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Menu, X, ChevronDown, ChevronRight, Shield, LogIn, LogOut, Globe,
@@ -23,7 +23,7 @@ import {
 
 type MegaColumn = {
   title: string;
-  items: { label: string; path: string; icon?: any; desc?: string }[];
+  items: { label: string; path: string; icon?: any; desc?: string; sub?: string }[];
 };
 type NavItem =
   | { label: string; path: string; mega?: undefined }
@@ -40,8 +40,27 @@ const Header = () => {
   const { user, signOut } = useAuth();
   const { data: settings } = useSiteSettings();
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
 
   const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to talk to an advisor.");
+
+  // Publish live header height as a CSS variable so mobile drawer,
+  // sticky bars, and anchor scroll offsets can all use --header-h.
+  useLayoutEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const set = () => {
+      document.documentElement.style.setProperty("--header-h", `${el.offsetHeight}px`);
+    };
+    set();
+    const ro = new ResizeObserver(set);
+    ro.observe(el);
+    window.addEventListener("resize", set);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", set);
+    };
+  }, []);
 
   useEffect(() => {
     if (!user) { setIsAdmin(false); setIsPartner(false); return; }
