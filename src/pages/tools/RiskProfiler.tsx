@@ -8,6 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts";
 import ShareButtons from "@/components/share/ShareButtons";
 import SEO from "@/components/seo/SEO";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 
 interface Question {
   question: string;
