@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, CheckCircle2 } from "lucide-react";
+import { Loader2, CheckCircle2, LogIn } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const schema = z.object({
@@ -35,9 +36,9 @@ const ApplicationForm = () => {
   });
 
   const onSubmit = async (data: FormData) => {
+    if (!user?.id) return;
     setLoading(true);
-    const insertData: any = { ...data };
-    if (user?.id) insertData.user_id = user.id;
+    const insertData: any = { ...data, user_id: user.id };
     const { error } = await supabase.from("partner_applications").insert([insertData]);
     setLoading(false);
 
@@ -56,6 +57,21 @@ const ApplicationForm = () => {
         <CheckCircle2 className="h-12 w-12 text-brand-green" />
         <h3 className="font-display text-xl font-bold text-foreground">{t("partnerApp.successTitle")}</h3>
         <p className="text-muted-foreground">{t("partnerApp.successDesc")}</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center gap-4 rounded-2xl border border-border bg-card p-8 text-center">
+        <LogIn className="h-10 w-10 text-primary" />
+        <h3 className="font-display text-xl font-bold text-foreground">Sign in to apply</h3>
+        <p className="text-sm text-muted-foreground">
+          Please create an account or sign in first, so we can link your application to your login.
+        </p>
+        <Button asChild size="lg">
+          <Link to="/auth?redirect=/partner%23apply">Sign in / Create account</Link>
+        </Button>
       </div>
     );
   }
