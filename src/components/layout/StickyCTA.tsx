@@ -33,7 +33,7 @@ const StickyCTA = () => {
         <div className="mb-1 flex flex-col gap-2 animate-in fade-in slide-in-from-bottom-2 duration-200">
           <a
             href={whatsappHref}
-            target={whatsapp ? "_blank" : undefined}
+            target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center gap-3 rounded-full bg-brand-green pl-4 pr-5 py-3 text-white shadow-lg shadow-brand-green/30 transition-transform hover:scale-105"
           >
