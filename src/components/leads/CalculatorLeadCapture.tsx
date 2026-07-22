@@ -79,7 +79,7 @@ const CalculatorLeadCapture = ({
           </p>
           <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
             <Button asChild size="sm" className="bg-brand-green hover:bg-brand-green/90 text-white">
-              <a href={waHref} target={waNumber ? "_blank" : undefined} rel="noopener noreferrer">
+              <a href={waHref} target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="mr-1.5 h-4 w-4" /> WhatsApp now
               </a>
             </Button>
@@ -127,7 +127,7 @@ const CalculatorLeadCapture = ({
               Reach me on WhatsApp (preferred)
             </label>
             <div className="flex flex-wrap items-center gap-3 pt-1 text-xs">
-              <a href={waHref} target={waNumber ? "_blank" : undefined} rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-brand-green hover:underline">
+              <a href={waHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-brand-green hover:underline">
                 <MessageCircle className="h-3.5 w-3.5" /> Or WhatsApp directly
               </a>
               <span className="text-muted-foreground">·</span>
