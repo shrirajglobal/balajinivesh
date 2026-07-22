@@ -44,7 +44,10 @@ const ChatWidget = () => {
 
   const hidden = HIDDEN_ROUTES.some((p) => location.pathname.startsWith(p));
 
-  useEffect(() => chatBus.subscribe(setOpen), []);
+  useEffect(() => {
+    const unsub = chatBus.subscribe(setOpen);
+    return () => { unsub(); };
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current) {
