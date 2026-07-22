@@ -61,6 +61,21 @@ const ApplicationForm = () => {
     );
   }
 
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center gap-4 rounded-2xl border border-border bg-card p-8 text-center">
+        <LogIn className="h-10 w-10 text-primary" />
+        <h3 className="font-display text-xl font-bold text-foreground">Sign in to apply</h3>
+        <p className="text-sm text-muted-foreground">
+          Please create an account or sign in first, so we can link your application to your login.
+        </p>
+        <Button asChild size="lg">
+          <Link to="/auth?redirect=/partner%23apply">Sign in / Create account</Link>
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
       <h3 className="font-display text-xl font-bold text-foreground">{t("partnerApp.title")}</h3>
