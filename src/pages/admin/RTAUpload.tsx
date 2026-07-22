@@ -71,7 +71,7 @@ const RTAUploadPage = () => {
     }
 
     const { data: parseResult, error: parseError } = await supabase.functions.invoke("parse-rta-statement", {
-      body: { upload_id: uploadRecord.id, file_path: filePath, month_year: `${monthYear}-01` },
+      body: { upload_id: uploadRecord.id, file_path: filePath, month_year: `${monthYear}-01`, file_name: file.name },
     });
 
     setUploading(false);
