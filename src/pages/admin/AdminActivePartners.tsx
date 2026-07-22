@@ -132,6 +132,13 @@ const AdminActivePartners = () => {
               <Label>EUIN</Label>
               <Input value={euin} onChange={(e) => setEuin(e.target.value)} />
             </div>
+            <div className="space-y-2">
+              <Label>Linked User ID (UUID)</Label>
+              <Input value={userId} onChange={(e) => setUserId(e.target.value)} placeholder="00000000-0000-0000-0000-000000000000" />
+              <p className="text-xs text-muted-foreground">
+                The auth user this partner record belongs to. Fixing a wrong id here re-attributes the dashboard/leads/commissions to the correct sub-advisor.
+              </p>
+            </div>
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setEditPartner(null)}>Cancel</Button>
