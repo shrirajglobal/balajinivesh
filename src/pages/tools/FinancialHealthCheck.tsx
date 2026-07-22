@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, ChevronRight, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 
 interface Question {
   id: string;
@@ -221,9 +222,7 @@ const FinancialHealthCheck = () => {
                   </Button>
                 </div>
 
-                <p className="mt-6 text-center text-xs text-muted-foreground">
-                  This assessment is for educational purposes only and does not constitute financial advice. Connect with Balaji Nivesh for personalized financial planning.
-                </p>
+                <div className="mt-6"><SebiDisclaimer variant="compact" /></div>
               </motion.div>
             )}
           </div>

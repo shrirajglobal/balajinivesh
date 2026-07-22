@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent } from "@/components/ui/card";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 
 const fmt = (v: number) => "₹" + v.toLocaleString("en-IN", { maximumFractionDigits: 0 });
@@ -110,7 +111,7 @@ const SIPvsFD = () => {
               </div>
             </div>
           </div>
-          <p className="mx-auto mt-8 max-w-2xl text-center text-xs text-muted-foreground">SIP returns are assumed and not guaranteed. FD returns are pre-tax. Mutual fund investments are subject to market risks.</p>
+          <div className="mx-auto mt-8 max-w-3xl"><SebiDisclaimer variant="compact" /></div>
         </div>
       </section>
     </div>

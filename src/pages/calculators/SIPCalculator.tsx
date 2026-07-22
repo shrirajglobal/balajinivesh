@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent } from "@/components/ui/card";
 import CalculatorLeadCapture from "@/components/leads/CalculatorLeadCapture";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import {
   AreaChart,
   Area,
@@ -130,9 +131,9 @@ const SIPCalculator = () => {
               </div>
             </div>
           </div>
-          <p className="mx-auto mt-8 max-w-2xl text-center text-xs text-muted-foreground">
-            This calculator is for illustrative purposes only. Actual returns may vary based on market conditions. Mutual fund investments are subject to market risks.
-          </p>
+          <div className="mx-auto mt-8 max-w-3xl">
+            <SebiDisclaimer variant="compact" />
+          </div>
         </div>
       </section>
     </div>

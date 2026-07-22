@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent } from "@/components/ui/card";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 const fmt = (v: number) => "₹" + v.toLocaleString("en-IN", { maximumFractionDigits: 0 });
@@ -141,7 +142,7 @@ const RetirementPlanner = () => {
               </div>
             </div>
           </div>
-          <p className="mx-auto mt-8 max-w-2xl text-center text-xs text-muted-foreground">This planner is for illustrative purposes only. Actual inflation and returns will vary. Consult a financial professional for personalized planning.</p>
+          <div className="mx-auto mt-8 max-w-3xl"><SebiDisclaimer variant="compact" /></div>
         </div>
       </section>
     </div>

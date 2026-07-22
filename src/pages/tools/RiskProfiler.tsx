@@ -342,9 +342,7 @@ const RiskProfiler = () => {
                   />
                 </div>
 
-                <p className="mt-6 text-center text-xs text-muted-foreground">
-                  This risk profiling tool is for educational purposes only. Asset allocation suggestions are general guidelines, not personalized investment advice. Balaji Nivesh is an AMFI-registered Mutual Fund Distributor, not a SEBI-registered Investment Advisor.
-                </p>
+                <div className="mt-6"><SebiDisclaimer variant="compact" /></div>
               </motion.div>
             )}
           </div>

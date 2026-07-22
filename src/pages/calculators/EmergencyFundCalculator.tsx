@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent } from "@/components/ui/card";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 
 const fmt = (v: number) => "₹" + v.toLocaleString("en-IN", { maximumFractionDigits: 0 });
 
@@ -116,7 +117,7 @@ const EmergencyFundCalculator = () => {
               </div>
             </div>
           </div>
-          <p className="mx-auto mt-8 max-w-2xl text-center text-xs text-muted-foreground">Emergency fund recommendations are general guidelines. Your actual needs may vary based on personal circumstances.</p>
+          <div className="mx-auto mt-8 max-w-3xl"><SebiDisclaimer variant="compact" /></div>
         </div>
       </section>
     </div>
