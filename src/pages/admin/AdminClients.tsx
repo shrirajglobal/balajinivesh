@@ -13,10 +13,16 @@ interface Client {
   created_at: string;
 }
 
+const maskPan = (pan: string | null) => {
+  if (!pan || pan.length < 10) return pan || "—";
+  return `${pan.slice(0, 5)}••••${pan.slice(-1)}`;
+};
+
 const AdminClients = () => {
   const [clients, setClients] = useState<Client[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [revealedRows, setRevealedRows] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     supabase.from("partner_clients").select("*").order("created_at", { ascending: false }).then(({ data }) => {
@@ -24,6 +30,15 @@ const AdminClients = () => {
       setLoading(false);
     });
   }, []);
+
+  const toggleReveal = (id: string) => {
+    setRevealedRows((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   const filtered = clients.filter((c) => !search || c.client_name.toLowerCase().includes(search.toLowerCase()) || c.pan_number?.toLowerCase().includes(search.toLowerCase()));
 
@@ -57,7 +72,18 @@ const AdminClients = () => {
             ) : filtered.map((c) => (
               <TableRow key={c.id}>
                 <TableCell className="font-medium">{c.client_name}</TableCell>
-                <TableCell>{c.pan_number || "—"}</TableCell>
+                <TableCell className="font-mono">
+                  {revealedRows.has(c.id) ? (c.pan_number || "—") : maskPan(c.pan_number)}
+                  {c.pan_number && (
+                    <button
+                      type="button"
+                      onClick={() => toggleReveal(c.id)}
+                      className="ml-2 text-xs text-muted-foreground underline"
+                    >
+                      {revealedRows.has(c.id) ? "Hide" : "Show"}
+                    </button>
+                  )}
+                </TableCell>
                 <TableCell>{c.folio_number || "—"}</TableCell>
                 <TableCell className="text-muted-foreground">{new Date(c.created_at).toLocaleDateString("en-IN")}</TableCell>
               </TableRow>

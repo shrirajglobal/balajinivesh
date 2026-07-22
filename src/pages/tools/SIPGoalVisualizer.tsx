@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import ShareButtons from "@/components/share/ShareButtons";
 import SEO from "@/components/seo/SEO";
+import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import {
   AreaChart,
   Area,
@@ -270,7 +271,11 @@ const SIPGoalVisualizer = () => {
             </div>
           </div>
 
-          <p className="mx-auto mt-10 max-w-3xl text-center text-xs text-muted-foreground">
+          <div className="mx-auto mt-8 max-w-3xl">
+            <SebiDisclaimer variant="compact" />
+          </div>
+
+          <p className="mx-auto mt-6 max-w-3xl text-center text-xs text-muted-foreground">
             For illustrative & educational purposes only. Equity returns are not guaranteed and depend on market conditions. FD rates vary by bank and tenure. Mutual fund investments are subject to market risks — read all scheme-related documents carefully. Balaji Nivesh is an AMFI-registered Mutual Fund Distributor, not a SEBI-registered Investment Advisor.
           </p>
         </div>
