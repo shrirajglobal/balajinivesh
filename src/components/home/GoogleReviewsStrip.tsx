@@ -1,6 +1,7 @@
 import { Star, ExternalLink, PenLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { buildWriteReviewUrl, buildReadReviewsUrl } from "@/lib/googleReview";
 
 /**
  * Prominent Google reviews block for the homepage.
@@ -13,12 +14,9 @@ const GoogleReviewsStrip = () => {
   const placeId = settings?.map.google_place_id;
   const rating = settings?.map.google_rating || "4.7";
   const count = settings?.map.google_review_count || "";
-  const writeUrl = placeId
-    ? `https://search.google.com/local/writereview?placeid=${placeId}`
-    : settings?.map.google_review_url || "";
-  const readUrl = placeId
-    ? `https://search.google.com/local/reviews?placeid=${placeId}`
-    : writeUrl;
+  const fallback = settings?.map.google_review_url;
+  const writeUrl = buildWriteReviewUrl(placeId, fallback);
+  const readUrl = buildReadReviewsUrl(placeId, fallback);
 
   const numericRating = Number(rating) || 0;
   const fullStars = Math.round(numericRating);

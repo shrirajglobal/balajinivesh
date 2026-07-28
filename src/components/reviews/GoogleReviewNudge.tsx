@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { X, Star } from "lucide-react";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { buildWriteReviewUrl } from "@/lib/googleReview";
 
 const CAN_ASK_KEY = "bn_can_ask_review";
 const DISMISSED_KEY = "bn_review_dismissed_at";
@@ -35,7 +36,7 @@ const GoogleReviewNudge = () => {
     return () => clearTimeout(t);
   }, [location.pathname]);
 
-  const reviewUrl = settings?.map.google_review_url || "";
+  const reviewUrl = buildWriteReviewUrl(settings?.map.google_place_id, settings?.map.google_review_url);
   const rating = settings?.map.google_rating || "";
 
   const dismiss = () => {
