@@ -1,5 +1,6 @@
 import { ShieldCheck, BadgeCheck, Users, Award, Star } from "lucide-react";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
+import { buildWriteReviewUrl } from "@/lib/googleReview";
 
 /**
  * Slim authority bar shown under hero on key marketing pages.
@@ -8,7 +9,7 @@ import { useSiteSettings } from "@/hooks/useSiteSettings";
 const AuthorityStrip = () => {
   const { data: settings } = useSiteSettings();
   const arn = settings?.map.arn_number;
-  const reviewUrl = settings?.map.google_review_url;
+  const reviewUrl = buildWriteReviewUrl(settings?.map.google_place_id, settings?.map.google_review_url);
   const rating = settings?.map.google_rating;
   const reviewCount = settings?.map.google_review_count;
 
