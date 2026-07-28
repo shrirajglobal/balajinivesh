@@ -84,6 +84,7 @@ const AdminAcademyImport = lazy(() => import("./pages/admin/AdminAcademyImport")
 const AdminAcademyGenerate = lazy(() => import("./pages/admin/AdminAcademyGenerate"));
 const AdminNewsletter = lazy(() => import("./pages/admin/AdminNewsletter"));
 const AdminCRM = lazy(() => import("./pages/admin/AdminCRM"));
+const AdminChats = lazy(() => import("./pages/admin/AdminChats"));
 
 // Public blog
 const BlogIndex = lazy(() => import("./pages/blog/BlogIndex"));
@@ -162,6 +163,7 @@ const App = () => (
                   <Route path="academy/generate" element={<LazyRoute component={AdminAcademyGenerate} />} />
                   <Route path="newsletter" element={<LazyRoute component={AdminNewsletter} />} />
                   <Route path="crm" element={<LazyRoute component={AdminCRM} />} />
+                  <Route path="chats" element={<LazyRoute component={AdminChats} />} />
                   <Route path="embeddings" element={<LazyRoute component={AdminEmbeddings} />} />
                   <Route path="videos" element={<LazyRoute component={AdminVideos} />} />
                   <Route path="forum" element={<LazyRoute component={AdminForum} />} />

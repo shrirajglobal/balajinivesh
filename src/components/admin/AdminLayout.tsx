@@ -36,6 +36,7 @@ import {
   Video,
   MessagesSquare,
   MapPin,
+  MessageCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -56,6 +57,7 @@ const menuItems = [
   { title: "Academy CMS", path: "/admin/academy", icon: GraduationCap },
   { title: "Newsletter", path: "/admin/newsletter", icon: Mail },
   { title: "CRM Inbox", path: "/admin/crm", icon: Inbox },
+  { title: "Chatbot Conversations", path: "/admin/chats", icon: MessageCircle },
   { title: "AI Embeddings", path: "/admin/embeddings", icon: Sparkles },
   { title: "Videos", path: "/admin/videos", icon: Video },
   { title: "Forum Moderation", path: "/admin/forum", icon: MessagesSquare },

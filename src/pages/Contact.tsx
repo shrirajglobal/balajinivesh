@@ -56,6 +56,7 @@ const Contact = () => {
         message: message.trim() || `Interested in: ${interest || "general consultation"}`,
         source: "contact_page",
       });
+      try { localStorage.setItem("bn_can_ask_review", "1"); } catch { /* ignore */ }
       toast({ title: "We'll be in touch!", description: "An advisor will WhatsApp you within one business day." });
       setName(""); setPhone(""); setEmail(""); setInterest(""); setMessage("");
     } catch {

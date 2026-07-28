@@ -58,6 +58,7 @@ const CalculatorLeadCapture = ({
         message: `${context}\nWhatsApp consent: ${whatsappOk ? "yes" : "no"}`,
         source,
       });
+      try { localStorage.setItem("bn_can_ask_review", "1"); } catch { /* ignore */ }
       setSent(true);
       toast({ title: "Got it!", description: "Our advisor will reach out shortly." });
     } catch {
