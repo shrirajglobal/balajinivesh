@@ -1,92 +1,136 @@
-## Final CRO + Mobile Fix Plan
+# Chat, Reviews & Calendar Upgrades
 
-### Point B — my final recommendation
-Show the plain-English label as the **main title** and the original technical name as a small **muted subtitle** directly beneath it, inside the mega-menu and page hero. Top-level nav items (Invest, Learn, Find an Advisor, Partner, About) stay as-is — they're already simple.
-
-Example (mega-menu item):
-```text
-What kind of investor am I?
-Risk Profile · 2-min quiz
-```
-This keeps SEO/keyword recognition ("Risk Profile", "SIP Calculator") while making the action instantly obvious to a first-time visitor. On the page itself, the H1 becomes the plain-English question and the technical term appears as an eyebrow tag above it.
+Four independent improvements, grouped for one pass.
 
 ---
 
-## Scope of work (in ship order)
+## 1. Ask Balaji Nivesh — smarter chat with lead capture
 
-### 1. Mobile menu drawer position (Fix 1)
-- Add a `ref` on the `<header>` in `Header.tsx`, measure its live height with `ResizeObserver`, write it to `document.documentElement.style.setProperty('--header-h', ...)`.
-- Mobile drawer uses `top: var(--header-h)` and `height: calc(100dvh - var(--header-h))`.
-- Removes the "top items hidden behind banner" bug regardless of tagline wrap or viewport size.
+**In-chat action buttons (always visible in header of chat panel)**
+Add a compact action row at the top of the chat panel with three icon-buttons:
+- WhatsApp (uses existing `useWhatsAppContactHref`)
+- Call (`tel:` link from `site_settings.contact_phone`)
+- Book a call (routes to `/contact`)
 
-### 2. Merge Chat + WhatsApp into ONE floating button (Fix 2, option B)
-- Keep `ChatWidget`'s panel + edge-function logic; remove its standalone launcher button.
-- Expose an `openChat()` function via a tiny Zustand store (or context).
-- `StickyCTA` fan-out gets a fourth option: **"Ask our AI assistant"** which calls `openChat()`.
-- Result: one clear orange bubble bottom-right on every page → tap → four labelled choices (WhatsApp / Call / Book a call / Ask AI).
+**Lead capture (only when a CTA is clicked)**
+Clicking any of the three buttons opens an inline mini-form inside the chat:
+- Name (required)
+- Mobile (required, 10-digit validated)
+- Optional 1-line "What's on your mind?"
 
-### 3. Homepage upgrades (Points A, C, E)
-- **One primary CTA:** keep only "Book a free 15-min call" as the loud orange button. Downgrade "Try the SIP calculator first" to a plain text link.
-- **Trust line into hero:** move `AuthorityStrip` (ARN, 5+ yrs, 2,500 families, ₹310 Cr) directly under the hero sub-headline as a single scannable row.
-- **"How this works" 3-step strip** immediately under the hero:
-  ```text
-  1. Tell us your goal   →   2. Get a free plan on a 15-min call   →   3. Start with as little as ₹500
-  ```
-  Big icons, one sentence each, no jargon.
+On submit:
+- Insert into `contact_submissions` (source = `chatbot_whatsapp` / `chatbot_call` / `chatbot_book`) — auto-funnels into `lead_inbox` via existing trigger.
+- Attach `name` + `phone` to the current `chat_conversations` row (new nullable columns `lead_name`, `lead_phone`, `lead_captured_at`).
+- Then perform the original action (open WhatsApp / dial / navigate to /contact).
+- If the same conversation already captured a lead, skip the form and go straight to the action.
 
-### 4. Plain-English labels with subtitles (Point B, final form)
-Update the following in `Header.tsx` mega-menu and matching page headers. Format: **Plain title** with `technical name · short hint` as muted subtitle.
+**Fix chat text formatting**
+The current bubbles use `prose prose-sm` inside `text-sm` containers, which makes headings, lists and paragraphs collapse awkwardly. Rework the assistant bubble:
+- Remove the `bg-muted/60` bubble background on assistant messages (per chat-UI guidance); render on card surface with normal foreground.
+- Give user messages a proper high-contrast pair (primary / primary-foreground) instead of `bg-primary/10`.
+- Tighten Markdown component styles: proper spacing for `p`, `ul`, `ol`, `strong`, `h3/h4`; render links as underlined primary; add spacing between paragraphs.
+- Add a subtle typing shimmer while streaming instead of the current spinner-in-bubble.
+- Widen the panel slightly on desktop (`sm:w-[420px]`).
 
-| Location | Main label | Subtitle |
-|---|---|---|
-| Tools | What kind of investor am I? | Risk Profile · 2-min quiz |
-| Tools | Score my money in 2 minutes | Financial Health Check |
-| Tools | How much for my dream? | Goal Visualizer · SIP planner |
-| Learn | Today's market, simply explained | Market Updates |
-| Learn (col header) | Read & Watch | (replaces "Insights & Stories") |
-| Learn | Ask the community | Community Forum |
-| Buttons | See my result | (replaces "Calculate") |
-| Buttons | Send my details | (replaces "Submit") |
-| Buttons | Show me how → | (replaces "Learn more") |
-
-Routes and SEO titles are unchanged.
-
-### 5. Mobile sticky bottom bar (Point D)
-- Slim bar above the FAB, appears only after user scrolls past hero.
-- Two buttons: **"WhatsApp us"** (green) and **"Book a call"** (orange).
-- Uses `env(safe-area-inset-bottom)` for iOS home indicator.
-- Auto-hides when an input/textarea is focused (won't cover keyboard).
-
-### 6. Standardized "Next step" block (Point A, end of pages)
-- New shared component `NextStepBlock` with WhatsApp + Book-a-call buttons and one sentence: *"Not sure which is right for you? Talk to an advisor free for 15 minutes."*
-- Drop into every Solution page (MF, Bonds, Insurance, FDs, IPO), every Calculator result section, every Education pillar page.
-- Replaces the current inline `CalculatorLeadCapture` form on calculator results (still keeps the phone-capture form as an optional secondary card).
-
-### 7. Progressive disclosure on long pages (Point G)
-- Wrap below-the-fold sections of Education, Academy, and long Solution pages in shadcn `Accordion` with plain-English section titles.
-- Only the first section stays open by default; the rest are collapsed.
-
-### 8. Exit / dwell-time nudge (Point H)
-- One-time toast after 30 seconds of scrolling on Solution + Calculator pages.
-- Copy: *"Confused? Get a human to explain in 15 mins — free."* + WhatsApp + Book buttons.
-- Dismissible, capped once per session via `sessionStorage`.
-
-### 9. Partner section rename (Point I)
-- Under `/partner`, replace "Partner Academy / NISM Prep / Content Bible" tiles with **Learn / Earn / Grow** (same underlying routes and content).
-- Update `PartnerHome.tsx` copy + Partner sub-nav labels only.
+**Suggestion chips**
+Keep the 4 starter chips but restyle as pill buttons in a 2-col grid so they don't stack as thin rows.
 
 ---
 
-## What stays untouched
-- All routes, database schema, edge functions, auth, admin panel, RTA integration.
-- All compliance disclaimers, ARN tagline, SEBI/AMFI wording.
-- WhatsApp fallback number, `useWhatsAppContactHref` hook.
-- Academy content and generation pipeline.
+## 2. Admin: Chat conversation viewer (read-only)
 
-## Technical notes
-- Header height via CSS variable so drawer, sticky bar, and any anchor scrolls can all use `var(--header-h)`.
-- Chat/WhatsApp merge uses a shared imperative store — no prop drilling, no re-render churn on other pages.
-- All copy changes are presentation-only; no i18n key deletions (add new keys, keep old ones for now to avoid missing-translation warnings in `hi.json` / `bn.json`, then translate in a follow-up).
-- Estimated files touched: ~14 (Header, StickyCTA, ChatWidget, new `NextStepBlock`, new `MobileStickyBar`, new `HowItWorks`, `Index.tsx`, `AuthorityStrip.tsx`, ~5 solution pages, ~3 calculator pages, `PartnerHome.tsx`).
+New admin page `/admin/chats` (component `src/pages/admin/AdminChats.tsx`):
+- Left list: conversations ordered by `updated_at` desc, showing title, captured name/phone (if any), message count, last activity.
+- Filters: date range, "Has contact info", search on title/lead name/phone.
+- Right pane: full transcript rendered with the same Markdown component, plus citation chips. Read-only.
+- Link the "Has contact info" conversations to their `lead_inbox` row for quick follow-up.
 
-Reply **"go"** to build in this order (1 → 9), or tell me which steps to skip or reorder.
+Route added in `src/App.tsx` under `AdminGuard`. Sidebar link added in `AdminLayout.tsx`.
+
+**RLS**: add admin SELECT policies on `chat_conversations` and `chat_messages` using `has_role(auth.uid(), 'admin')`. Existing user policies untouched.
+
+---
+
+## 3. Google Reviews — trust widget
+
+Store the review link (`https://share.google/IK6J7sBBQJRY6TR55`) in `site_settings` as `google_review_url`. Add optional `google_rating` and `google_review_count` keys admins can edit from `AdminSiteSettings`.
+
+Two placements:
+
+**a) Homepage authority strip addition**
+Add a Google-badged card to `AuthorityStrip.tsx`: yellow stars, `4.X / 5` from Google, "N happy families reviewed us", CTA `Leave a Google review →` opening the link in a new tab.
+
+**b) Floating "Rate us" nudge (post-conversion)**
+A small, dismissible bottom-left card that appears only:
+- After a lead form submission (contact / calculator / gift claim) — set `localStorage.bn_can_ask_review = 1`.
+- On `/contact` "thank you" state and after `CalculatorLeadCapture` success.
+- Never on `/admin` or `/partner/dashboard`.
+Copy: *"Loved working with us? A quick Google review helps other families find us."* Button → review URL. Persist a `bn_review_dismissed` flag for 60 days once dismissed or clicked.
+
+No fake ratings — if `google_rating` isn't set, the strip renders "Rated on Google" with the stars-only badge and CTA.
+
+---
+
+## 4. Partner CRM — Google Calendar sync (2-way OAuth)
+
+Uses the **Google Calendar App User Connector** so each partner connects their own Google account. This is the correct Lovable primitive per the App User Connectors knowledge.
+
+**Setup (workspace-level, one-time by admin)**
+Run `connector_app_user--connect_client` for `connector_id: google_calendar`. Admin creates the Google OAuth web client in Google Cloud Console, adds gateway redirect URI `https://connector-gateway.lovable.dev/api/v1/app-users/oauth2/callback`, requests scopes:
+- `.../auth/userinfo.email`
+- `.../auth/userinfo.profile`
+- `.../auth/calendar.events`
+
+**Per-partner connect flow**
+- New "Google Calendar" card on Partner Dashboard + Leads page.
+- Button "Connect Google Calendar" → opens the App User Connector popup (`connectAppUser` with `app_user_id = partner user.id`).
+- Store returned connection key in `partner_google_connections` (new table: `partner_id`, `connection_key` (text), `google_email`, `connected_at`).
+- Disconnect button clears the row.
+
+**Sync behavior**
+When a partner sets `next_follow_up_date` on a lead (existing Leads CRM):
+- Server-side Edge Function `partner-calendar-sync` calls `callAsAppUser` → `POST /calendar/v3/calendars/primary/events` to create/update an event titled `Follow-up: {lead.name}` with 15-min default duration, description containing lead phone + notes, and a 30-min popup reminder.
+- Persist returned `event_id` on the lead (new column `partner_leads.google_event_id`).
+- Update triggers PATCH; clearing the follow-up date deletes the event.
+
+**Edge cases**
+- If the partner hasn't connected Google, keep the current in-app reminder behavior silently — no error.
+- Token refresh handled by the gateway; if the connection dies, surface an inline "Reconnect Google Calendar" banner on the Leads page.
+
+---
+
+## Technical details
+
+**New DB migration**
+- `chat_conversations`: add `lead_name text`, `lead_phone text`, `lead_captured_at timestamptz`, `lead_action text`.
+- `chat_conversations` + `chat_messages`: add admin SELECT policy via `has_role`.
+- `site_settings`: seed keys `google_review_url`, `google_rating`, `google_review_count`.
+- New table `partner_google_connections` (partner_id UUID PK → partners.id, connection_key text, google_email text, connected_at timestamptz). GRANT to `authenticated`/`service_role`, RLS: partner sees own row, admin sees all.
+- `partner_leads`: add `google_event_id text`.
+
+**New/changed files**
+- `src/components/chatbot/ChatWidget.tsx` — action row, lead form, formatting.
+- `src/components/chatbot/ChatLeadForm.tsx` — new.
+- `src/components/blog/Markdown.tsx` — verify prose overrides; may add compact variant.
+- `src/pages/admin/AdminChats.tsx` — new.
+- `src/components/layout/AuthorityStrip.tsx` — Google card.
+- `src/components/reviews/GoogleReviewNudge.tsx` — new floating post-conversion card, mounted in `LayoutWrapper`.
+- `src/pages/admin/AdminSiteSettings.tsx` — expose 3 new keys.
+- `src/components/partner/GoogleCalendarCard.tsx` — new; used in `Dashboard.tsx` + `Leads.tsx`.
+- `src/pages/partner/Leads.tsx` — call sync when follow-up date changes.
+- `supabase/functions/partner-calendar-sync/index.ts` — new Edge Function using `callAsAppUser` helper.
+- `supabase/functions/_shared/appUserConnector.ts` — new helper per tanstack-app-user-connector guidance (adapted to Supabase Edge Function runtime).
+- `src/App.tsx` + `AdminLayout.tsx` — new admin route/link.
+
+**Not changing**
+- Existing chatbot Edge Function RAG behavior, compliance system prompt, streaming protocol.
+- Existing lead_inbox trigger — it will pick up the new `contact_submissions` rows automatically.
+
+---
+
+## Order of execution
+1. Migration (chat lead cols, admin RLS, partner_google_connections, google_event_id, site_settings seed).
+2. Chat UI — action buttons, lead form, formatting fix.
+3. Admin `/admin/chats` viewer.
+4. Google Review — AuthorityStrip card + post-conversion nudge + admin settings fields.
+5. Google Calendar — `connect_client` for `google_calendar`, connect card, Edge Function, Leads integration.
