@@ -11,6 +11,7 @@ import HeroBanner from "@/components/layout/HeroBanner";
 import AuthorityStrip from "@/components/layout/AuthorityStrip";
 import HowItWorks from "@/components/layout/HowItWorks";
 import NewsletterSignup from "@/components/newsletter/NewsletterSignup";
+import GoogleReviewsStrip from "@/components/home/GoogleReviewsStrip";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
@@ -200,6 +201,8 @@ const Index = () => {
           <NewsletterSignup source="homepage" variant="card" />
         </div>
       </section>
+
+      <GoogleReviewsStrip />
 
       {/* CTA */}
       <section className="bg-gradient-to-r from-primary to-secondary py-12 sm:py-16 lg:py-20">
