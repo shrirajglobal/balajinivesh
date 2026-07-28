@@ -1,4 +1,4 @@
-import { ShieldCheck, BadgeCheck, Users, Award } from "lucide-react";
+import { ShieldCheck, BadgeCheck, Users, Award, Star } from "lucide-react";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 
 /**
@@ -8,6 +8,9 @@ import { useSiteSettings } from "@/hooks/useSiteSettings";
 const AuthorityStrip = () => {
   const { data: settings } = useSiteSettings();
   const arn = settings?.map.arn_number;
+  const reviewUrl = settings?.map.google_review_url;
+  const rating = settings?.map.google_rating;
+  const reviewCount = settings?.map.google_review_count;
 
   const items = [
     { icon: BadgeCheck, label: arn ? `AMFI Reg. ${arn}` : "AMFI Registered" },
@@ -26,6 +29,30 @@ const AuthorityStrip = () => {
               <span>{label}</span>
             </li>
           ))}
+          {reviewUrl && (
+            <li className="flex items-center">
+              <a
+                href={reviewUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 rounded-full border border-yellow-300/60 bg-yellow-50 px-2.5 py-1 text-[11px] font-medium text-yellow-900 transition-colors hover:border-yellow-400 hover:bg-yellow-100 sm:text-xs"
+              >
+                <span className="flex">
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <Star key={i} className="h-3 w-3 fill-yellow-500 text-yellow-500" />
+                  ))}
+                </span>
+                {rating ? (
+                  <span>
+                    <span className="font-semibold">{rating}</span> on Google
+                    {reviewCount ? <span className="text-yellow-800/70"> · {reviewCount} reviews</span> : null}
+                  </span>
+                ) : (
+                  <span className="font-semibold">Rate us on Google</span>
+                )}
+              </a>
+            </li>
+          )}
         </ul>
       </div>
     </div>
@@ -33,3 +60,4 @@ const AuthorityStrip = () => {
 };
 
 export default AuthorityStrip;
+
