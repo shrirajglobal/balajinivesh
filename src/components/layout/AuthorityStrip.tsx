@@ -35,7 +35,7 @@ const AuthorityStrip = () => {
                 href={reviewUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 rounded-full border border-yellow-300/60 bg-yellow-50 px-2.5 py-1 text-[11px] font-medium text-yellow-900 transition-colors hover:border-yellow-400 hover:bg-yellow-100 sm:text-xs"
+                className="group flex items-center gap-1.5 rounded-full border border-yellow-300/60 bg-yellow-50 px-2.5 py-1 text-[11px] font-medium text-yellow-900 transition-colors hover:border-yellow-400 hover:bg-yellow-100 sm:text-xs"
               >
                 <span className="flex">
                   {[0, 1, 2, 3, 4].map((i) => (
@@ -48,11 +48,13 @@ const AuthorityStrip = () => {
                     {reviewCount ? <span className="text-yellow-800/70"> · {reviewCount} reviews</span> : null}
                   </span>
                 ) : (
-                  <span className="font-semibold">Rate us on Google</span>
+                  <span className="font-semibold">Rated on Google</span>
                 )}
+                <span className="font-semibold text-yellow-900/90 group-hover:underline">· Rate us →</span>
               </a>
             </li>
           )}
+
         </ul>
       </div>
     </div>
