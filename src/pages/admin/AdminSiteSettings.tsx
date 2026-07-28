@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Loader2, Save, Globe } from "lucide-react";
+import { Loader2, Save, Globe, RefreshCw } from "lucide-react";
 
 interface SiteSetting {
   id: string;
@@ -113,7 +113,24 @@ const AdminSiteSettings = () => {
               />
             </div>
           ))}
-          <div className="flex justify-end pt-2">
+          <div className="flex flex-wrap justify-end gap-2 pt-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={async () => {
+                const t = toast.loading("Fetching latest Google rating…");
+                const { data: res, error } = await supabase.functions.invoke("refresh-google-reviews");
+                toast.dismiss(t);
+                if (error) return toast.error(error.message);
+                const r = res as { rating?: string; review_count?: string };
+                toast.success(`Updated: ${r.rating ?? "?"} ★ · ${r.review_count ?? "?"} reviews`);
+                qc.invalidateQueries({ queryKey: ["admin_site_settings"] });
+                qc.invalidateQueries({ queryKey: ["site_settings"] });
+              }}
+            >
+              <RefreshCw className="mr-2 h-4 w-4" />
+              Refresh Google rating
+            </Button>
             <Button onClick={handleSave} disabled={save.isPending}>
               {save.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
               Save Changes
