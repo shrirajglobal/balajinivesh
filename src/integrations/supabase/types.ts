@@ -275,6 +275,10 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          lead_action: string | null
+          lead_captured_at: string | null
+          lead_name: string | null
+          lead_phone: string | null
           session_id: string
           source: string
           title: string | null
@@ -284,6 +288,10 @@ export type Database = {
         Insert: {
           created_at?: string
           id?: string
+          lead_action?: string | null
+          lead_captured_at?: string | null
+          lead_name?: string | null
+          lead_phone?: string | null
           session_id: string
           source?: string
           title?: string | null
@@ -293,6 +301,10 @@ export type Database = {
         Update: {
           created_at?: string
           id?: string
+          lead_action?: string | null
+          lead_captured_at?: string | null
+          lead_name?: string | null
+          lead_phone?: string | null
           session_id?: string
           source?: string
           title?: string | null
@@ -1264,6 +1276,41 @@ export type Database = {
           },
         ]
       }
+      partner_google_connections: {
+        Row: {
+          connected_at: string
+          connection_key: string
+          google_email: string | null
+          partner_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          connected_at?: string
+          connection_key: string
+          google_email?: string | null
+          partner_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          connected_at?: string
+          connection_key?: string
+          google_email?: string | null
+          partner_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "partner_google_connections_partner_id_fkey"
+            columns: ["partner_id"]
+            isOneToOne: true
+            referencedRelation: "partners"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       partner_lead_activities: {
         Row: {
           activity_type: string
@@ -1311,6 +1358,7 @@ export type Database = {
           created_at: string
           email: string | null
           expected_investment_amount: number | null
+          google_event_id: string | null
           id: string
           last_contacted_at: string | null
           name: string
@@ -1327,6 +1375,7 @@ export type Database = {
           created_at?: string
           email?: string | null
           expected_investment_amount?: number | null
+          google_event_id?: string | null
           id?: string
           last_contacted_at?: string | null
           name: string
@@ -1343,6 +1392,7 @@ export type Database = {
           created_at?: string
           email?: string | null
           expected_investment_amount?: number | null
+          google_event_id?: string | null
           id?: string
           last_contacted_at?: string | null
           name?: string
