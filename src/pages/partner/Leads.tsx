@@ -21,6 +21,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import GoogleCalendarConnect from "@/components/partner/GoogleCalendarConnect";
+
 
 type Priority = "hot" | "warm" | "cold";
 type Status = "new" | "contacted" | "interested" | "meeting_scheduled" | "converted" | "not_interested";
@@ -96,6 +98,8 @@ const Leads = () => {
   const [activeLead, setActiveLead] = useState<Lead | null>(null);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [noteText, setNoteText] = useState("");
+  const [calendarConnected, setCalendarConnected] = useState(false);
+
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -195,11 +199,31 @@ const Leads = () => {
     updateLead(lead, { priority: next }, `Priority: ${lead.priority} → ${next}`, "status_change");
   };
 
-  const handleFollowUpChange = (lead: Lead, next: Date | undefined) => {
+  const syncToCalendar = async (leadId: string, cleared: boolean) => {
+    if (!calendarConnected) {
+      toast({
+        title: "Google Calendar not connected",
+        description: "Connect your Google Calendar to get follow-up reminders automatically.",
+      });
+      return;
+    }
+    const { data, error } = await supabase.functions.invoke("partner-calendar", {
+      body: { action: "sync_lead", lead_id: leadId },
+    });
+    if (error || (data as { error?: string } | null)?.error) {
+      toast({ title: "Could not sync to Google Calendar", variant: "destructive" });
+      return;
+    }
+    toast({ title: cleared ? "Calendar reminder removed" : "Synced to Google Calendar" });
+  };
+
+  const handleFollowUpChange = async (lead: Lead, next: Date | undefined) => {
     const iso = next ? toISODate(next) : null;
     if (iso === lead.next_follow_up_date) return;
-    updateLead(lead, { next_follow_up_date: iso }, `Next follow-up: ${iso || "cleared"}`, "status_change");
+    await updateLead(lead, { next_follow_up_date: iso }, `Next follow-up: ${iso || "cleared"}`, "status_change");
+    void syncToCalendar(lead.id, !iso);
   };
+
 
   const markContacted = async (lead: Lead) => {
     await updateLead(lead, { last_contacted_at: new Date().toISOString() }, "Marked as contacted", "call");
@@ -265,11 +289,14 @@ const Leads = () => {
           <h1 className="font-display text-2xl font-bold text-foreground">{t("partnerLeads.title")}</h1>
           <p className="mt-1 text-muted-foreground">{t("partnerLeads.subtitle")}</p>
         </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <GoogleCalendarConnect onStatusChange={setCalendarConnected} />
         {partnerId && (
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button><Plus className="mr-1 h-4 w-4" /> {t("partnerLeads.addLead")}</Button>
             </DialogTrigger>
+
             <DialogContent className="max-h-[90vh] overflow-y-auto">
               <DialogHeader><DialogTitle>{t("partnerLeads.addNewLead")}</DialogTitle></DialogHeader>
               <Form {...form}>
@@ -330,7 +357,9 @@ const Leads = () => {
             </DialogContent>
           </Dialog>
         )}
+        </div>
       </div>
+
 
       {/* Stats */}
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
