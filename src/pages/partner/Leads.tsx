@@ -21,6 +21,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import GoogleCalendarConnect from "@/components/partner/GoogleCalendarConnect";
+
 
 type Priority = "hot" | "warm" | "cold";
 type Status = "new" | "contacted" | "interested" | "meeting_scheduled" | "converted" | "not_interested";
@@ -96,6 +98,8 @@ const Leads = () => {
   const [activeLead, setActiveLead] = useState<Lead | null>(null);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [noteText, setNoteText] = useState("");
+  const [calendarConnected, setCalendarConnected] = useState(false);
+
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
