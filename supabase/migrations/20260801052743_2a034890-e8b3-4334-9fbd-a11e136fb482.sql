@@ -1,0 +1,1 @@
+update public.site_settings set setting_value = 'https://share.google/IK6J7sBBQJRY6TR55' where setting_key = 'google_review_url';
