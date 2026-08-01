@@ -53,3 +53,7 @@ verify_jwt = false
 
 [functions.generate-bible-chapter]
 verify_jwt = false
+
+[functions.partner-calendar]
+verify_jwt = false
+
