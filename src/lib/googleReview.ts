@@ -9,11 +9,13 @@
  * shows the "Write a review" button prominently on both mobile and desktop.
  */
 export function buildWriteReviewUrl(placeId?: string | null, fallback?: string | null): string {
+  if (fallback) return fallback;
   if (placeId) return `https://www.google.com/maps/place/?q=place_id:${placeId}`;
-  return fallback || "";
+  return "";
 }
 
 export function buildReadReviewsUrl(placeId?: string | null, fallback?: string | null): string {
+  if (fallback) return fallback;
   if (placeId) return `https://www.google.com/maps/place/?q=place_id:${placeId}`;
-  return fallback || "";
+  return "";
 }
