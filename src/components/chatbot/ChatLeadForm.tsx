@@ -27,7 +27,7 @@ const ACTION_INTRO: Record<ChatCTAAction, string> = {
   book: "Tell us who you are and we'll take you to the booking form.",
 };
 
-const ChatLeadForm = ({ action, conversationId, onCaptured, onCancel }: Props) => {
+const ChatLeadForm = ({ action, conversationId, sessionId, onCaptured, onCancel }: Props) => {
   const { toast } = useToast();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -64,17 +64,17 @@ const ChatLeadForm = ({ action, conversationId, onCaptured, onCancel }: Props) =
       return;
     }
 
-    // Best-effort update on conversation row (RLS-safe: silently ignored if none)
+    // Annotate the conversation server-side (service-role, session-verified).
     if (conversationId) {
-      await supabase
-        .from("chat_conversations")
-        .update({
+      await supabase.functions.invoke("mark-chat-lead", {
+        body: {
+          conversation_id: conversationId,
+          session_id: sessionId,
           lead_name: trimmedName,
           lead_phone: digits,
-          lead_captured_at: new Date().toISOString(),
           lead_action: action,
-        })
-        .eq("id", conversationId);
+        },
+      });
     }
 
     setBusy(false);

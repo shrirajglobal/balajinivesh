@@ -316,6 +316,7 @@ const ChatWidget = () => {
                   <ChatLeadForm
                     action={ctaForm}
                     conversationId={conversationId}
+                  sessionId={sessionId.current}
                     onCaptured={handleLeadCaptured}
                     onCancel={() => setCtaForm(null)}
                   />
@@ -327,6 +328,7 @@ const ChatWidget = () => {
                 <ChatLeadForm
                   action={ctaForm}
                   conversationId={conversationId}
+                  sessionId={sessionId.current}
                   onCaptured={handleLeadCaptured}
                   onCancel={() => setCtaForm(null)}
                 />
