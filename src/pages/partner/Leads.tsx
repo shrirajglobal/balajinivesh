@@ -265,11 +265,14 @@ const Leads = () => {
           <h1 className="font-display text-2xl font-bold text-foreground">{t("partnerLeads.title")}</h1>
           <p className="mt-1 text-muted-foreground">{t("partnerLeads.subtitle")}</p>
         </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <GoogleCalendarConnect onStatusChange={setCalendarConnected} />
         {partnerId && (
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
               <Button><Plus className="mr-1 h-4 w-4" /> {t("partnerLeads.addLead")}</Button>
             </DialogTrigger>
+
             <DialogContent className="max-h-[90vh] overflow-y-auto">
               <DialogHeader><DialogTitle>{t("partnerLeads.addNewLead")}</DialogTitle></DialogHeader>
               <Form {...form}>
