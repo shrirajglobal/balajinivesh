@@ -10,6 +10,7 @@ export type ChatCTAAction = "whatsapp" | "call" | "book";
 interface Props {
   action: ChatCTAAction;
   conversationId: string | null;
+  sessionId: string;
   onCaptured: (name: string, phone: string) => void;
   onCancel: () => void;
 }
