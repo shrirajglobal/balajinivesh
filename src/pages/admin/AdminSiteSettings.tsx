@@ -105,6 +105,12 @@ const AdminSiteSettings = () => {
                 {row.description && (
                   <p className="mt-0.5 text-xs text-muted-foreground">{row.description}</p>
                 )}
+                {row.setting_key === "google_place_id" && (
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    How to find it: search your business on Google Maps, click "Share" → "Embed a map" —
+                    the Place ID is in the embed code. Or use Google's Place ID Finder tool.
+                  </p>
+                )}
               </div>
               <Input
                 id={`s-${row.setting_key}`}
