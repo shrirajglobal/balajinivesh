@@ -333,7 +333,9 @@ const Leads = () => {
             </DialogContent>
           </Dialog>
         )}
+        </div>
       </div>
+
 
       {/* Stats */}
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
