@@ -12,7 +12,7 @@ import { buildWriteReviewUrl, buildReadReviewsUrl } from "@/lib/googleReview";
 const GoogleReviewsStrip = () => {
   const { data: settings } = useSiteSettings();
   const placeId = settings?.map.google_place_id;
-  const rating = settings?.map.google_rating || "4.7";
+  const rating = settings?.map.google_rating || "";
   const count = settings?.map.google_review_count || "";
   const fallback = settings?.map.google_review_url;
   const writeUrl = buildWriteReviewUrl(placeId, fallback);
@@ -20,6 +20,9 @@ const GoogleReviewsStrip = () => {
 
   const numericRating = Number(rating) || 0;
   const fullStars = Math.round(numericRating);
+
+  // Never display a fabricated rating — hide the whole section until real data exists.
+  if (!rating) return null;
 
   return (
     <section className="border-y border-border bg-muted/30 py-12 sm:py-16">
