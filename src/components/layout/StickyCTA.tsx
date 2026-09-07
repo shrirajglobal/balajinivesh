@@ -29,9 +29,9 @@ const StickyCTA = () => {
   if (hidden) return null;
 
   return (
-    <div className="fixed bottom-20 right-4 z-40 flex flex-col items-end gap-2 sm:bottom-6 sm:right-6">
+    <div className="pointer-events-none fixed bottom-20 right-4 z-40 flex flex-col items-end gap-2 sm:bottom-6 sm:right-6">
       {open && (
-        <div className="mb-1 flex flex-col gap-2 animate-in fade-in slide-in-from-bottom-2 duration-200">
+        <div className="pointer-events-auto mb-1 flex flex-col gap-2 animate-in fade-in slide-in-from-bottom-2 duration-200">
           <a
             href={whatsappHref}
             target="_blank"
@@ -69,7 +69,7 @@ const StickyCTA = () => {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close contact menu" : "Talk to an advisor or ask a question"}
         className={cn(
-          "flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition-all sm:h-16 sm:w-16",
+          "pointer-events-auto flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition-all sm:h-16 sm:w-16",
           open
             ? "bg-foreground text-background shadow-foreground/30 rotate-90"
             : "bg-primary text-primary-foreground shadow-primary/40 ring-4 ring-primary/20"
@@ -79,7 +79,7 @@ const StickyCTA = () => {
       </button>
 
       {!open && (
-        <span className="hidden sm:inline-block rounded-full bg-foreground/90 px-3 py-1 text-[11px] font-semibold text-background shadow-md">
+        <span className="pointer-events-none hidden sm:inline-block rounded-full bg-foreground/90 px-3 py-1 text-[11px] font-semibold text-background shadow-md">
           Need help? Talk to us
         </span>
       )}
