@@ -47,4 +47,5 @@ Per SEBI legibility norms, every rendering of this identity line must be at leas
 
 ## Verification
 
-Typecheck, then load the home page, About, Disclaimer, Privacy Policy, Terms of Use and Commission Disclosure in the browser and confirm every visible ARN mention matches the approved string, in all three languages.
+Typecheck, then load the home page, About, Disclaimer, Privacy Policy, Terms of Use and Commission Disclosure in the browser and confirm every visible ARN mention matches the approved string, in all three languages. Also measure the computed font size of each identity line on mobile and desktop widths to confirm none renders below 12px.
+
