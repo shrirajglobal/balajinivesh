@@ -82,10 +82,9 @@ const Header = () => {
           title: "Where to invest",
           items: [
             { label: "Grow with SIPs", sub: "Mutual Funds", path: "/solutions/mutual-funds", icon: Briefcase, desc: "SIPs, ELSS, debt & hybrid funds" },
-            { label: "Steady income", sub: "Bonds", path: "/solutions/bonds", icon: Briefcase, desc: "Govt & corporate bonds" },
-            { label: "Protect your family", sub: "Insurance", path: "/solutions/insurance", icon: Shield, desc: "Term & health protection" },
-            { label: "New listings", sub: "IPO", path: "/solutions/ipo", icon: TrendingUp, desc: "Primary market access" },
-            { label: "Safer parking", sub: "Fixed Deposits", path: "/solutions/fixed-deposits", icon: Briefcase, desc: "Corporate FDs" },
+            { label: "Flexible strategies", sub: "SIF", path: "/solutions/sif", icon: TrendingUp, desc: "Specialized Investment Funds, from ₹10 lakh" },
+            { label: "Private markets", sub: "AIF", path: "/solutions/aif", icon: Briefcase, desc: "Alternative Investment Funds, from ₹1 crore" },
+            { label: "Your own portfolio", sub: "PMS", path: "/solutions/pms", icon: Shield, desc: "Portfolio Management Services, from ₹50 lakh" },
           ],
         },
         {

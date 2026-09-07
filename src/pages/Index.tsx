@@ -36,10 +36,9 @@ const Index = () => {
 
   const solutions = [
     { label: t("nav.mutualFunds"), path: "/solutions/mutual-funds" },
-    { label: t("nav.bonds"), path: "/solutions/bonds" },
-    { label: t("nav.insurance"), path: "/solutions/insurance" },
-    { label: t("nav.ipo"), path: "/solutions/ipo" },
-    { label: t("nav.fixedDeposits"), path: "/solutions/fixed-deposits" },
+    { label: t("nav.sif"), path: "/solutions/sif" },
+    { label: t("nav.aif"), path: "/solutions/aif" },
+    { label: t("nav.pms"), path: "/solutions/pms" },
   ];
 
   const trustPoints = [t("home.trust1"), t("home.trust2"), t("home.trust3"), t("home.trust4"), t("home.trust5"), t("home.trust6")];

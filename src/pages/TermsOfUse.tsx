@@ -16,7 +16,7 @@ const TermsOfUse = () => {
           <h2>2. Nature of Services</h2>
           <p>Balaji Nivesh operates as a <strong>Mutual Fund Distributor</strong> registered with the Association of Mutual Funds in India (AMFI). We are <strong>not</strong> a SEBI-registered Investment Adviser as defined under the SEBI (Investment Advisers) Regulations, 2013.</p>
           <ul>
-            <li>We facilitate the distribution of mutual fund schemes, bonds, insurance, IPOs, and fixed deposits from various product manufacturers.</li>
+            <li>We facilitate the distribution of mutual fund schemes, Specialized Investment Funds (SIF), Alternative Investment Funds (AIF) and Portfolio Management Services (PMS) offered by duly registered product manufacturers.</li>
             <li>The information provided on this website is for <strong>general educational and informational purposes only</strong> and does not constitute investment advice, a recommendation, or an offer to buy or sell any securities.</li>
             <li>Any reference to specific mutual fund schemes, returns, or financial products is for illustrative purposes and should not be construed as a solicitation or endorsement.</li>
           </ul>
