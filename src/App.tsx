@@ -21,10 +21,9 @@ import AdminLayout from "./components/admin/AdminLayout";
 
 // Lazy load non-critical routes
 const MutualFunds = lazy(() => import("./pages/solutions/MutualFunds"));
-const Bonds = lazy(() => import("./pages/solutions/Bonds"));
-const Insurance = lazy(() => import("./pages/solutions/Insurance"));
-const IPO = lazy(() => import("./pages/solutions/IPO"));
-const FixedDeposits = lazy(() => import("./pages/solutions/FixedDeposits"));
+const SIF = lazy(() => import("./pages/solutions/SIF"));
+const AIF = lazy(() => import("./pages/solutions/AIF"));
+const PMS = lazy(() => import("./pages/solutions/PMS"));
 
 const Calculators = lazy(() => import("./pages/Calculators"));
 const SIPCalculator = lazy(() => import("./pages/calculators/SIPCalculator"));
@@ -183,11 +182,16 @@ const App = () => (
                 <Route element={<LayoutWrapper />}>
                   <Route path="/" element={<Index />} />
                   {/* Investment Solutions */}
+                  <Route path="/solutions" element={<Navigate to="/solutions/mutual-funds" replace />} />
                   <Route path="/solutions/mutual-funds" element={<LazyRoute component={MutualFunds} />} />
-                  <Route path="/solutions/bonds" element={<LazyRoute component={Bonds} />} />
-                  <Route path="/solutions/insurance" element={<LazyRoute component={Insurance} />} />
-                  <Route path="/solutions/ipo" element={<LazyRoute component={IPO} />} />
-                  <Route path="/solutions/fixed-deposits" element={<LazyRoute component={FixedDeposits} />} />
+                  <Route path="/solutions/sif" element={<LazyRoute component={SIF} />} />
+                  <Route path="/solutions/aif" element={<LazyRoute component={AIF} />} />
+                  <Route path="/solutions/pms" element={<LazyRoute component={PMS} />} />
+                  {/* Retired product pages — redirect to keep old links alive */}
+                  <Route path="/solutions/bonds" element={<Navigate to="/solutions/mutual-funds" replace />} />
+                  <Route path="/solutions/insurance" element={<Navigate to="/solutions/mutual-funds" replace />} />
+                  <Route path="/solutions/ipo" element={<Navigate to="/solutions/mutual-funds" replace />} />
+                  <Route path="/solutions/fixed-deposits" element={<Navigate to="/solutions/mutual-funds" replace />} />
                   {/* Calculators */}
                   <Route path="/calculators" element={<LazyRoute component={Calculators} />} />
                   <Route path="/calculators/sip" element={<LazyRoute component={SIPCalculator} />} />

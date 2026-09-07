@@ -66,10 +66,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {[
                 { label: t("nav.mutualFunds"), path: "/solutions/mutual-funds" },
-                { label: t("nav.bonds"), path: "/solutions/bonds" },
-                { label: t("nav.insurance"), path: "/solutions/insurance" },
-                { label: t("nav.ipo"), path: "/solutions/ipo" },
-                { label: t("nav.fixedDeposits"), path: "/solutions/fixed-deposits" },
+                { label: t("nav.sif"), path: "/solutions/sif" },
+                { label: t("nav.aif"), path: "/solutions/aif" },
+                { label: t("nav.pms"), path: "/solutions/pms" },
               ].map((link) => (
                 <li key={link.path}>
                   <Link to={link.path} className="inline-block py-0.5 text-sm text-muted-foreground transition-colors hover:text-primary">
