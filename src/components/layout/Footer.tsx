@@ -113,10 +113,11 @@ const Footer = () => {
           {/* Statutory notice strip: SEBI SCORES + SEBI FILINGS + ARN/AMFI status */}
           <div className="mt-4 rounded-md border border-border bg-muted/70 p-3 text-center text-xs leading-relaxed text-foreground/90">
             <p className="font-medium">
-              AMFI Registered Mutual Fund Distributor
-              {arnNumber && <span> | ARN NO: {arnNumber}</span>}
-              {arnHolder && <span> | ARN Holder: {arnHolder}</span>}
+              {arnIdentity.entityName}
+              <br />
+              {arnIdentity.credentialLine}
             </p>
+
             <p className="mt-1.5">
               Please write to SEBI - SCORES for any grievances related to Mutual Fund and Capital Market:{" "}
               <a
