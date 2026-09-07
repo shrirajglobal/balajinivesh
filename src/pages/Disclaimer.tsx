@@ -98,10 +98,9 @@ const Disclaimer = () => {
           <h2>7. Product-Specific Disclosures</h2>
           <ul>
             <li><strong>Mutual Funds:</strong> Subject to market risks. Read all scheme-related documents carefully.</li>
-            <li><strong>Bonds:</strong> Subject to credit risk, interest rate risk, and liquidity risk. Bond values may fluctuate based on market conditions.</li>
-            <li><strong>Insurance:</strong> Insurance is a contract between the insurer and the insured. Balaji Nivesh acts as a referral partner and is not an IRDAI-licensed insurance agent/broker. Please read the policy documents carefully for detailed terms and conditions.</li>
-            <li><strong>IPO:</strong> Investment in IPOs involves risk. Past IPO listing gains do not guarantee future performance. Allotment is subject to regulatory processes and is not guaranteed.</li>
-            <li><strong>Fixed Deposits:</strong> Returns on fixed deposits depend on the issuer's creditworthiness. Fixed deposits of companies are not guaranteed by any regulatory body.</li>
+            <li><strong>SIF (Specialized Investment Funds):</strong> A distinct SEBI product category with a higher minimum investment (generally ₹10 lakh) and wider strategy mandates than mutual funds. Higher volatility and strategy-specific liquidity terms apply. Read the offer documents carefully.</li>
+            <li><strong>AIF (Alternative Investment Funds):</strong> Privately pooled vehicles registered under the SEBI (AIF) Regulations, 2012, with a minimum commitment of ₹1 crore. Investments are illiquid, may be locked in for the fund's life, and carry high risk including loss of capital.</li>
+            <li><strong>PMS (Portfolio Management Services):</strong> Offered by SEBI-registered portfolio managers with a minimum investment of ₹50 lakh. Securities are held directly in the investor's name; portfolios may be concentrated. Past performance of any strategy does not guarantee future results.</li>
           </ul>
         </section>
 

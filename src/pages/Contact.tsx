@@ -19,7 +19,7 @@ const INTEREST_OPTIONS = [
   "Retirement planning",
   "Tax-saving (ELSS)",
   "Child's education planning",
-  "Insurance review",
+  "SIF / AIF / PMS enquiry",
   "Lumpsum investment",
   "Become a partner",
   "Something else",

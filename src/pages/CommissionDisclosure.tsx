@@ -132,7 +132,7 @@ const CommissionDisclosure = () => {
           <ul>
             <li>{arnHolder} does not receive any consideration by way of remuneration or reward from investors.</li>
             <li>We may, from time to time, participate in training or business development programs organised by AMCs.</li>
-            <li>For insurance products distributed or referred by us, commission is paid by the respective insurance company as per IRDAI norms and is embedded in the premium.</li>
+            <li>For SIF, AIF and PMS products, distribution commission structures differ from mutual fund trail commission and are governed by the respective SEBI regulations and the terms agreed with the fund house or portfolio manager. These are disclosed to you in the product documents before you invest.</li>
             <li>Aggregate commission details, where required, are disclosed in the Consolidated Account Statement (CAS) sent to investors as per SEBI regulations.</li>
           </ul>
         </section>
