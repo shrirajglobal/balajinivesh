@@ -27,7 +27,7 @@
 |---|--------------|----------------|------------------|
 | 1 | **Phone Number (primary)** | "+91 XXXXX XXXXX" (placeholder) | Contact Page, Footer |
 | 2 | **Phone Number (secondary / WhatsApp)** | Not present | Contact Page |
-| 3 | **Email Address** | "info@balajinivesh.com" (assumed) | Contact Page, Footer |
+| 3 | **Email Address** | "infobalajinivesh@gmail.com" (assumed) | Contact Page, Footer |
 | 4 | **Full Office Address** | "Your Office Address, City, State, India" (placeholder) | Contact Page, Footer |
 | 5 | **Office Hours / Working Days** | "Mon - Sat, 10 AM - 6 PM" (assumed) | Contact Page |
 | 6 | **Google Maps Link / Embed** | Not present | Contact Page |

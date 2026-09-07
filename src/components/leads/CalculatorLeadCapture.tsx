@@ -136,7 +136,7 @@ const CalculatorLeadCapture = ({
                 <Phone className="h-3.5 w-3.5" /> Call us
               </a>
               <span className="text-muted-foreground">·</span>
-              <a href={`mailto:${settings?.map.contact_email || "info@balajinivesh.com"}`} className="inline-flex items-center gap-1 font-semibold text-foreground hover:underline">
+              <a href={`mailto:${settings?.map.contact_email || "infobalajinivesh@gmail.com"}`} className="inline-flex items-center gap-1 font-semibold text-foreground hover:underline">
                 <Mail className="h-3.5 w-3.5" /> Email
               </a>
             </div>
