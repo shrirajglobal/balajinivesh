@@ -56,7 +56,7 @@ const Index = () => {
       <HeroBanner className="py-12 sm:py-16 lg:py-28">
         <div className="mx-auto max-w-3xl text-center px-1">
           <motion.div initial="hidden" animate="visible" variants={fadeInUp} custom={0}>
-            <span className="inline-block rounded-full border border-border bg-card px-3 py-1 text-[11px] font-medium text-muted-foreground sm:px-4 sm:py-1.5 sm:text-xs">
+            <span className="inline-block rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground sm:px-4 sm:py-1.5">
               {t("home.badge")}
             </span>
           </motion.div>
