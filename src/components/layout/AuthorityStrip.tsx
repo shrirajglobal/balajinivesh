@@ -1,6 +1,8 @@
 import { ShieldCheck, BadgeCheck, Users, Award, Star } from "lucide-react";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { buildWriteReviewUrl } from "@/lib/googleReview";
+import { useArnIdentity } from "@/lib/arn";
+
 
 /**
  * Slim authority bar shown under hero on key marketing pages.

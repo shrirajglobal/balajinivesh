@@ -5,15 +5,14 @@ import { useSiteSettings } from "@/hooks/useSiteSettings";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import NewsletterSignup from "@/components/newsletter/NewsletterSignup";
 import logo from "@/assets/logo.jpeg";
+import { useArnIdentity } from "@/lib/arn";
+
 
 const Footer = () => {
   const { t } = useLanguage();
   const { data: settings } = useSiteSettings();
-  const arnNumber = settings?.map.arn_number;
-  const arnHolder = settings?.map.arn_holder_name;
-  const arnLine = arnNumber
-    ? `${arnNumber}${arnHolder ? ` · ${arnHolder}` : ""}`
-    : t("footer.arn");
+  const arnIdentity = useArnIdentity();
+
   const contactPhone = settings?.map.contact_phone || "+91 93300 79717";
   const contactEmail = settings?.map.contact_email || "infobalajinivesh@gmail.com";
 
