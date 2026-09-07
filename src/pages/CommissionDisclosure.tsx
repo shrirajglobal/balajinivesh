@@ -5,7 +5,7 @@ const CommissionDisclosure = () => {
   const rawArn = settings?.map.arn_number || "173142";
   const arnNumber = rawArn.replace(/^ARN[-\s]*/i, "");
   const arnHolder = settings?.map.arn_holder_name || "Balaji Nivesh Private Limited";
-  const contactEmail = settings?.map.contact_email || "info@balajinivesh.com";
+  const contactEmail = settings?.map.contact_email || "infobalajinivesh@gmail.com";
   const contactPhone = settings?.map.contact_phone || "+91 93300 79717";
 
   return (

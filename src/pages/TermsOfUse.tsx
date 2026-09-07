@@ -125,7 +125,7 @@ const TermsOfUse = () => {
           <h2>15. Contact</h2>
           <p>
             For questions about these Terms of Use, please contact us at:<br />
-            <strong>Email:</strong> info@balajinivesh.com<br />
+            <strong>Email:</strong> infobalajinivesh@gmail.com<br />
             <strong>Phone:</strong> +91 93300 79717
           </p>
         </section>

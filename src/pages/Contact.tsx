@@ -38,7 +38,7 @@ const Contact = () => {
 
   const waHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to book a free 15-min call.");
   const phoneDisplay = settings?.map.contact_phone || "+91 93300 79717";
-  const emailDisplay = settings?.map.contact_email || "info@balajinivesh.com";
+  const emailDisplay = settings?.map.contact_email || "infobalajinivesh@gmail.com";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

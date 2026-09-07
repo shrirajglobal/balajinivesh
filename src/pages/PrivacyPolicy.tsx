@@ -101,7 +101,7 @@ const PrivacyPolicy = () => {
           </p>
           <p className="mt-2">
             <strong>Grievance Officer:</strong> [Name of Grievance Officer]<br />
-            <strong>Email:</strong> info@balajinivesh.com<br />
+            <strong>Email:</strong> infobalajinivesh@gmail.com<br />
             <strong>Phone:</strong> +91 93300 79717<br />
             <strong>Address:</strong> 1 R. N. Mukherjee Road, 3rd Floor, Room No. 320, Kolkata, West Bengal – 700001
           </p>
@@ -118,7 +118,7 @@ const PrivacyPolicy = () => {
           <h2>13. Contact Us</h2>
           <p>
             For any questions or concerns about this Privacy Policy, please contact us at:<br />
-            <strong>Email:</strong> info@balajinivesh.com<br />
+            <strong>Email:</strong> infobalajinivesh@gmail.com<br />
             <strong>Phone:</strong> +91 93300 79717
           </p>
         </section>

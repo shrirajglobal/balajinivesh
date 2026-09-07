@@ -15,7 +15,7 @@ const Footer = () => {
     ? `${arnNumber}${arnHolder ? ` · ${arnHolder}` : ""}`
     : t("footer.arn");
   const contactPhone = settings?.map.contact_phone || "+91 93300 79717";
-  const contactEmail = settings?.map.contact_email || "info@balajinivesh.com";
+  const contactEmail = settings?.map.contact_email || "infobalajinivesh@gmail.com";
 
   return (
     <footer className="border-t border-border bg-muted/50">
