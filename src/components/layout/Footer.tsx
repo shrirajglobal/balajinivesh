@@ -29,7 +29,12 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-sm leading-relaxed text-muted-foreground">{t("footer.tagline")}</p>
-            <p className="text-xs font-medium text-muted-foreground">{arnLine}</p>
+            <p className="text-xs font-medium leading-relaxed text-muted-foreground">
+              {arnIdentity.entityName}
+              <br />
+              {arnIdentity.credentialLine}
+            </p>
+
             <div className="pt-2">
               <h4 className="mb-2 font-display text-sm font-semibold text-foreground">
                 Daily market updates in your inbox
