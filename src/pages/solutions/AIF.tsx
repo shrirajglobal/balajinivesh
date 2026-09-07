@@ -5,7 +5,7 @@ const AIF = () => (
   <SolutionPageTemplate
     title="AIF"
     subtitle="Alternative Investment Fund — privately pooled vehicles for sophisticated, high-net-worth investors."
-    description="This page is for educational purposes only. Balaji Nivesh is an AMFI registered mutual fund distributor and does not provide investment advisory services."
+    description="This page is for educational purposes only. Balaji Nivesh Private Limited is an AMFI-registered Mutual Fund Distributor | ARN-173142 and does not provide investment advisory services."
     icon={<Boxes className="h-8 w-8" />}
     whatIsIt="An Alternative Investment Fund (AIF) is a privately pooled investment vehicle registered with SEBI under the SEBI (Alternative Investment Funds) Regulations, 2012. It collects money from sophisticated investors — Indian or foreign — and invests according to a defined strategy that usually falls outside conventional equity and debt. SEBI classifies AIFs into three categories: Category I (venture capital, SME, social impact and infrastructure funds that receive policy encouragement), Category II (private equity, private credit and real estate funds that use no significant leverage) and Category III (hedge-fund style strategies including long-short and derivatives-driven approaches). AIFs typically have a defined fund life, capital is drawn down over time, and units are illiquid until the fund exits its investments. Minimum investment is generally ₹1 crore per investor (₹25 lakh for directors, employees and fund managers of the AIF)."
     suitableFor={[

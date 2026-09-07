@@ -1,6 +1,8 @@
 import { ShieldCheck, BadgeCheck, Users, Award, Star } from "lucide-react";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { buildWriteReviewUrl } from "@/lib/googleReview";
+import { useArnIdentity } from "@/lib/arn";
+
 
 /**
  * Slim authority bar shown under hero on key marketing pages.
@@ -8,24 +10,25 @@ import { buildWriteReviewUrl } from "@/lib/googleReview";
  */
 const AuthorityStrip = () => {
   const { data: settings } = useSiteSettings();
-  const arn = settings?.map.arn_number;
+  const arnIdentity = useArnIdentity();
   const reviewUrl = buildWriteReviewUrl(settings?.map.google_place_id, settings?.map.google_review_url);
   const rating = settings?.map.google_rating;
   const reviewCount = settings?.map.google_review_count;
 
   const items = [
-    { icon: BadgeCheck, label: arn ? `AMFI Reg. ${arn}` : "AMFI Registered" },
-    { icon: ShieldCheck, label: "AMFI-Registered Distributor" },
+    { icon: BadgeCheck, label: arnIdentity.credentialLine },
+    { icon: ShieldCheck, label: arnIdentity.entityName },
     { icon: Award, label: "5+ years experience" },
     { icon: Users, label: "2,500+ families served" },
   ];
+
 
   return (
     <div className="border-y border-border bg-muted/40">
       <div className="container">
         <ul className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 py-3 sm:gap-x-10">
           {items.map(({ icon: Icon, label }) => (
-            <li key={label} className="flex items-center gap-2 text-[11px] font-medium text-muted-foreground sm:text-xs">
+            <li key={label} className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
               <Icon className="h-3.5 w-3.5 text-brand-green" />
               <span>{label}</span>
             </li>

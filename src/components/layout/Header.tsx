@@ -11,6 +11,8 @@ import { useLanguage, LANGUAGE_LABELS, type Language } from "@/contexts/Language
 import { useAuth } from "@/contexts/AuthContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { useWhatsAppContactHref } from "@/lib/whatsapp";
+import { useArnIdentity } from "@/lib/arn";
+
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.jpeg";
 import {
@@ -39,6 +41,8 @@ const Header = () => {
   const { t, language, setLanguage } = useLanguage();
   const { user, signOut } = useAuth();
   const { data: settings } = useSiteSettings();
+  const arnIdentity = useArnIdentity();
+
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
 
@@ -131,11 +135,12 @@ const Header = () => {
   return (
     <header ref={headerRef} className="sticky top-0 z-50 relative border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
 
-      <div className="bg-primary/5 text-center text-xs leading-tight text-muted-foreground">
+      <div className="bg-primary/5 text-center text-xs leading-snug text-muted-foreground">
         <div className="container px-4 py-1.5">
-          <span className="font-medium text-foreground">Balaji Nivesh Private Limited</span> · AMFI-registered Mutual Fund Distributor · ARN – 173142 · <span className="italic hidden sm:inline">Not a SEBI-registered Investment Adviser</span>
+          <span className="font-medium text-foreground">{arnIdentity.entityName}</span> · {arnIdentity.credentialLine} · <span className="italic hidden sm:inline">Not a SEBI-registered Investment Adviser</span>
         </div>
       </div>
+
       <div className="container flex h-14 items-center justify-between sm:h-16 lg:h-18">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">

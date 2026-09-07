@@ -17,7 +17,7 @@ const CommissionDisclosure = () => {
         <section className="rounded-lg border border-primary/20 bg-primary/5 p-6">
           <h2>Regulatory Status</h2>
           <p>
-            <strong>{arnHolder}</strong> (ARN-{arnNumber}) is an <strong>AMFI Registered Mutual Fund Distributor</strong>. We distribute <strong>regular plans</strong> of mutual fund schemes and receive commission from Asset Management Companies (AMCs) for the assets mobilised and retained through us. We do not charge investors any separate fee for distribution services.
+            <strong>{arnHolder}</strong> is an <strong>AMFI-registered Mutual Fund Distributor | ARN-{arnNumber}</strong>. We distribute <strong>regular plans</strong> of mutual fund schemes and receive commission from Asset Management Companies (AMCs) for the assets mobilised and retained through us. We do not charge investors any separate fee for distribution services.
           </p>
           <p className="mt-3">
             We are <strong>not</strong> a SEBI-registered Investment Adviser under the SEBI (Investment Advisers) Regulations, 2013, nor a SEBI-registered Research Analyst under the SEBI (Research Analysts) Regulations, 2014, nor a SEBI-registered Portfolio Manager under the SEBI (Portfolio Managers) Regulations, 2020.

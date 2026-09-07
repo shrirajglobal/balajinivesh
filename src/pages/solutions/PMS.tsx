@@ -5,7 +5,7 @@ const PMS = () => (
   <SolutionPageTemplate
     title="PMS"
     subtitle="Portfolio Management Services — an individually managed portfolio of securities held in your own name."
-    description="This page is for educational purposes only. Balaji Nivesh is an AMFI registered mutual fund distributor and does not provide investment advisory services."
+    description="This page is for educational purposes only. Balaji Nivesh Private Limited is an AMFI-registered Mutual Fund Distributor | ARN-173142 and does not provide investment advisory services."
     icon={<Briefcase className="h-8 w-8" />}
     whatIsIt="Portfolio Management Services (PMS) is a professional investment service in which a SEBI-registered portfolio manager builds and manages a portfolio of stocks, bonds and other securities for a single investor. Unlike a mutual fund, where you own units of a pooled scheme, in PMS the securities are held in your own demat account in your own name, giving you direct ownership and full visibility of every holding and transaction. PMS is offered in two broad forms: discretionary, where the portfolio manager takes buy and sell decisions on your behalf under a signed agreement, and non-discretionary, where the manager recommends and you approve each decision. SEBI prescribes a minimum investment of ₹50 lakh. Fees are typically a fixed management fee, a performance/profit-sharing fee above a hurdle rate, or a combination, and are disclosed in the disclosure document and the PMS agreement."
     suitableFor={[

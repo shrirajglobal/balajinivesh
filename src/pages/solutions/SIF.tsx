@@ -5,7 +5,7 @@ const SIF = () => (
   <SolutionPageTemplate
     title="SIF"
     subtitle="Specialized Investment Fund — SEBI's newer category that sits between mutual funds and PMS."
-    description="This page is for educational purposes only. Balaji Nivesh is an AMFI registered mutual fund distributor and does not provide investment advisory services."
+    description="This page is for educational purposes only. Balaji Nivesh Private Limited is an AMFI-registered Mutual Fund Distributor | ARN-173142 and does not provide investment advisory services."
     icon={<Layers className="h-8 w-8" />}
     whatIsIt="A Specialized Investment Fund (SIF) is an investment product category introduced by SEBI to bridge the gap between traditional mutual funds and Portfolio Management Services. SIFs are launched by eligible mutual fund houses under a distinct brand and are permitted to run more flexible, sophisticated strategies — such as long-short equity, sector rotation or hybrid debt strategies — that a regular mutual fund scheme cannot pursue. Because of this added flexibility and the higher risk that comes with it, SEBI prescribes a higher minimum investment (generally ₹10 lakh per investor across a fund house's SIF strategies, with limited exceptions such as accredited investors) so that participation is restricted to investors who can understand and absorb the risk. SIFs remain a pooled, regulated structure with periodic disclosures, but they are not mutual funds and should not be evaluated with the same expectations."
     suitableFor={[

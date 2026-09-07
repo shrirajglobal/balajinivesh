@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { MessageCircle, CalendarClock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useWhatsAppContactHref } from "@/lib/whatsapp";
+import { useArnIdentity } from "@/lib/arn";
+
 
 interface Props {
   headline?: string;
@@ -19,6 +21,8 @@ const NextStepBlock = ({
   className = "",
 }: Props) => {
   const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like a 15-min free plan call.");
+  const arnIdentity = useArnIdentity();
+
 
   return (
     <section aria-label="Next step" className={className}>
@@ -43,9 +47,10 @@ const NextStepBlock = ({
               </a>
             </Button>
           </div>
-          <p className="mt-3 text-[11px] text-muted-foreground">
-            Balaji Nivesh Pvt Ltd · AMFI-registered Mutual Fund Distributor · ARN – 173142
+          <p className="mt-3 text-xs text-muted-foreground">
+            {arnIdentity.entityName} · {arnIdentity.credentialLine}
           </p>
+
         </div>
       </div>
     </section>

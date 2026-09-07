@@ -5,15 +5,14 @@ import { useSiteSettings } from "@/hooks/useSiteSettings";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import NewsletterSignup from "@/components/newsletter/NewsletterSignup";
 import logo from "@/assets/logo.jpeg";
+import { useArnIdentity } from "@/lib/arn";
+
 
 const Footer = () => {
   const { t } = useLanguage();
   const { data: settings } = useSiteSettings();
-  const arnNumber = settings?.map.arn_number;
-  const arnHolder = settings?.map.arn_holder_name;
-  const arnLine = arnNumber
-    ? `${arnNumber}${arnHolder ? ` · ${arnHolder}` : ""}`
-    : t("footer.arn");
+  const arnIdentity = useArnIdentity();
+
   const contactPhone = settings?.map.contact_phone || "+91 93300 79717";
   const contactEmail = settings?.map.contact_email || "infobalajinivesh@gmail.com";
 
@@ -30,7 +29,12 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-sm leading-relaxed text-muted-foreground">{t("footer.tagline")}</p>
-            <p className="text-xs font-medium text-muted-foreground">{arnLine}</p>
+            <p className="text-xs font-medium leading-relaxed text-muted-foreground">
+              {arnIdentity.entityName}
+              <br />
+              {arnIdentity.credentialLine}
+            </p>
+
             <div className="pt-2">
               <h4 className="mb-2 font-display text-sm font-semibold text-foreground">
                 Daily market updates in your inbox
@@ -109,10 +113,11 @@ const Footer = () => {
           {/* Statutory notice strip: SEBI SCORES + SEBI FILINGS + ARN/AMFI status */}
           <div className="mt-4 rounded-md border border-border bg-muted/70 p-3 text-center text-xs leading-relaxed text-foreground/90">
             <p className="font-medium">
-              AMFI Registered Mutual Fund Distributor
-              {arnNumber && <span> | ARN NO: {arnNumber}</span>}
-              {arnHolder && <span> | ARN Holder: {arnHolder}</span>}
+              {arnIdentity.entityName}
+              <br />
+              {arnIdentity.credentialLine}
             </p>
+
             <p className="mt-1.5">
               Please write to SEBI - SCORES for any grievances related to Mutual Fund and Capital Market:{" "}
               <a
