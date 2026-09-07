@@ -67,7 +67,15 @@
     "ctaTitle": "आज ही अपनी निवेश यात्रा शुरू करें",
     "ctaSubtitle": "मुफ़्त Financial Health Check पाएँ और अनुशासित निवेश से अपनी संपत्ति बढ़ाएँ।",
     "getHealthCheck": "मुफ़्त Health Check पाएँ",
-    "tryCalc": "कैलकुलेटर आज़माएँ"
+    "tryCalc": "कैलकुलेटर आज़माएँ",
+    "goalStripTitle": "आपका लक्ष्य क्या है?",
+    "goalStripSubtitle": "एक चुनें — 30 सेकंड में जवाब पाएं।",
+    "goalCrorepati": "करोड़पति",
+    "goalRetirement": "Retirement",
+    "goalEducation": "शिक्षा",
+    "goalMarriage": "शादी",
+    "goalEmergency": "इमरजेंसी",
+    "goalHome": "सपनों का घर"
   },
   "about": {
     "title": "हमारे बारे में",

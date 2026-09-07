@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import {
   Calculator, BookOpen, Target, HeartPulse, TrendingUp, Shield,
   ArrowRight, CheckCircle2, Home, GraduationCap, Briefcase, Users,
+  Crown, Landmark, Gem,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -83,6 +84,32 @@ const Index = () => {
 
       <HowItWorks />
       <AuthorityStrip />
+
+      {/* What's your goal? */}
+      <section className="border-b border-border/60 py-10 sm:py-12">
+        <div className="container">
+          <h2 className="text-center font-display text-xl font-bold text-foreground sm:text-2xl">{t("home.goalStripTitle")}</h2>
+          <p className="mx-auto mt-2 max-w-xl text-center text-sm text-muted-foreground">{t("home.goalStripSubtitle")}</p>
+          <div className="mx-auto mt-6 grid max-w-4xl grid-cols-3 gap-3 sm:grid-cols-6 sm:gap-4">
+            {[
+              { icon: Crown, label: t("home.goalCrorepati"), path: "/calculators/crorepati" },
+              { icon: Landmark, label: t("home.goalRetirement"), path: "/calculators/retirement" },
+              { icon: GraduationCap, label: t("home.goalEducation"), path: "/calculators/child-education" },
+              { icon: Gem, label: t("home.goalMarriage"), path: "/calculators/child-marriage" },
+              { icon: Shield, label: t("home.goalEmergency"), path: "/calculators/emergency-fund" },
+              { icon: Home, label: t("home.goalHome"), path: "/tools/sip-goal" },
+            ].map((g) => (
+              <Link key={g.path} to={g.path} className="group flex flex-col items-center gap-2 rounded-xl border border-border/60 bg-card p-4 text-center transition-all hover:border-primary/40 hover:shadow-md">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-brand-orange-light text-primary">
+                  <g.icon className="h-5 w-5" />
+                </span>
+                <span className="text-xs font-semibold text-foreground group-hover:text-primary sm:text-sm">{g.label}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
 
       {/* Features Grid */}
       <section className="py-12 sm:py-16 lg:py-24">

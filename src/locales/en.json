@@ -67,7 +67,15 @@
     "ctaTitle": "Start Your Investment Journey Today",
     "ctaSubtitle": "Get a free financial health check and discover how to grow your wealth with disciplined investing.",
     "getHealthCheck": "Get Free Health Check",
-    "tryCalc": "Try Our Calculators"
+    "tryCalc": "Try Our Calculators",
+    "goalStripTitle": "What's your goal?",
+    "goalStripSubtitle": "Pick one — get your answer in 30 seconds.",
+    "goalCrorepati": "Crorepati",
+    "goalRetirement": "Retirement",
+    "goalEducation": "Education",
+    "goalMarriage": "Marriage",
+    "goalEmergency": "Emergency",
+    "goalHome": "Dream Home"
   },
   "about": {
     "title": "About",

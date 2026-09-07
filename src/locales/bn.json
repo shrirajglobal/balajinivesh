@@ -67,7 +67,15 @@
     "ctaTitle": "আজই আপনার বিনিয়োগ যাত্রা শুরু করুন",
     "ctaSubtitle": "ফ্রি Financial Health Check নিন এবং শৃঙ্খলিত বিনিয়োগের মাধ্যমে সম্পদ বাড়ান।",
     "getHealthCheck": "ফ্রি Health Check নিন",
-    "tryCalc": "আমাদের ক্যালকুলেটর ব্যবহার করুন"
+    "tryCalc": "আমাদের ক্যালকুলেটর ব্যবহার করুন",
+    "goalStripTitle": "আপনার লক্ষ্য কী?",
+    "goalStripSubtitle": "একটি বাছুন — ৩০ সেকেন্ডে উত্তর পান।",
+    "goalCrorepati": "কোটিপতি",
+    "goalRetirement": "Retirement",
+    "goalEducation": "শিক্ষা",
+    "goalMarriage": "বিয়ে",
+    "goalEmergency": "জরুরি তহবিল",
+    "goalHome": "স্বপ্নের বাড়ি"
   },
   "about": {
     "title": "আমাদের সম্পর্কে",
