@@ -76,7 +76,7 @@ const Index = () => {
             </Button>
           </motion.div>
           <motion.p initial="hidden" animate="visible" variants={fadeInUp} custom={4} className="mt-4 text-xs text-muted-foreground sm:text-sm">
-            No fees · No pressure · SEBI-compliant AMFI-registered distributor
+            No fees · No pressure · Balaji Nivesh Private Limited — AMFI-registered Mutual Fund Distributor | ARN-173142
           </motion.p>
         </div>
       </HeroBanner>

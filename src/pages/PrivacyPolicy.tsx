@@ -8,7 +8,7 @@ const PrivacyPolicy = () => {
         <section>
           <h2>1. Introduction</h2>
           <p>
-            Balaji Nivesh Private Limited ("we", "us", or "our"), an AMFI-registered Mutual Fund Distributor (ARN – 173142), is committed to protecting the privacy of individuals who visit our website and use our services. This Privacy Policy explains how we collect, use, store, and disclose your personal information in compliance with the Information Technology Act, 2000 and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011, as well as applicable SEBI and AMFI guidelines.
+            Balaji Nivesh Private Limited ("we", "us", or "our"), an AMFI-registered Mutual Fund Distributor | ARN-173142, is committed to protecting the privacy of individuals who visit our website and use our services. This Privacy Policy explains how we collect, use, store, and disclose your personal information in compliance with the Information Technology Act, 2000 and the Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011, as well as applicable SEBI and AMFI guidelines.
           </p>
         </section>
 

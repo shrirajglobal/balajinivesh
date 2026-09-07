@@ -5,7 +5,7 @@ const MutualFunds = () => (
   <SolutionPageTemplate
     title="Mutual Funds"
     subtitle="A professionally managed investment vehicle that pools money from multiple investors to invest in diversified securities."
-    description="This page is for educational purposes only. Balaji Nivesh is an AMFI registered mutual fund distributor and does not provide investment advisory services."
+    description="This page is for educational purposes only. Balaji Nivesh Private Limited is an AMFI-registered Mutual Fund Distributor | ARN-173142 and does not provide investment advisory services."
     icon={<TrendingUp className="h-8 w-8" />}
     whatIsIt="A mutual fund is a type of financial vehicle made up of a pool of money collected from many investors to invest in securities like stocks, bonds, money market instruments, and other assets. Mutual funds are operated by professional fund managers, who allocate the fund's assets and attempt to produce capital gains or income for the fund's investors. A mutual fund's portfolio is structured and maintained to match the investment objectives stated in its prospectus. In India, mutual funds are regulated by SEBI (Securities and Exchange Board of India) through AMFI (Association of Mutual Funds in India)."
     suitableFor={[
