@@ -18,6 +18,11 @@ Add a small shared helper that reads the company name and ARN from the existing 
 
 The helper normalises the ARN so it is always printed as `ARN-173142`, with a plain hyphen, whatever the setting holds. Everything below consumes the helper instead of hardcoded text, so a future ARN change is one edit.
 
+## Minimum font size
+
+Per SEBI legibility norms, every rendering of this identity line must be at least 12px. Several current spots use the 10–11px "extra small" size (header bar, footer strip, closing block, trust strip labels). All of them move to a 12px floor — no smaller size on any screen width, mobile included. The rest of each surface keeps its existing sizing.
+
+
 ## Where it gets applied
 
 | Area | Current | Action |
@@ -42,4 +47,5 @@ The helper normalises the ARN so it is always printed as `ARN-173142`, with a pl
 
 ## Verification
 
-Typecheck, then load the home page, About, Disclaimer, Privacy Policy, Terms of Use and Commission Disclosure in the browser and confirm every visible ARN mention matches the approved string, in all three languages.
+Typecheck, then load the home page, About, Disclaimer, Privacy Policy, Terms of Use and Commission Disclosure in the browser and confirm every visible ARN mention matches the approved string, in all three languages. Also measure the computed font size of each identity line on mobile and desktop widths to confirm none renders below 12px.
+
