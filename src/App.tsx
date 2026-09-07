@@ -50,6 +50,7 @@ const Resources = lazy(() => import("./pages/Resources"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfUse = lazy(() => import("./pages/TermsOfUse"));
 const Disclaimer = lazy(() => import("./pages/Disclaimer"));
+const CommissionDisclosure = lazy(() => import("./pages/CommissionDisclosure"));
 
 const Partner = lazy(() => import("./pages/Partner"));
 const PartnerDashboard = lazy(() => import("./pages/partner/Dashboard"));
@@ -233,6 +234,7 @@ const App = () => (
                   <Route path="/privacy" element={<LazyRoute component={PrivacyPolicy} />} />
                   <Route path="/terms" element={<LazyRoute component={TermsOfUse} />} />
                   <Route path="/disclaimer" element={<LazyRoute component={Disclaimer} />} />
+                  <Route path="/commission-disclosure" element={<LazyRoute component={CommissionDisclosure} />} />
                   {/* Catch-all */}
                   <Route path="*" element={<NotFound />} />
                 </Route>
