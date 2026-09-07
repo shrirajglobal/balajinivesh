@@ -11,6 +11,8 @@ import { useLanguage, LANGUAGE_LABELS, type Language } from "@/contexts/Language
 import { useAuth } from "@/contexts/AuthContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { useWhatsAppContactHref } from "@/lib/whatsapp";
+import { useArnIdentity } from "@/lib/arn";
+
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.jpeg";
 import {
@@ -39,6 +41,8 @@ const Header = () => {
   const { t, language, setLanguage } = useLanguage();
   const { user, signOut } = useAuth();
   const { data: settings } = useSiteSettings();
+  const arnIdentity = useArnIdentity();
+
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
 
