@@ -48,7 +48,17 @@ const Disclaimer = () => {
           <h2>3. Investor Responsibility</h2>
           <ul>
             <li>All investment decisions are made solely by the investor. We do not assume responsibility for any investment losses.</li>
-            <li>Investors must read and understand the Scheme Information Document (SID), Statement of Additional Information (SAI), and Key Information Memorandum (KIM) of any mutual fund scheme before investing.</li>
+            <li>
+              Investors must read and understand the Scheme Information Document (SID), Statement of Additional Information (SAI), and Key Information Memorandum (KIM) of any mutual fund scheme before investing. Scheme Draft/SAI/SID/KIM documents are available on the SEBI filings portal at{" "}
+              <a
+                href="https://www.sebi.gov.in/filings/mutual-funds.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline"
+              >
+                www.sebi.gov.in/filings/mutual-funds.html
+              </a>.
+            </li>
             <li>Investors should assess their own risk appetite, financial goals, and investment horizon before making any investment decision.</li>
             <li>Investors are advised to consult their tax advisors for tax implications of their investments.</li>
           </ul>

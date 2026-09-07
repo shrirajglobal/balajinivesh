@@ -9,8 +9,10 @@ import logo from "@/assets/logo.jpeg";
 const Footer = () => {
   const { t } = useLanguage();
   const { data: settings } = useSiteSettings();
-  const arnLine = settings?.map.arn_number
-    ? `${settings.map.arn_number}${settings.map.arn_holder_name ? ` · ${settings.map.arn_holder_name}` : ""}`
+  const arnNumber = settings?.map.arn_number;
+  const arnHolder = settings?.map.arn_holder_name;
+  const arnLine = arnNumber
+    ? `${arnNumber}${arnHolder ? ` · ${arnHolder}` : ""}`
     : t("footer.arn");
   const contactPhone = settings?.map.contact_phone || "+91 93300 79717";
   const contactEmail = settings?.map.contact_email || "info@balajinivesh.com";
@@ -104,12 +106,45 @@ const Footer = () => {
           <p className="text-xs leading-relaxed text-muted-foreground">
             <strong>{t("footer.disclaimerLink")}:</strong> {t("footer.disclaimer")}
           </p>
+
+          {/* Statutory notice strip: SEBI SCORES + SEBI FILINGS + ARN/AMFI status */}
+          <div className="mt-4 rounded-md border border-border bg-muted/70 p-3 text-center text-xs leading-relaxed text-foreground/90">
+            <p className="font-medium">
+              AMFI Registered Mutual Fund Distributor
+              {arnNumber && <span> | ARN NO: {arnNumber}</span>}
+              {arnHolder && <span> | ARN Holder: {arnHolder}</span>}
+            </p>
+            <p className="mt-1.5">
+              Please write to SEBI - SCORES for any grievances related to Mutual Fund and Capital Market:{" "}
+              <a
+                href="https://scores.sebi.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary hover:underline"
+              >
+                scores.sebi.gov.in
+              </a>
+            </p>
+            <p className="mt-1">
+              Please go to SEBI - FILINGS for any Mutual Funds Draft, SAI, SID & KIM:{" "}
+              <a
+                href="https://www.sebi.gov.in/filings/mutual-funds.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary hover:underline"
+              >
+                sebi.gov.in/filings/mutual-funds.html
+              </a>
+            </p>
+          </div>
+
           <div className="mt-4 flex flex-col items-center justify-between gap-3 text-xs text-muted-foreground sm:flex-row sm:gap-2">
             <p>{t("footer.copyright").replace("{year}", new Date().getFullYear().toString())}</p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to="/privacy" className="hover:text-primary">{t("footer.privacyPolicy")}</Link>
               <Link to="/terms" className="hover:text-primary">{t("footer.termsOfUse")}</Link>
               <Link to="/disclaimer" className="hover:text-primary">{t("footer.disclaimerLink")}</Link>
+              <Link to="/commission-disclosure" className="hover:text-primary">Commission Disclosure</Link>
             </div>
           </div>
         </div>

@@ -15,7 +15,7 @@ const AuthorityStrip = () => {
 
   const items = [
     { icon: BadgeCheck, label: arn ? `AMFI Reg. ${arn}` : "AMFI Registered" },
-    { icon: ShieldCheck, label: "SEBI-compliant Distributor" },
+    { icon: ShieldCheck, label: "AMFI-Registered Distributor" },
     { icon: Award, label: "5+ years experience" },
     { icon: Users, label: "2,500+ families served" },
   ];
