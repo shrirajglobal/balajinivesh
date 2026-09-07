@@ -46,10 +46,11 @@ const SebiDisclaimer = ({ variant = "full", className }: SebiDisclaimerProps) =>
           Mutual fund investments are subject to market risks. Read all scheme-related documents carefully.
         </p>
         <p className="mt-1">
-          Past performance is not indicative of future returns. Balaji Nivesh Private Limited is an AMFI-registered Mutual Fund Distributor | ARN-173142. It is a Mutual Fund
-          Distributor and not a SEBI-registered Investment Adviser. The information provided is for educational
-          purposes only and does not constitute investment advice.
+          Past performance is not indicative of future returns. Balaji Nivesh Private Limited is an AMFI-registered
+          Mutual Fund Distributor | ARN-173142, and not a SEBI-registered Investment Adviser. The information provided
+          is for educational purposes only and does not constitute investment advice.
         </p>
+
       </div>
     );
   }
