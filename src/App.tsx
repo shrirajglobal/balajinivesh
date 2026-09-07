@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import PageSkeleton from "@/components/ui/page-skeleton";
 
@@ -134,6 +135,7 @@ const App = () => (
             <Toaster />
             <Sonner position="top-center" />
             <BrowserRouter>
+              <ScrollToTop />
               <Routes>
                 {/* Admin routes — no main Layout wrapper */}
                 <Route
