@@ -33,6 +33,11 @@ const StepUpSIPCalculator = lazy(() => import("./pages/calculators/StepUpSIPCalc
 const RetirementPlanner = lazy(() => import("./pages/calculators/RetirementPlanner"));
 const SIPvsFD = lazy(() => import("./pages/calculators/SIPvsFD"));
 const EmergencyFundCalculator = lazy(() => import("./pages/calculators/EmergencyFundCalculator"));
+const CrorepatiCalculator = lazy(() => import("./pages/calculators/CrorepatiCalculator"));
+const ChildEducationCalculator = lazy(() => import("./pages/calculators/ChildEducationCalculator"));
+const ChildMarriageCalculator = lazy(() => import("./pages/calculators/ChildMarriageCalculator"));
+const LifeCoverCalculator = lazy(() => import("./pages/calculators/LifeCoverCalculator"));
+
 
 const FinancialHealthCheck = lazy(() => import("./pages/tools/FinancialHealthCheck"));
 const RiskProfiler = lazy(() => import("./pages/tools/RiskProfiler"));
@@ -191,6 +196,10 @@ const App = () => (
                   <Route path="/calculators/retirement" element={<LazyRoute component={RetirementPlanner} />} />
                   <Route path="/calculators/sip-vs-fd" element={<LazyRoute component={SIPvsFD} />} />
                   <Route path="/calculators/emergency-fund" element={<LazyRoute component={EmergencyFundCalculator} />} />
+                  <Route path="/calculators/crorepati" element={<LazyRoute component={CrorepatiCalculator} />} />
+                  <Route path="/calculators/child-education" element={<LazyRoute component={ChildEducationCalculator} />} />
+                  <Route path="/calculators/child-marriage" element={<LazyRoute component={ChildMarriageCalculator} />} />
+                  <Route path="/calculators/life-cover" element={<LazyRoute component={LifeCoverCalculator} />} />
                   {/* Assessment Tools */}
                   <Route path="/tools/health-check" element={<LazyRoute component={FinancialHealthCheck} />} />
                   <Route path="/tools/risk-profile" element={<LazyRoute component={RiskProfiler} />} />
