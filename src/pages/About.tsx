@@ -84,7 +84,8 @@ const About = () => {
             <div className="mt-6 space-y-3 text-sm text-muted-foreground">
               <p><strong className="text-foreground">Legal Name:</strong> Balaji Nivesh Private Limited</p>
               <p><strong className="text-foreground">Founded:</strong> October 2020</p>
-              <p><strong className="text-foreground">{t("about.arnNumber")}</strong> ARN-173142</p>
+              <p><strong className="text-foreground">{t("about.arnNumber")}</strong> AMFI-registered Mutual Fund Distributor | ARN-173142</p>
+
               <p><strong className="text-foreground">{t("about.amfiReg")}</strong> {t("about.amfiRegVal")}</p>
               <p><strong className="text-foreground">{t("about.type")}</strong> {t("about.typeVal")}</p>
               <p><strong className="text-foreground">{t("about.sebiComp")}</strong> {t("about.sebiCompVal")}</p>
