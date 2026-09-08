@@ -191,6 +191,7 @@ const Contact = () => {
                   />
                 </div>
               </Card>
+              <AppPromo variant="inline" placement="contact" />
               <div className="rounded-lg border border-border bg-muted/50 p-4">
                 <p className="text-xs leading-relaxed text-muted-foreground"><strong>Note:</strong> {t("contact.note")}</p>
               </div>
