@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MessagesSquare, Plus, Loader2, Clock, MessageCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -15,6 +15,7 @@ import SEO from "@/components/seo/SEO";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import { toast } from "sonner";
 import { formatDistanceToNow } from "date-fns";
+import { openExternalLogin } from "@/lib/externalAuth";
 
 interface Thread {
   id: string;
@@ -45,7 +46,7 @@ function slugify(s: string) {
 
 const ForumIndex = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
+  
   const [threads, setThreads] = useState<Thread[] | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [title, setTitle] = useState("");
@@ -68,7 +69,7 @@ const ForumIndex = () => {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
-      navigate("/auth?redirect=/forum");
+      openExternalLogin();
       return;
     }
     if (!title.trim() || !body.trim()) return;
@@ -121,7 +122,7 @@ const ForumIndex = () => {
         <div className="container max-w-4xl">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="font-display text-xl font-semibold text-foreground">Recent threads</h2>
-            <Button onClick={() => (user ? setShowForm((v) => !v) : navigate("/auth?redirect=/forum"))}>
+            <Button onClick={() => (user ? setShowForm((v) => !v) : openExternalLogin())}>
               <Plus className="mr-1 h-4 w-4" />
               {showForm ? "Cancel" : "New thread"}
             </Button>

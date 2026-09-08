@@ -12,6 +12,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { useWhatsAppContactHref } from "@/lib/whatsapp";
 import { useArnIdentity } from "@/lib/arn";
+import { EXTERNAL_LOGIN_URL } from "@/lib/externalAuth";
 
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.jpeg";
@@ -284,9 +285,9 @@ const Header = () => {
             </DropdownMenu>
           ) : (
             <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex">
-              <Link to="/auth" className="flex items-center gap-1.5">
+              <a href={EXTERNAL_LOGIN_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5">
                 <LogIn className="h-4 w-4" /> Login
-              </Link>
+              </a>
             </Button>
           )}
 
@@ -384,9 +385,9 @@ const Header = () => {
                 </Button>
               ) : (
                 <Button asChild variant="ghost" className="w-full">
-                  <Link to="/auth" className="flex items-center gap-2">
+                  <a href={EXTERNAL_LOGIN_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                     <LogIn className="h-4 w-4" /> Login
-                  </Link>
+                  </a>
                 </Button>
               )}
             </div>

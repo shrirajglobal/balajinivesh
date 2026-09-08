@@ -11,6 +11,7 @@ import ProgressTracker from "@/components/education/ProgressTracker";
 import CertificateModal from "@/components/education/CertificateModal";
 import GiftClaimForm from "@/components/education/GiftClaimForm";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
+import { EXTERNAL_LOGIN_URL } from "@/lib/externalAuth";
 
 const topics = [
   {
@@ -122,7 +123,7 @@ const HomemakersEducation = () => {
             <div className="mb-8 rounded-xl border border-primary/20 bg-brand-orange-light p-4 text-center">
               <p className="text-sm text-foreground">
                 <Lock className="mr-1 inline h-4 w-4" />
-                <Link to="/auth" className="font-medium text-primary underline">Sign in</Link> to track your progress, earn a certificate & claim a gift!
+                <a href={EXTERNAL_LOGIN_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-primary underline">Sign in</a> to track your progress, earn a certificate & claim a gift!
               </p>
             </div>
           )}

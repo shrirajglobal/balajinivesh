@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, CheckCircle2, LogIn } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { EXTERNAL_LOGIN_URL } from "@/lib/externalAuth";
 
 const schema = z.object({
   full_name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -70,7 +71,7 @@ const ApplicationForm = () => {
           Please create an account or sign in first, so we can link your application to your login.
         </p>
         <Button asChild size="lg">
-          <Link to="/auth?redirect=/partner%23apply">Sign in / Create account</Link>
+          <a href={EXTERNAL_LOGIN_URL} target="_blank" rel="noopener noreferrer">Sign in / Create account</a>
         </Button>
       </div>
     );

@@ -3,8 +3,9 @@ import { Link, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { UserPlus } from "lucide-react";
+import { UserPlus, ExternalLink } from "lucide-react";
 import PartnerSidebar from "./PartnerSidebar";
+import { EXTERNAL_LOGIN_URL } from "@/lib/externalAuth";
 
 const PartnerLayout = ({ children }: { children: ReactNode }) => {
   const { user, loading } = useAuth();
@@ -27,8 +28,35 @@ const PartnerLayout = ({ children }: { children: ReactNode }) => {
     return () => { cancelled = true; };
   }, [user]);
 
+  // Temporary redirect: send unauthenticated users to Wealth Elite login.
+  useEffect(() => {
+    if (!loading && !user) {
+      window.open(EXTERNAL_LOGIN_URL, "_blank", "noopener,noreferrer");
+    }
+  }, [loading, user]);
+
   if (loading) return <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">Loading...</div>;
-  if (!user) return <Navigate to="/auth" replace />;
+
+  if (!user) {
+    return (
+      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 text-center">
+        <ExternalLink className="h-10 w-10 text-primary" />
+        <h1 className="font-display text-2xl font-bold text-foreground">Opening login...</h1>
+        <p className="max-w-md text-muted-foreground">
+          The login page has opened in a new tab. Once you are signed in there, return here to access the partner portal.
+        </p>
+        <a
+          href={EXTERNAL_LOGIN_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+        >
+          <ExternalLink className="h-4 w-4" />
+          Open login page
+        </a>
+      </div>
+    );
+  }
 
   if (hasPartner === null) {
     return <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">Loading...</div>;
