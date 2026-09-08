@@ -71,7 +71,7 @@ Deno.serve(async (req) => {
     }
 
     // Build confirmation URL pointing back to the public app
-    const origin = req.headers.get("origin") ?? body.origin ?? "https://balajinivesh.studydna.in";
+    const origin = req.headers.get("origin") ?? body.origin ?? "https://www.balajinivesh.com";
     const confirmUrl = `${origin}/subscribe/confirm?token=${confirmationToken}`;
 
     // Send opt-in email
@@ -84,7 +84,7 @@ Deno.serve(async (req) => {
        <p style="margin:0 0 20px;line-height:1.55">Please confirm your email so we can start sending you updates:</p>
        <p style="margin:0 0 24px"><a href="${confirmUrl}" style="display:inline-block;background:#ea7c2f;color:#fff;text-decoration:none;padding:12px 22px;border-radius:8px;font-weight:600">Confirm my email</a></p>
        <p style="margin:0;color:#6b7280;font-size:12px;line-height:1.55">If the button does not work, paste this link into your browser:<br><span style="word-break:break-all;color:#1d4ed8">${confirmUrl}</span></p>`,
-      `You're receiving this because someone signed up <strong>${email}</strong> on balajinivesh.studydna.in. If this wasn't you, simply ignore this message — no list will ever include you without confirmation.`
+      `You're receiving this because someone signed up <strong>${email}</strong> on www.balajinivesh.com. If this wasn't you, simply ignore this message — no list will ever include you without confirmation.`
     );
 
     const send = await sendEmail({ to: email, subject, html });

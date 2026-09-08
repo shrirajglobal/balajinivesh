@@ -69,7 +69,7 @@ Deno.serve(async (req) => {
 
     // Sequential to respect Resend free-tier rate limits
     for (const sub of subs) {
-      const unsubUrl = `https://balajinivesh.studydna.in/subscribe/unsubscribe?token=${sub.unsubscribe_token}`;
+      const unsubUrl = `https://www.balajinivesh.com/subscribe/unsubscribe?token=${sub.unsubscribe_token}`;
       const greeting = sub.name ? `Hi ${sub.name},` : "Hi there,";
       const innerHtml = `<p style="margin:0 0 14px;color:#374151">${greeting}</p>${campaign.html_body}`;
       const footer = `Don't want these emails? <a href="${unsubUrl}" style="color:#1d4ed8">Unsubscribe in one tap</a>.`;
