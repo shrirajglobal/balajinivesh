@@ -157,7 +157,10 @@ async function fetchFeeds(): Promise<{ geo: FeedItem[]; industry: FeedItem[]; fa
 
   await Promise.all(FEEDS.map(async (f) => {
     try {
-      const r = await fetch(f.url, { headers: { "User-Agent": "Mozilla/5.0", Accept: "application/rss+xml, application/xml, text/xml, */*" } });
+      const r = await fetch(f.url, {
+        headers: { "User-Agent": "Mozilla/5.0", Accept: "application/rss+xml, application/xml, text/xml, */*" },
+        signal: AbortSignal.timeout(10000),
+      });
       if (!r.ok) { failed.push(`${f.source} (${r.status})`); return; }
       const xml = await r.text();
       const items = parseFeed(xml, f.source)
