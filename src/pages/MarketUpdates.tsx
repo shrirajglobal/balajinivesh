@@ -103,7 +103,7 @@ const MarketUpdates = () => {
 
       const { data: archRows } = await supabase
         .from("market_updates")
-        .select("id, update_date, headline, market_sentiment")
+        .select("id, update_date, headline, market_sentiment, is_weekly_roundup")
         .eq("status", "published")
         .order("update_date", { ascending: false })
         .limit(30);
@@ -153,6 +153,9 @@ const MarketUpdates = () => {
                 <Card className="border-primary/20 shadow-sm">
                   <CardContent className="p-6 lg:p-8">
                     <div className="flex flex-wrap items-center gap-3">
+                      {latest.is_weekly_roundup && (
+                        <Badge className="bg-secondary text-secondary-foreground">Weekly Roundup</Badge>
+                      )}
                       <Badge variant="outline" className={sentimentColor(latest.market_sentiment)}>
                         {latest.market_sentiment ?? "neutral"}
                       </Badge>
@@ -239,6 +242,9 @@ const MarketUpdates = () => {
                       <p className="mt-0.5 text-sm font-medium text-foreground">{a.headline}</p>
                     </div>
                     <div className="flex items-center gap-2">
+                      {a.is_weekly_roundup && (
+                        <Badge className="bg-secondary text-secondary-foreground">Weekly Roundup</Badge>
+                      )}
                       {a.market_sentiment && (
                         <Badge variant="outline" className={sentimentColor(a.market_sentiment)}>
                           {a.market_sentiment}
