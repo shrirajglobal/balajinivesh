@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { supabase } from "@/integrations/supabase/client";
 import { useWhatsAppContactHref } from "@/lib/whatsapp";
+import AppPromo from "@/components/app/AppPromo";
 
 interface Props {
   /** Short context to pre-fill the lead, e.g. "SIP of ₹10,000/month for 10 years" */
@@ -88,6 +89,7 @@ const CalculatorLeadCapture = ({
               <a href={callHref}><Phone className="mr-1.5 h-4 w-4" /> Call now</a>
             </Button>
           </div>
+          <AppPromo variant="card" placement="calculator-thankyou" className="mt-2 w-full" />
         </CardContent>
       </Card>
     );

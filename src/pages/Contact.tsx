@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { supabase } from "@/integrations/supabase/client";
+import AppPromo from "@/components/app/AppPromo";
 import { useWhatsAppContactHref } from "@/lib/whatsapp";
 import HeroBanner from "@/components/layout/HeroBanner";
 import SEO from "@/components/seo/SEO";
@@ -191,6 +192,7 @@ const Contact = () => {
                   />
                 </div>
               </Card>
+              <AppPromo variant="inline" placement="contact" />
               <div className="rounded-lg border border-border bg-muted/50 p-4">
                 <p className="text-xs leading-relaxed text-muted-foreground"><strong>Note:</strong> {t("contact.note")}</p>
               </div>

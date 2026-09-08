@@ -5,6 +5,7 @@ import StickyCTA from "./StickyCTA";
 import ChatWidget from "@/components/chatbot/ChatWidget";
 import MobileStickyBar from "./MobileStickyBar";
 import DwellNudge from "./DwellNudge";
+import AppBanner from "@/components/app/AppBanner";
 
 interface LayoutProps {
   children: ReactNode;
@@ -19,6 +20,7 @@ const Layout = memo(({ children }: LayoutProps) => {
       <StickyCTA />
       <ChatWidget />
       <MobileStickyBar />
+      <AppBanner />
       <DwellNudge />
     </div>
   );

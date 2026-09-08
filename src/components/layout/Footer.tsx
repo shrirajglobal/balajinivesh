@@ -6,6 +6,7 @@ import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import NewsletterSignup from "@/components/newsletter/NewsletterSignup";
 import logo from "@/assets/logo.jpeg";
 import { useArnIdentity } from "@/lib/arn";
+import AppPromo from "@/components/app/AppPromo";
 
 
 const Footer = () => {
@@ -100,6 +101,7 @@ const Footer = () => {
                 <span>1 R. N. Mukherjee Road, 3rd Floor, Room No. 320, Kolkata, West Bengal – 700001</span>
               </li>
             </ul>
+            <AppPromo variant="footer" placement="footer" className="mt-6" />
           </div>
         </div>
 

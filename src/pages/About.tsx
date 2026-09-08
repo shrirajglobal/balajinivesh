@@ -7,6 +7,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import HeroBanner from "@/components/layout/HeroBanner";
 import SEO from "@/components/seo/SEO";
 import logo from "@/assets/logo.jpeg";
+import AppPromo from "@/components/app/AppPromo";
 
 const About = () => {
   const { t } = useLanguage();
@@ -94,6 +95,13 @@ const About = () => {
           </div>
         </div>
       </section>
+
+      <section className="py-10">
+        <div className="container max-w-3xl">
+          <AppPromo variant="inline" placement="about" />
+        </div>
+      </section>
+
 
       <section className="bg-gradient-to-r from-primary to-secondary py-16">
         <div className="container text-center">

@@ -13,6 +13,7 @@ import AuthorityStrip from "@/components/layout/AuthorityStrip";
 import HowItWorks from "@/components/layout/HowItWorks";
 import NewsletterSignup from "@/components/newsletter/NewsletterSignup";
 import GoogleReviewsStrip from "@/components/home/GoogleReviewsStrip";
+import AppPromo from "@/components/app/AppPromo";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
@@ -83,6 +84,7 @@ const Index = () => {
 
       <HowItWorks />
       <AuthorityStrip />
+      <AppPromo variant="band" placement="homepage" />
 
       {/* What's your goal? */}
       <section className="border-b border-border/60 py-10 sm:py-12">
