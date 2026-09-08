@@ -858,6 +858,7 @@ export type Database = {
           gold_price: number | null
           headline: string
           id: string
+          is_weekly_roundup: boolean
           key_movers: Json | null
           market_sentiment: string | null
           meta_description: string | null
@@ -899,6 +900,7 @@ export type Database = {
           gold_price?: number | null
           headline: string
           id?: string
+          is_weekly_roundup?: boolean
           key_movers?: Json | null
           market_sentiment?: string | null
           meta_description?: string | null
@@ -940,6 +942,7 @@ export type Database = {
           gold_price?: number | null
           headline?: string
           id?: string
+          is_weekly_roundup?: boolean
           key_movers?: Json | null
           market_sentiment?: string | null
           meta_description?: string | null
