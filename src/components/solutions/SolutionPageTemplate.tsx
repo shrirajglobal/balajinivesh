@@ -56,7 +56,7 @@ const SolutionPageTemplate = ({
   return (
     <div>
       <SEO
-        title={`${title} — ${subtitle} | Balaji Nivesh`}
+        title={`${title} — Balaji Nivesh`}
         description={description.length > 160 ? `${description.slice(0, 157)}...` : description}
         jsonLd={[
           breadcrumbLd([

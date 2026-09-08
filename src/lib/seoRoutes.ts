@@ -55,7 +55,7 @@ export const routeMeta: Record<string, RouteMeta> = {
   "/calculators": {
     title: "Free Investment Calculators — SIP, Retirement, Goals",
     description:
-      "Eleven free calculators for SIP, lumpsum, step-up SIP, retirement, crorepati, child education, marriage, emergency fund and life cover. Plan any goal in 2 minutes.",
+      "Eleven free calculators — SIP, lumpsum, step-up SIP, retirement, crorepati, child education, marriage, emergency fund and life cover. Plan any goal in 2 minutes.",
     keywords: ["SIP calculator", "retirement calculator", "investment calculator India"],
     crumbs: [["Calculators", "/calculators"]],
   },
@@ -128,7 +128,7 @@ export const routeMeta: Record<string, RouteMeta> = {
 
 [
   CALC("SIP Calculator", "/calculators/sip", "SIP Calculator — Monthly SIP Returns in Seconds",
-    "Work out what a monthly SIP could grow to. Adjust amount, years and expected return, see the year-by-year chart, and get a plan from an AMFI-registered distributor.",
+    "Work out what a monthly SIP could grow to. Adjust the amount, years and expected return, and see the year-by-year chart. Free SIP calculator, market risks apply.",
     ["SIP calculator", "mutual fund SIP returns", "SIP growth calculator"]),
   CALC("Lumpsum Calculator", "/calculators/lumpsum", "Lumpsum Calculator — One-Time Investment Growth",
     "See how a one-time investment could grow over time with compounding. Free lumpsum mutual fund calculator from Balaji Nivesh.",
