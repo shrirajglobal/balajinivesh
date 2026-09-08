@@ -6,6 +6,7 @@ import ChatWidget from "@/components/chatbot/ChatWidget";
 import MobileStickyBar from "./MobileStickyBar";
 import DwellNudge from "./DwellNudge";
 import AppBanner from "@/components/app/AppBanner";
+import RouteSEO from "@/components/seo/RouteSEO";
 
 interface LayoutProps {
   children: ReactNode;
