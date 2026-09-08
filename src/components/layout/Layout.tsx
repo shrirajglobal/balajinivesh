@@ -15,6 +15,7 @@ interface LayoutProps {
 const Layout = memo(({ children }: LayoutProps) => {
   return (
     <div className="flex min-h-screen flex-col">
+      <RouteSEO />
       <Header />
       <main className="flex-1 pb-16 sm:pb-0">{children}</main>
       <Footer />
