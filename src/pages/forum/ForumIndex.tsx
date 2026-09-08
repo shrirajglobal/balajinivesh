@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MessagesSquare, Plus, Loader2, Clock, MessageCircle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -46,7 +46,7 @@ function slugify(s: string) {
 
 const ForumIndex = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
+  
   const [threads, setThreads] = useState<Thread[] | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [title, setTitle] = useState("");
