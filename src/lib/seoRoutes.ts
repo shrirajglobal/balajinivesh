@@ -128,7 +128,7 @@ export const routeMeta: Record<string, RouteMeta> = {
 
 [
   CALC("SIP Calculator", "/calculators/sip", "SIP Calculator — Monthly SIP Returns in Seconds",
-    "Work out what a monthly SIP could grow to. Adjust the amount, years and expected return, and see the year-by-year chart. market risks apply.",
+    "Work out what a monthly SIP could grow to. Adjust the amount, years and expected return and see the year-by-year chart. Market risks apply.",
     ["SIP calculator", "mutual fund SIP returns", "SIP growth calculator"]),
   CALC("Lumpsum Calculator", "/calculators/lumpsum", "Lumpsum Calculator — One-Time Investment Growth",
     "See how a one-time investment could grow over time with compounding. Free lumpsum mutual fund calculator from Balaji Nivesh.",
