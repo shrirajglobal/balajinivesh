@@ -57,6 +57,25 @@ const SolutionPageTemplate = ({
       <SEO
         title={`${title} — ${subtitle} | Balaji Nivesh`}
         description={description.length > 160 ? `${description.slice(0, 157)}...` : description}
+        jsonLd={[
+          breadcrumbLd([
+            ["Solutions", "/solutions/mutual-funds"],
+            [title, typeof window !== "undefined" ? window.location.pathname : "/solutions/mutual-funds"],
+          ]),
+          ...(faqs?.length
+            ? [
+                {
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: faqs.map((f) => ({
+                    "@type": "Question",
+                    name: f.question,
+                    acceptedAnswer: { "@type": "Answer", text: f.answer },
+                  })),
+                },
+              ]
+            : []),
+        ]}
       />
       {/* Hero */}
       <HeroBanner>
