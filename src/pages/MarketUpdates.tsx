@@ -78,7 +78,7 @@ function MetricCard({ label, value, change }: { label: string; value: string; ch
 const MarketUpdates = () => {
   const { date } = useParams();
   const [latest, setLatest] = useState<MarketUpdate | null>(null);
-  const [archive, setArchive] = useState<Pick<MarketUpdate, "id" | "update_date" | "headline" | "market_sentiment">[]>([]);
+  const [archive, setArchive] = useState<Pick<MarketUpdate, "id" | "update_date" | "headline" | "market_sentiment" | "is_weekly_roundup">[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
