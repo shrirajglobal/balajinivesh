@@ -8,5 +8,7 @@ Disallow: /partner/leads
 Disallow: /partner/academy
 Disallow: /partner/toolkit
 Disallow: /auth
+Disallow: /subscribe/confirm
+Disallow: /unsubscribe
 
-Sitemap: https://balajinivesh.studydna.in/sitemap.xml
+Sitemap: https://www.balajinivesh.com/sitemap.xml

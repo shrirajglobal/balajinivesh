@@ -65,7 +65,7 @@ const AdminNewsletter = () => {
 <p style="margin:0 0 14px;color:#475569;font-size:14px">${format(new Date(latestMarket.update_date), "EEEE, d MMMM yyyy")}</p>
 <p style="margin:0 0 18px;line-height:1.6">${latestMarket.summary}</p>
 ${latestMarket.what_it_means ? `<div style="background:#fff6ee;border-left:3px solid #ea7c2f;padding:14px 16px;margin:18px 0;border-radius:6px"><strong style="display:block;margin-bottom:6px">What this means for you</strong><span style="font-size:14px">${latestMarket.what_it_means}</span></div>` : ""}
-<p style="margin:24px 0 0"><a href="https://balajinivesh.studydna.in/market-updates/${latestMarket.update_date}" style="display:inline-block;background:#1d4ed8;color:#fff;text-decoration:none;padding:10px 20px;border-radius:8px;font-weight:600">Read full update →</a></p>`);
+<p style="margin:24px 0 0"><a href="https://www.balajinivesh.com/market-updates/${latestMarket.update_date}" style="display:inline-block;background:#1d4ed8;color:#fff;text-decoration:none;padding:10px 20px;border-radius:8px;font-weight:600">Read full update →</a></p>`);
     toast.success("Composed from today's market update");
   };
 
@@ -76,7 +76,7 @@ ${latestMarket.what_it_means ? `<div style="background:#fff6ee;border-left:3px s
     setHtmlBody(`
 <h2 style="margin:0 0 12px;font-size:20px;color:#0f172a">${post.title}</h2>
 <p style="margin:0 0 18px;line-height:1.6;color:#374151">${post.excerpt}</p>
-<p style="margin:24px 0 0"><a href="https://balajinivesh.studydna.in/blog/${post.slug}" style="display:inline-block;background:#1d4ed8;color:#fff;text-decoration:none;padding:10px 20px;border-radius:8px;font-weight:600">Read the full article →</a></p>`);
+<p style="margin:24px 0 0"><a href="https://www.balajinivesh.com/blog/${post.slug}" style="display:inline-block;background:#1d4ed8;color:#fff;text-decoration:none;padding:10px 20px;border-radius:8px;font-weight:600">Read the full article →</a></p>`);
     toast.success("Composed from blog post");
   };
 

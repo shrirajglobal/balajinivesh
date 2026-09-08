@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import HeroBanner from "@/components/layout/HeroBanner";
 import SEO from "@/components/seo/SEO";
+import { breadcrumbLd } from "@/lib/seoRoutes";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import {
   Accordion,
@@ -55,8 +56,27 @@ const SolutionPageTemplate = ({
   return (
     <div>
       <SEO
-        title={`${title} — ${subtitle} | Balaji Nivesh`}
+        title={`${title} — Balaji Nivesh`}
         description={description.length > 160 ? `${description.slice(0, 157)}...` : description}
+        jsonLd={[
+          breadcrumbLd([
+            ["Solutions", "/solutions/mutual-funds"],
+            [title, typeof window !== "undefined" ? window.location.pathname : "/solutions/mutual-funds"],
+          ]),
+          ...(faqs?.length
+            ? [
+                {
+                  "@context": "https://schema.org",
+                  "@type": "FAQPage",
+                  mainEntity: faqs.map((f) => ({
+                    "@type": "Question",
+                    name: f.question,
+                    acceptedAnswer: { "@type": "Answer", text: f.answer },
+                  })),
+                },
+              ]
+            : []),
+        ]}
       />
       {/* Hero */}
       <HeroBanner>

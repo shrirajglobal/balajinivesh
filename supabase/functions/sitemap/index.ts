@@ -47,7 +47,7 @@ serve(async (req) => {
   const isRobots = url.pathname.endsWith("/robots.txt") || url.searchParams.get("type") === "robots";
 
   // Determine site origin
-  const origin = req.headers.get("origin")?.replace(/\/$/, "") || "https://balajinivesh.lovable.app";
+  const origin = req.headers.get("origin")?.replace(/\/$/, "") || "https://www.balajinivesh.com";
 
   if (isRobots) {
     const robots = `User-agent: *

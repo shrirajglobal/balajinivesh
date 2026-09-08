@@ -36,7 +36,7 @@ export const buildShareUrl = ({
 }: BuildShareUrlOptions): string => {
   const base =
     url ??
-    (typeof window !== "undefined" ? window.location.href : "https://balajinivesh.studydna.in/");
+    (typeof window !== "undefined" ? window.location.href : "https://www.balajinivesh.com/");
 
   let absolute: URL;
   try {
