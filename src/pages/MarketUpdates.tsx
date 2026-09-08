@@ -34,6 +34,7 @@ interface MarketUpdate {
   what_it_means: string | null;
   key_movers: string[];
   market_sentiment: string | null;
+  is_weekly_roundup: boolean | null;
   meta_title: string | null;
   meta_description: string | null;
   published_at: string | null;
