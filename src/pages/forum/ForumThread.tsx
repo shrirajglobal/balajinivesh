@@ -166,9 +166,9 @@ const ForumThread = () => {
             ) : (
               <div className="flex items-center justify-between gap-3 text-sm">
                 <span className="text-muted-foreground">Sign in to reply.</span>
-                <Button asChild>
-                  <Link to={`/auth?redirect=/forum/${thread.slug}`}>Sign in</Link>
-                </Button>
+                  <Button asChild>
+                    <a href={EXTERNAL_LOGIN_URL} target="_blank" rel="noopener noreferrer">Sign in</a>
+                  </Button>
               </div>
             )}
           </CardContent>

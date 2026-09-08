@@ -70,7 +70,7 @@ const ApplicationForm = () => {
           Please create an account or sign in first, so we can link your application to your login.
         </p>
         <Button asChild size="lg">
-          <Link to="/auth?redirect=/partner%23apply">Sign in / Create account</Link>
+          <a href={EXTERNAL_LOGIN_URL} target="_blank" rel="noopener noreferrer">Sign in / Create account</a>
         </Button>
       </div>
     );
