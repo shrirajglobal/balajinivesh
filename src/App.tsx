@@ -51,6 +51,7 @@ const Auth = lazy(() => import("./pages/Auth"));
 const MarketUpdates = lazy(() => import("./pages/MarketUpdates"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
+const GetApp = lazy(() => import("./pages/GetApp"));
 const Resources = lazy(() => import("./pages/Resources"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfUse = lazy(() => import("./pages/TermsOfUse"));
@@ -246,6 +247,7 @@ const App = () => (
                   <Route path="/about" element={<LazyRoute component={About} />} />
                   <Route path="/contact" element={<LazyRoute component={Contact} />} />
                   <Route path="/resources" element={<LazyRoute component={Resources} />} />
+                  <Route path="/app" element={<LazyRoute component={GetApp} />} />
                   <Route path="/privacy" element={<LazyRoute component={PrivacyPolicy} />} />
                   <Route path="/terms" element={<LazyRoute component={TermsOfUse} />} />
                   <Route path="/disclaimer" element={<LazyRoute component={Disclaimer} />} />

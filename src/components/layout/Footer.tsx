@@ -6,6 +6,7 @@ import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import NewsletterSignup from "@/components/newsletter/NewsletterSignup";
 import logo from "@/assets/logo.jpeg";
 import { useArnIdentity } from "@/lib/arn";
+import AppPromo from "@/components/app/AppPromo";
 
 
 const Footer = () => {
