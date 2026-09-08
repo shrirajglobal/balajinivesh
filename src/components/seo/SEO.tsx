@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { SITE_URL, absoluteUrl } from "@/lib/site";
 
 interface SEOProps {
   title: string;
