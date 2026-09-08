@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import SEO from "@/components/seo/SEO";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import { toast } from "sonner";
+import { EXTERNAL_LOGIN_URL } from "@/lib/externalAuth";
 import { format, formatDistanceToNow } from "date-fns";
 
 interface Thread {

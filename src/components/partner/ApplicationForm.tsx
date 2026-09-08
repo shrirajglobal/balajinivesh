@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, CheckCircle2, LogIn } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { EXTERNAL_LOGIN_URL } from "@/lib/externalAuth";
 
 const schema = z.object({
   full_name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),

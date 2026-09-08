@@ -15,6 +15,7 @@ import SEO from "@/components/seo/SEO";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import { toast } from "sonner";
 import { formatDistanceToNow } from "date-fns";
+import { openExternalLogin } from "@/lib/externalAuth";
 
 interface Thread {
   id: string;
