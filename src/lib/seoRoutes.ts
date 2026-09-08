@@ -124,9 +124,7 @@ export const routeMeta: Record<string, RouteMeta> = {
     crumbs: [["Commission Disclosure", "/commission-disclosure"]],
   },
   "/auth": { title: "Sign in | Balaji Nivesh", description: "Sign in to your Balaji Nivesh account.", noindex: true },
-  Object_placeholder: undefined as unknown as RouteMeta,
 };
-delete (routeMeta as Record<string, unknown>).Object_placeholder;
 
 [
   CALC("SIP Calculator", "/calculators/sip", "SIP Calculator — Monthly SIP Returns in Seconds",
