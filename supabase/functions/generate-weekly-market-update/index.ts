@@ -312,6 +312,14 @@ Use ONLY the material above. Do not add any other news from memory. Write the we
       `Major Mutual Fund Industry News in India\n${post.industry_news}${srcLine("i", post.industry_sources)}`,
     ].join("\n\n");
 
+    const violations = scanFields([
+      post.headline, summary, post.what_it_means, post.key_movers, post.meta_title, post.meta_description,
+    ]);
+    const blocked = hasBlockingViolations(violations);
+    if (violations.length) {
+      console.warn("weekly update compliance violations:", JSON.stringify(violations));
+    }
+
     const payload = {
       update_date: targetDate,
       ...snap,
@@ -322,13 +330,19 @@ Use ONLY the material above. Do not add any other news from memory. Write the we
       market_sentiment: post.market_sentiment,
       meta_title: post.meta_title,
       meta_description: post.meta_description,
-      status: "published",
+      status: blocked ? "draft" : "published",
       is_weekly_roundup: true,
       ai_generated: true,
       ai_provider: "lovable_ai",
       ai_model: AI_MODEL,
-      raw_ai_output: { ...post, week_start: weekStart, week_end: targetDate, failed_feeds: feeds.failed },
-      published_at: new Date().toISOString(),
+      raw_ai_output: {
+        ...post,
+        week_start: weekStart,
+        week_end: targetDate,
+        failed_feeds: feeds.failed,
+        compliance_violations: violations,
+      },
+      published_at: blocked ? null : new Date().toISOString(),
     };
 
     let saved;
@@ -339,16 +353,24 @@ Use ONLY the material above. Do not add any other news from memory. Write the we
       saved = data;
     } else {
       const { data, error } = await supabase
-        .from("market_updates").insert(payload).select().single();
+        .from("market_updates")
+        .upsert(payload, { onConflict: "update_date" })
+        .select().single();
       if (error) throw error;
       saved = data;
     }
 
     return new Response(JSON.stringify({
-      success: true, id: saved.id, status: saved.status, headline: saved.headline, failed_feeds: feeds.failed,
+      success: true, id: saved.id, status: saved.status, headline: saved.headline,
+      compliance_hold: blocked, violations, failed_feeds: feeds.failed,
     }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
   } catch (e) {
-    const msg = e instanceof Error ? e.message : String(e);
+    const msg =
+      e instanceof Error
+        ? e.message
+        : typeof e === "object" && e !== null
+        ? JSON.stringify(e)
+        : String(e);
     console.error("generate-weekly-market-update error:", msg);
     return new Response(JSON.stringify({ success: false, error: msg }), {
       status: 500,
@@ -356,3 +378,4 @@ Use ONLY the material above. Do not add any other news from memory. Write the we
     });
   }
 });
+
