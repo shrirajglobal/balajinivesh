@@ -146,11 +146,11 @@ const Footer = () => {
 
           <div className="mt-4 flex flex-col items-center justify-between gap-3 text-xs text-muted-foreground sm:flex-row sm:gap-2">
             <p>{t("footer.copyright").replace("{year}", new Date().getFullYear().toString())}</p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/privacy" className="hover:text-primary">{t("footer.privacyPolicy")}</Link>
-              <Link to="/terms" className="hover:text-primary">{t("footer.termsOfUse")}</Link>
-              <Link to="/disclaimer" className="hover:text-primary">{t("footer.disclaimerLink")}</Link>
-              <Link to="/commission-disclosure" className="hover:text-primary">Commission Disclosure</Link>
+            <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-center sm:flex sm:flex-wrap sm:justify-center sm:gap-4">
+              <Link to="/privacy" className="py-1 hover:text-primary">{t("footer.privacyPolicy")}</Link>
+              <Link to="/terms" className="py-1 hover:text-primary">{t("footer.termsOfUse")}</Link>
+              <Link to="/disclaimer" className="py-1 hover:text-primary">{t("footer.disclaimerLink")}</Link>
+              <Link to="/commission-disclosure" className="py-1 font-medium text-foreground hover:text-primary">Commission Disclosure</Link>
             </div>
           </div>
         </div>
