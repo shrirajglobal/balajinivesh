@@ -50,9 +50,13 @@ const SEO = ({ title, description, canonical, image, type = "website", jsonLd, k
     if (keywords?.length) created.push(upsertMeta('meta[name="keywords"]', { name: "keywords", content: keywords.join(", ") }));
     if (noindex) created.push(upsertMeta('meta[name="robots"]', { name: "robots", content: "noindex,nofollow" }));
 
-    const url =
-      canonical ??
-      (typeof window !== "undefined" ? absoluteUrl(window.location.pathname) : SITE_URL);
+    const url = canonical
+      ? canonical.startsWith("http")
+        ? canonical
+        : absoluteUrl(canonical)
+      : typeof window !== "undefined"
+      ? absoluteUrl(window.location.pathname)
+      : SITE_URL;
     if (url) upsertLink("canonical", url);
 
     // OG
