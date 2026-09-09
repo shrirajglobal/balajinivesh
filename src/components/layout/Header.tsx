@@ -145,8 +145,8 @@ const Header = () => {
       <div className="container flex h-14 items-center justify-between sm:h-16 lg:h-18">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
-          <img src={logo} alt="Balaji Nivesh" className="h-8 w-auto sm:h-10" />
-          <span className="hidden font-display text-base font-bold text-foreground sm:inline-block sm:text-lg">
+          <img src={logo} alt="Balaji Nivesh" className="h-11 w-auto sm:h-12" />
+          <span className="font-display text-base font-bold text-foreground sm:text-lg">
             Balaji <span className="text-secondary">Nivesh</span>
           </span>
         </Link>

@@ -24,7 +24,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="space-y-4 sm:col-span-2 lg:col-span-1">
             <Link to="/" className="flex items-center gap-2">
-              <img src={logo} alt="Balaji Nivesh" className="h-9 w-auto sm:h-10" />
+              <img src={logo} alt="Balaji Nivesh" className="h-12 w-auto sm:h-14" />
               <span className="font-display text-base font-bold text-foreground sm:text-lg">
                 Balaji <span className="text-secondary">Nivesh</span>
               </span>
