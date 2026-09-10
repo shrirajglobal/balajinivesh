@@ -17,7 +17,7 @@ const StickyCTA = () => {
   const { data: settings } = useSiteSettings();
 
   const phone = (settings?.map.contact_phone || "").trim();
-  const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to speak with an advisor.");
+  const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to speak with the Balaji Nivesh team.");
   const callHref = phone ? `tel:${phone.replace(/\s+/g, "")}` : "/contact";
 
   // Auto-hide on admin/partner routes
@@ -67,7 +67,7 @@ const StickyCTA = () => {
 
       <button
         onClick={() => setOpen((v) => !v)}
-        aria-label={open ? "Close contact menu" : "Talk to an advisor or ask a question"}
+        aria-label={open ? "Close contact menu" : "Talk to our team or ask a question"}
         className={cn(
           "pointer-events-auto flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition-all sm:h-16 sm:w-16",
           open

@@ -58,7 +58,7 @@ const Contact = () => {
         source: "contact_page",
       });
       try { localStorage.setItem("bn_can_ask_review", "1"); } catch { /* ignore */ }
-      toast({ title: "We'll be in touch!", description: "An advisor will WhatsApp you within one business day." });
+      toast({ title: "We'll be in touch!", description: "Our team will WhatsApp you within one business day." });
       setName(""); setPhone(""); setEmail(""); setInterest(""); setMessage("");
     } catch {
       toast({ title: "Something went wrong", description: "Please try WhatsApp or call us directly." });

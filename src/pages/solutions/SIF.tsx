@@ -48,7 +48,7 @@ const SIF = () => (
       {
         question: "How does Balaji Nivesh support me here?",
         answer:
-          "We help you understand the structure, taxation and risk profile of these products and assist with documentation. We are a distributor, not an advisor, and we do not manage your money or execute transactions on a discretionary basis.",
+          "We help you understand the structure, taxation and risk profile of these products and assist with documentation. We are a distributor, not an investment adviser, and we do not manage your money or execute transactions on a discretionary basis.",
       },
     ]}
   />
