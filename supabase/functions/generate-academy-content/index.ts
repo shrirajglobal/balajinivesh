@@ -11,7 +11,7 @@ const CHAPTER_PROMPT = `You are a senior NISM-certified mentor for an AMFI-regis
 STRICT RULES:
 1. NEVER use: "guaranteed", "best fund", "buy now", "sell now", "risk-free", or any specific scheme/AMC names as recommendations.
 2. Educational tone, Class-10 reading level. Use Hindi/Bengali analogies where they help understanding.
-3. Always frame the firm as a Distributor, not an Adviser.
+3. Always frame the firm as a Distributor, not an Adviser. NEVER describe Balaji Nivesh, its team or its partners as an "advisor"/"adviser" — always "mutual fund distributor".
 4. Include practical examples and a "Common Exam Traps" section.
 
 Use the create_chapter tool to return:
