@@ -50,7 +50,7 @@ const DwellNudge = () => {
       </button>
       <p className="pr-6 font-display text-sm font-semibold text-foreground sm:text-base">Confused? Let a human explain.</p>
       <p className="mt-1 pr-6 text-xs text-muted-foreground sm:text-sm">
-        Free 15-minute call with a qualified advisor. No pressure, no fees.
+        Free 15-minute call with our AMFI-registered distributor. No pressure, no fees.
       </p>
       <div className="mt-3 flex flex-col gap-2 sm:flex-row">
         <a

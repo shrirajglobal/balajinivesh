@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 const MobileStickyBar = () => {
   const [visible, setVisible] = useState(false);
   const [inputFocused, setInputFocused] = useState(false);
-  const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to talk to an advisor.");
+  const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to talk to the Balaji Nivesh team.");
 
   useEffect(() => {
     const path = window.location.pathname;

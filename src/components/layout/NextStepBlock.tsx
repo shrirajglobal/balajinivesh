@@ -17,7 +17,7 @@ interface Props {
  */
 const NextStepBlock = ({
   headline = "Not sure which is right for you?",
-  subtext = "Talk to a Balaji Nivesh advisor free for 15 minutes — no pressure, no fees.",
+  subtext = "Talk to the Balaji Nivesh team free for 15 minutes — no pressure, no fees.",
   className = "",
 }: Props) => {
   const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like a 15-min free plan call.");

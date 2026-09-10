@@ -30,7 +30,7 @@ const CalculatorLeadCapture = ({
   context,
   source,
   title = "Want a personalised plan?",
-  subtitle = "Get this calculation as a free PDF and a 15-min call with our SEBI-compliant advisor. No fees, no pressure.",
+  subtitle = "Get this calculation as a free PDF and a 15-min call with our AMFI-registered mutual fund distributor. No fees, no pressure.",
 }: Props) => {
   const { toast } = useToast();
   const { data: settings } = useSiteSettings();
@@ -61,7 +61,7 @@ const CalculatorLeadCapture = ({
       });
       try { localStorage.setItem("bn_can_ask_review", "1"); } catch { /* ignore */ }
       setSent(true);
-      toast({ title: "Got it!", description: "Our advisor will reach out shortly." });
+      toast({ title: "Got it!", description: "Our team will reach out shortly." });
     } catch {
       setSent(true);
       toast({ title: "Thanks!", description: "We'll be in touch shortly." });
@@ -77,7 +77,7 @@ const CalculatorLeadCapture = ({
           <CheckCircle2 className="h-10 w-10 text-brand-green" />
           <h3 className="font-display text-lg font-bold text-foreground">You're on the list</h3>
           <p className="text-sm text-muted-foreground">
-            Our advisor will reach out on WhatsApp within one business day. Want to talk now?
+            Our team will reach out on WhatsApp within one business day. Want to talk now?
           </p>
           <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
             <Button asChild size="sm" className="bg-brand-green hover:bg-brand-green/90 text-white">

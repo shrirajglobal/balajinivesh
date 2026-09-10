@@ -136,7 +136,7 @@ const AdminActivePartners = () => {
               <Label>Linked User ID (UUID)</Label>
               <Input value={userId} onChange={(e) => setUserId(e.target.value)} placeholder="00000000-0000-0000-0000-000000000000" />
               <p className="text-xs text-muted-foreground">
-                The auth user this partner record belongs to. Fixing a wrong id here re-attributes the dashboard/leads/commissions to the correct sub-advisor.
+                The auth user this partner record belongs to. Fixing a wrong id here re-attributes the dashboard/leads/commissions to the correct sub-distributor.
               </p>
             </div>
           </div>

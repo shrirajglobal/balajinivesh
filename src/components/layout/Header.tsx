@@ -47,7 +47,7 @@ const Header = () => {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
 
-  const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to talk to an advisor.");
+  const whatsappHref = useWhatsAppContactHref("Hi Balaji Nivesh, I'd like to talk to the Balaji Nivesh team.");
 
 
   useEffect(() => {
@@ -126,7 +126,7 @@ const Header = () => {
         },
       ],
     },
-    { label: "Find an Advisor", path: "/locator" },
+    { label: "Find a Distributor", path: "/locator" },
     { label: t("partner.navPartner"), path: "/partner" },
     { label: t("nav.about"), path: "/about" },
   ];

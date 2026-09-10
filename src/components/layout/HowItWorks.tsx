@@ -15,7 +15,7 @@ const HowItWorks = () => {
     {
       icon: PhoneCall,
       title: "Get a free 15-min plan call",
-      desc: "A qualified advisor walks you through the options.",
+      desc: "Our AMFI-registered distributor walks you through the options.",
       tone: "bg-brand-blue-light text-secondary",
     },
     {
