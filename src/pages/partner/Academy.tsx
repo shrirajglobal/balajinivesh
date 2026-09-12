@@ -70,9 +70,9 @@ const Academy = () => {
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-blue-light text-secondary">
               <GraduationCap className="h-5 w-5" />
             </div>
-            <h1 className="font-display text-2xl font-bold text-foreground">Partner University</h1>
+            <h1 className="font-display text-2xl font-bold text-foreground">Distributor Academy</h1>
           </div>
-          <p className="mt-2 text-muted-foreground">Mentor-style training to help you ace NISM, master products, and grow your practice.</p>
+          <p className="mt-2 text-muted-foreground">Continue your NISM preparation and practical distributor learning.</p>
         </div>
         <Card className="min-w-[220px] border-primary/20">
           <CardContent className="p-4">
