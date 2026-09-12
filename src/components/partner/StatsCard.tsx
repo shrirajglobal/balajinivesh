@@ -11,7 +11,7 @@ interface StatsCardProps {
 
 const StatsCard = ({ title, value, subtitle, icon: Icon, trend }: StatsCardProps) => (
   <Card className="border-border/60">
-    <CardContent className="flex items-start gap-4 p-6">
+    <CardContent className="flex flex-col items-start gap-3 p-4 sm:flex-row sm:gap-4 sm:p-6">
       <div className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-brand-orange-light text-primary">
         <Icon className="h-5 w-5" />
       </div>

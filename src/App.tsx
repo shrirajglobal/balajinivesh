@@ -61,8 +61,6 @@ const CommissionDisclosure = lazy(() => import("./pages/CommissionDisclosure"));
 
 const Partner = lazy(() => import("./pages/Partner"));
 const PartnerDashboard = lazy(() => import("./pages/partner/Dashboard"));
-const PartnerCommissions = lazy(() => import("./pages/partner/Commissions"));
-const PartnerClients = lazy(() => import("./pages/partner/Clients"));
 const PartnerLeads = lazy(() => import("./pages/partner/Leads"));
 const PartnerAcademy = lazy(() => import("./pages/partner/Academy"));
 const PartnerAcademyModule = lazy(() => import("./pages/partner/AcademyModule"));
@@ -225,8 +223,8 @@ const App = () => (
                   {/* Partner */}
                   <Route path="/partner" element={<LazyRoute component={Partner} />} />
                   <Route path="/partner/dashboard" element={<LazyRoute component={PartnerDashboard} />} />
-                  <Route path="/partner/commissions" element={<LazyRoute component={PartnerCommissions} />} />
-                  <Route path="/partner/clients" element={<LazyRoute component={PartnerClients} />} />
+                  <Route path="/partner/commissions" element={<Navigate to="/partner/dashboard" replace />} />
+                  <Route path="/partner/clients" element={<Navigate to="/partner/dashboard" replace />} />
                   <Route path="/partner/leads" element={<LazyRoute component={PartnerLeads} />} />
                   <Route path="/partner/academy" element={<LazyRoute component={PartnerAcademy} />} />
                   <Route path="/partner/academy/:moduleSlug" element={<LazyRoute component={PartnerAcademyModule} />} />

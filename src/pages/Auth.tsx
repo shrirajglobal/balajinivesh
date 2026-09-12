@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { EXTERNAL_LOGIN_URL } from "@/lib/externalAuth";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -29,20 +29,14 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const pageTopRef = useRef<HTMLElement | null>(null);
   const returnTo = safeReturnTo(params.get("returnTo"));
 
   useEffect(() => {
     if (user && mode !== "choice" && mode !== "check-email") navigate(consumeReturnTo(returnTo), { replace: true });
   }, [mode, navigate, returnTo, user]);
 
-  useLayoutEffect(() => {
-    const scrollToTop = () => {
-      pageTopRef.current?.scrollIntoView({ block: "start" });
-    };
-    scrollToTop();
-    const timer = window.setTimeout(scrollToTop, 200);
-    return () => window.clearTimeout(timer);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, [mode]);
 
   const changeMode = (nextMode: Mode) => {
@@ -106,7 +100,7 @@ const Auth = () => {
 
   if (mode === "choice") {
     return (
-      <main ref={pageTopRef} className="min-h-[80vh] bg-muted/30 px-4 py-10 sm:py-16">
+      <main className="min-h-[80vh] bg-muted/30 px-4 py-10 sm:py-16">
         <div className="mx-auto max-w-4xl">
           <div className="text-center">
             <p className="text-sm font-semibold text-primary">Choose where you want to go</p>
@@ -134,15 +128,15 @@ const Auth = () => {
               <CardHeader>
                 <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-secondary/10 text-secondary"><GraduationCap className="h-6 w-6" /></div>
                 <CardTitle className="pt-3 font-display text-2xl">Distributor Login</CardTitle>
-                <CardDescription>Continue learning and manage leads in your CRM.</CardDescription>
+                <CardDescription>Manage leads, continue learning, and access distributor resources.</CardDescription>
               </CardHeader>
               <CardContent className="space-y-5">
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex gap-2"><BookOpenCheck className="mt-0.5 h-4 w-4 shrink-0 text-secondary" />NISM learning and progress</li>
-                  <li className="flex gap-2"><BriefcaseBusiness className="mt-0.5 h-4 w-4 shrink-0 text-secondary" />Leads, clients and follow-ups</li>
+                  <li className="flex gap-2"><BriefcaseBusiness className="mt-0.5 h-4 w-4 shrink-0 text-secondary" />Lead CRM and follow-up reminders</li>
                 </ul>
-                <Button className="w-full" variant="secondary" size="lg" onClick={() => changeMode("distributor")}>Continue to Distributor Login <ArrowRight className="ml-2 h-4 w-4" /></Button>
-                <p className="text-center text-sm text-muted-foreground">Interested in becoming a distributor? <button type="button" onClick={() => changeMode("signup")} className="font-semibold text-primary hover:underline">Apply here</button></p>
+                <Button className="w-full" variant="secondary" size="lg" onClick={() => changeMode("distributor")}>Sign in to Distributor Portal <ArrowRight className="ml-2 h-4 w-4" /></Button>
+                <p className="text-center text-sm text-muted-foreground">Want to become a distributor? <button type="button" onClick={() => changeMode("signup")} className="font-semibold text-primary hover:underline">Create an account and apply</button></p>
               </CardContent>
             </Card>
           </div>
@@ -153,13 +147,13 @@ const Auth = () => {
   }
 
   return (
-    <main ref={pageTopRef} className="min-h-[80vh] bg-muted/30 px-4 py-10 sm:py-16">
+    <main className="flex min-h-[80vh] justify-center bg-muted/30 px-4 py-10 sm:py-16">
       <Card className="w-full max-w-md border-border/60 shadow-lg">
         <CardHeader className="text-center">
           <Button type="button" variant="ghost" size="sm" className="absolute" onClick={() => changeMode("choice")}><ArrowLeft className="mr-1 h-4 w-4" />Back</Button>
           <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-secondary/10 text-secondary">{mode === "forgot" ? <Mail className="h-6 w-6" /> : mode === "check-email" ? <CheckCircle2 className="h-6 w-6" /> : <LockKeyhole className="h-6 w-6" />}</div>
           <CardTitle className="font-display text-2xl">{mode === "signup" ? "Create distributor account" : mode === "forgot" ? "Reset your password" : mode === "check-email" ? "Check your email" : "Distributor Login"}</CardTitle>
-          <CardDescription>{mode === "signup" ? "Create your account, then submit your distributor application." : mode === "forgot" ? "We’ll email you a secure password reset link." : mode === "check-email" ? "Use the link we sent to continue securely." : "Access Learning, Leads CRM, clients and business tools."}</CardDescription>
+          <CardDescription>{mode === "signup" ? "Create an account, submit your details, and receive access after team review." : mode === "forgot" ? "We’ll email you a secure password reset link." : mode === "check-email" ? "Use the link we sent to continue securely." : "Manage leads, continue your Academy learning, and use distributor resources."}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-5 pb-8">
           {mode === "check-email" ? (
@@ -175,11 +169,11 @@ const Auth = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between"><Label htmlFor="password">Password</Label>{mode === "distributor" && <button type="button" onClick={() => changeMode("forgot")} className="text-xs font-medium text-primary hover:underline">Forgot password?</button>}</div>
                   <div className="relative"><Input id="password" type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={mode === "signup" ? "new-password" : "current-password"} minLength={8} required className="pr-10" /><Button type="button" variant="ghost" size="icon" className="absolute right-0 top-0 h-10 w-10" onClick={() => setShowPassword((value) => !value)} aria-label={showPassword ? "Hide password" : "Show password"}>{showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}</Button></div>
-                  {mode === "signup" && <p className="text-xs text-muted-foreground">Use at least 8 characters.</p>}
+              {mode === "signup" && <p className="text-xs text-muted-foreground">Create account → submit details → team review → portal access. Use at least 8 characters.</p>}
                 </div>
               )}
               {errorMessage}
-              <Button type="submit" className="w-full" size="lg" disabled={loading}>{loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}{mode === "signup" ? "Create account & continue" : mode === "forgot" ? "Send reset link" : "Sign in to Learning & CRM"}</Button>
+              <Button type="submit" className="w-full" size="lg" disabled={loading}>{loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}{mode === "signup" ? "Create account & continue" : mode === "forgot" ? "Send reset link" : "Sign in to Distributor Portal"}</Button>
             </form>
           )}
           {(mode === "distributor" || mode === "signup") && <><div className="flex items-center gap-3"><Separator className="flex-1" /><span className="text-xs text-muted-foreground">or</span><Separator className="flex-1" /></div><Button type="button" variant="outline" className="w-full" onClick={handleGoogle} disabled={loading}><Users className="mr-2 h-4 w-4" />Continue with Google</Button></>}

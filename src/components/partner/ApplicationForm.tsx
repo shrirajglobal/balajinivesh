@@ -73,7 +73,7 @@ const ApplicationForm = () => {
       <div className="flex flex-col items-center gap-4 rounded-2xl border border-border bg-card p-8 text-center">
         <CheckCircle2 className="h-12 w-12 text-brand-green" />
         <h3 className="font-display text-xl font-bold text-foreground">{existingStatus === "approved" ? "Your distributor access is approved" : "Application received"}</h3>
-        <p className="text-muted-foreground">{existingStatus === "approved" ? "Continue to your Distributor Learning & CRM portal." : "Our team will review your details and activate your portal access after approval."}</p>
+        <p className="text-muted-foreground">{existingStatus === "approved" ? "Continue to your Distributor Portal." : "Our team will review your details. After approval, you can access Leads, Academy, and Toolkit."}</p>
         {existingStatus === "approved" && <Button asChild><Link to="/partner/dashboard">Open Learning &amp; CRM</Link></Button>}
       </div>
     );
@@ -97,7 +97,7 @@ const ApplicationForm = () => {
   return (
     <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
       <h3 className="font-display text-xl font-bold text-foreground">{t("partnerApp.title")}</h3>
-      <p className="mt-1 text-sm text-muted-foreground">{t("partnerApp.subtitle")}</p>
+      <p className="mt-1 text-sm text-muted-foreground">Create account → submit details → team review → portal access.</p>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="mt-6 space-y-4">
           <FormField control={form.control} name="full_name" render={({ field }) => (

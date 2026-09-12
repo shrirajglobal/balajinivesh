@@ -1,15 +1,17 @@
-import { Download, FileText } from "lucide-react";
+import { FileText, MessageCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import PartnerLayout from "@/components/partner/PartnerLayout";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useWhatsAppContactHref } from "@/lib/whatsapp";
 
 const Toolkit = () => {
   const { t } = useLanguage();
+  const requestHref = useWhatsAppContactHref("Hi Balaji Nivesh, I am a distributor and would like to request a resource from the Toolkit.");
 
   const materials = [
     { icon: FileText, title: t("partnerToolkit.brochuresTitle"), desc: t("partnerToolkit.brochuresDesc") },
-    { icon: Download, title: t("partnerToolkit.formsTitle"), desc: t("partnerToolkit.formsDesc") },
+    { icon: FileText, title: t("partnerToolkit.formsTitle"), desc: t("partnerToolkit.formsDesc") },
   ];
 
   return (
@@ -26,8 +28,8 @@ const Toolkit = () => {
               </div>
               <h3 className="font-display text-lg font-semibold text-foreground">{m.title}</h3>
               <p className="text-sm text-muted-foreground">{m.desc}</p>
-              <Button variant="outline" size="sm" disabled>
-                <Download className="mr-1 h-3 w-3" /> {t("partnerToolkit.comingSoon")}
+              <Button asChild variant="outline" size="sm">
+                <a href={requestHref} target="_blank" rel="noopener noreferrer"><MessageCircle className="mr-1 h-3 w-3" /> Request this resource</a>
               </Button>
             </CardContent>
           </Card>
