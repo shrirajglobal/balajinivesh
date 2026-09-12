@@ -38,7 +38,7 @@ const Auth = () => {
   const changeMode = (nextMode: Mode) => {
     setMode(nextMode);
     setError("");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "auto" });
     const next = new URLSearchParams(params);
     if (nextMode === "choice") next.delete("mode"); else next.set("mode", nextMode);
     setParams(next, { replace: true });

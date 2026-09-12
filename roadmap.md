@@ -5,4 +5,4 @@
 - [x] Connect application, approval, and distributor access states
 - [x] Reorganize distributor portal labels and dashboard actions
 - [x] Update every login entry consistently
-- [ ] Verify security, build, desktop, and mobile flows
+- [x] Verify security, build, desktop, and mobile flows
