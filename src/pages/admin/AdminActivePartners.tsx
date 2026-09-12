@@ -79,8 +79,8 @@ const AdminActivePartners = () => {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-bold text-foreground">Active Partners</h1>
-      <p className="mt-1 text-sm text-muted-foreground">Manage all registered partners</p>
+      <h1 className="font-display text-2xl font-bold text-foreground">Active Distributors</h1>
+      <p className="mt-1 text-sm text-muted-foreground">Manage registered distributors and their portal access.</p>
 
       <div className="mt-6 rounded-xl border border-border">
         <Table>
@@ -95,7 +95,7 @@ const AdminActivePartners = () => {
           </TableHeader>
           <TableBody>
             {partners.length === 0 ? (
-              <TableRow><TableCell colSpan={5} className="py-8 text-center text-muted-foreground">No partners found</TableCell></TableRow>
+              <TableRow><TableCell colSpan={5} className="py-8 text-center text-muted-foreground">No distributors found</TableCell></TableRow>
             ) : partners.map((p) => (
               <TableRow key={p.id}>
                 <TableCell className="font-medium">{p.arn_number || "—"}</TableCell>

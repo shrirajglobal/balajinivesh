@@ -11,7 +11,6 @@ import ProgressTracker from "@/components/education/ProgressTracker";
 import CertificateModal from "@/components/education/CertificateModal";
 import GiftClaimForm from "@/components/education/GiftClaimForm";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
-import { EXTERNAL_LOGIN_URL } from "@/lib/externalAuth";
 
 const missions = [
   {
