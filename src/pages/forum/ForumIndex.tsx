@@ -69,7 +69,7 @@ const ForumIndex = () => {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
-      openExternalLogin();
+      navigate("/auth?mode=distributor&returnTo=%2Fforum");
       return;
     }
     if (!title.trim() || !body.trim()) return;
@@ -122,7 +122,7 @@ const ForumIndex = () => {
         <div className="container max-w-4xl">
           <div className="mb-6 flex items-center justify-between">
             <h2 className="font-display text-xl font-semibold text-foreground">Recent threads</h2>
-            <Button onClick={() => (user ? setShowForm((v) => !v) : openExternalLogin())}>
+            <Button onClick={() => (user ? setShowForm((v) => !v) : navigate("/auth?mode=distributor&returnTo=%2Fforum"))}>
               <Plus className="mr-1 h-4 w-4" />
               {showForm ? "Cancel" : "New thread"}
             </Button>

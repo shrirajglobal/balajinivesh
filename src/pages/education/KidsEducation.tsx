@@ -142,7 +142,7 @@ const KidsEducation = () => {
             <div className="mb-8 rounded-xl border border-secondary/20 bg-accent p-4 text-center">
               <p className="text-sm text-foreground">
                 <Lock className="mr-1 inline h-4 w-4" />
-                <a href={EXTERNAL_LOGIN_URL} target="_blank" rel="noopener noreferrer" className="font-medium text-secondary underline">Sign in</a> to track your missions, earn a certificate & win a gift!
+                <Link to="/auth?mode=distributor&returnTo=%2Feducation%2Fkids" className="font-medium text-secondary underline">Sign in</Link> to track your missions, earn a certificate &amp; win a gift!
               </p>
             </div>
           )}

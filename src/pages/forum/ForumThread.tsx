@@ -168,7 +168,7 @@ const ForumThread = () => {
               <div className="flex items-center justify-between gap-3 text-sm">
                 <span className="text-muted-foreground">Sign in to reply.</span>
                   <Button asChild>
-                    <a href={EXTERNAL_LOGIN_URL} target="_blank" rel="noopener noreferrer">Sign in</a>
+                    <Link to={`/auth?mode=distributor&returnTo=${encodeURIComponent(location.pathname)}`}>Sign in</Link>
                   </Button>
               </div>
             )}
