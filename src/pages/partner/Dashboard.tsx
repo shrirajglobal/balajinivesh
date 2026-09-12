@@ -31,7 +31,6 @@ const Dashboard = () => {
       const { data: partner } = await supabase.from("partners").select("id").eq("user_id", user.id).maybeSingle();
       if (!partner) return;
 
-      const today = new Date().toISOString().slice(0, 10);
       const [leadRes, chapterRes] = await Promise.all([
         supabase.from("partner_leads").select("id,name,phone,status,priority,next_follow_up_date,updated_at").eq("partner_id", partner.id),
         supabase.from("partner_chapter_progress").select("id", { count: "exact", head: true }).eq("user_id", user.id),
