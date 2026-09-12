@@ -38,6 +38,7 @@ const Auth = () => {
   const changeMode = (nextMode: Mode) => {
     setMode(nextMode);
     setError("");
+    window.scrollTo({ top: 0, behavior: "smooth" });
     const next = new URLSearchParams(params);
     if (nextMode === "choice") next.delete("mode"); else next.set("mode", nextMode);
     setParams(next, { replace: true });
@@ -76,7 +77,7 @@ const Auth = () => {
     setLoading(true);
     setError("");
     rememberReturnTo(mode === "signup" ? "/partner#apply" : returnTo);
-    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin, extraParams: { prompt: "select_account" } });
+    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: `${window.location.origin}/auth?mode=distributor`, extraParams: { prompt: "select_account" } });
     setLoading(false);
     if (result.error) setError(result.error.message);
     else if (!result.redirected) navigate(consumeReturnTo(), { replace: true });
