@@ -36,7 +36,14 @@ const Auth = () => {
   }, [mode, navigate, returnTo, user]);
 
   useEffect(() => {
-    window.requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "auto" }));
+    const scrollToTop = () => {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      window.scrollTo(0, 0);
+    };
+    scrollToTop();
+    const timer = window.setTimeout(scrollToTop, 50);
+    return () => window.clearTimeout(timer);
   }, [mode]);
 
   const changeMode = (nextMode: Mode) => {
