@@ -12,7 +12,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { useWhatsAppContactHref } from "@/lib/whatsapp";
 import { useArnIdentity } from "@/lib/arn";
-import { EXTERNAL_LOGIN_URL } from "@/lib/externalAuth";
 
 import { supabase } from "@/integrations/supabase/client";
 import logo from "@/assets/logo.jpeg";
@@ -273,7 +272,7 @@ const Header = () => {
                 {isPartner && (
                   <DropdownMenuItem asChild>
                     <Link to="/partner/dashboard" className="flex items-center gap-2 cursor-pointer">
-                      <LayoutDashboard className="h-4 w-4" /> Partner Portal
+                       <LayoutDashboard className="h-4 w-4" /> Distributor Learning &amp; CRM
                     </Link>
                   </DropdownMenuItem>
                 )}
@@ -285,9 +284,9 @@ const Header = () => {
             </DropdownMenu>
           ) : (
             <Button asChild size="sm" variant="ghost" className="hidden sm:inline-flex">
-              <a href={EXTERNAL_LOGIN_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5">
+               <Link to="/auth" className="flex items-center gap-1.5">
                 <LogIn className="h-4 w-4" /> Login
-              </a>
+               </Link>
             </Button>
           )}
 
@@ -367,7 +366,7 @@ const Header = () => {
             )}
             {isPartner && (
               <Link to="/partner/dashboard" className={cn("flex items-center gap-2 rounded-lg px-3 py-3 text-sm font-medium transition-colors active:bg-accent", isActive("/partner") ? "text-primary" : "text-muted-foreground")}>
-                <LayoutDashboard className="h-4 w-4" /> Partner Portal
+                 <LayoutDashboard className="h-4 w-4" /> Distributor Learning &amp; CRM
               </Link>
             )}
             <div className="mt-4 px-3 flex flex-col gap-2">
@@ -385,9 +384,9 @@ const Header = () => {
                 </Button>
               ) : (
                 <Button asChild variant="ghost" className="w-full">
-                  <a href={EXTERNAL_LOGIN_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                   <Link to="/auth" className="flex items-center gap-2">
                     <LogIn className="h-4 w-4" /> Login
-                  </a>
+                   </Link>
                 </Button>
               )}
             </div>

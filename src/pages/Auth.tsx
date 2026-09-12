@@ -136,7 +136,7 @@ const Auth = () => {
               </CardContent>
             </Card>
           </div>
-          <p className="mt-7 text-center text-xs text-muted-foreground"><ShieldCheck className="mr-1 inline h-4 w-4" />{arnIdentity}</p>
+          <p className="mt-7 text-center text-xs text-muted-foreground"><ShieldCheck className="mr-1 inline h-4 w-4" />{arnIdentity.credentialLine}</p>
         </div>
       </main>
     );
@@ -175,7 +175,7 @@ const Auth = () => {
           {(mode === "distributor" || mode === "signup") && <><div className="flex items-center gap-3"><Separator className="flex-1" /><span className="text-xs text-muted-foreground">or</span><Separator className="flex-1" /></div><Button type="button" variant="outline" className="w-full" onClick={handleGoogle} disabled={loading}><Users className="mr-2 h-4 w-4" />Continue with Google</Button></>}
           {mode === "distributor" && <p className="text-center text-sm text-muted-foreground">New distributor? <button type="button" onClick={() => changeMode("signup")} className="font-semibold text-primary hover:underline">Create an account and apply</button></p>}
           {mode === "signup" && <p className="text-center text-sm text-muted-foreground">Already applied? <button type="button" onClick={() => changeMode("distributor")} className="font-semibold text-primary hover:underline">Sign in</button></p>}
-          <p className="text-center text-xs text-muted-foreground"><ShieldCheck className="mr-1 inline h-3.5 w-3.5" />{arnIdentity}</p>
+          <p className="text-center text-xs text-muted-foreground"><ShieldCheck className="mr-1 inline h-3.5 w-3.5" />{arnIdentity.credentialLine}</p>
         </CardContent>
       </Card>
     </main>

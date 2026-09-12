@@ -1,83 +1,65 @@
 import { ReactNode, useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { UserPlus, ExternalLink } from "lucide-react";
+import { Clock3, UserPlus, XCircle } from "lucide-react";
 import PartnerSidebar from "./PartnerSidebar";
-import { EXTERNAL_LOGIN_URL } from "@/lib/externalAuth";
+import { distributorLoginPath } from "@/lib/authNavigation";
 
 const PartnerLayout = ({ children }: { children: ReactNode }) => {
   const { user, loading } = useAuth();
-  const [hasPartner, setHasPartner] = useState<boolean | null>(null);
+  const location = useLocation();
+  const [access, setAccess] = useState<"loading" | "active" | "apply" | "pending" | "rejected">("loading");
 
   useEffect(() => {
     if (!user) {
-      setHasPartner(null);
+      setAccess("loading");
       return;
     }
     let cancelled = false;
     (async () => {
       const { data } = await supabase
         .from("partners")
-        .select("id")
+        .select("id,status")
         .eq("user_id", user.id)
         .maybeSingle();
-      if (!cancelled) setHasPartner(!!data);
+      if (cancelled) return;
+      if (data?.status === "active") {
+        setAccess("active");
+        return;
+      }
+      const { data: application } = await supabase.from("partner_applications").select("status").eq("user_id", user.id).maybeSingle();
+      if (cancelled) return;
+      setAccess(application?.status === "pending" ? "pending" : application?.status === "rejected" ? "rejected" : "apply");
     })();
     return () => { cancelled = true; };
   }, [user]);
 
-  // Temporary redirect: send unauthenticated users to Wealth Elite login.
-  useEffect(() => {
-    if (!loading && !user) {
-      window.open(EXTERNAL_LOGIN_URL, "_blank", "noopener,noreferrer");
-    }
-  }, [loading, user]);
-
   if (loading) return <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">Loading...</div>;
 
-  if (!user) {
-    return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 text-center">
-        <ExternalLink className="h-10 w-10 text-primary" />
-        <h1 className="font-display text-2xl font-bold text-foreground">Opening login...</h1>
-        <p className="max-w-md text-muted-foreground">
-          The login page has opened in a new tab. Once you are signed in there, return here to access the partner portal.
-        </p>
-        <a
-          href={EXTERNAL_LOGIN_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
-        >
-          <ExternalLink className="h-4 w-4" />
-          Open login page
-        </a>
-      </div>
-    );
-  }
+  if (!user) return <Navigate to={distributorLoginPath(`${location.pathname}${location.search}`)} replace />;
 
-  if (hasPartner === null) {
+  if (access === "loading") {
     return <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">Loading...</div>;
   }
 
-  if (!hasPartner) {
+  if (access !== "active") {
+    const pending = access === "pending";
+    const rejected = access === "rejected";
     return (
       <div className="container py-16 lg:py-24">
         <div className="mx-auto max-w-xl rounded-2xl border border-border bg-card p-8 text-center">
           <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-brand-orange-light text-primary">
-            <UserPlus className="h-6 w-6" />
+             {pending ? <Clock3 className="h-6 w-6" /> : rejected ? <XCircle className="h-6 w-6" /> : <UserPlus className="h-6 w-6" />}
           </div>
           <h1 className="mt-4 font-display text-2xl font-bold text-foreground">
-            You don't have a partner account yet
+             {pending ? "Your distributor application is under review" : rejected ? "Your application needs attention" : "Apply for Distributor Learning & CRM access"}
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Apply to become a partner. Once your application is approved, your dashboard, clients, leads and commissions will appear here.
+             {pending ? "We’ll activate your Learning & CRM access after our team completes the review." : rejected ? "Please contact the Balaji Nivesh team before submitting another application." : "Submit your distributor application. Once approved, Learning, CRM, clients and business tools will appear here."}
           </p>
-          <Button asChild className="mt-6" size="lg">
-            <Link to="/partner#apply">Apply to become a partner</Link>
-          </Button>
+           {!pending && <Button asChild className="mt-6" size="lg"><Link to="/partner#apply">{rejected ? "Contact team / review application" : "Start distributor application"}</Link></Button>}
         </div>
       </div>
     );

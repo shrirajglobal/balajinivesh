@@ -51,7 +51,7 @@ const AdminDashboard = () => {
   const cards = [
     { title: "Total Users", value: stats!.totalUsers, icon: Users, link: "/admin/users", color: "text-blue-600" },
     { title: "Pending Applications", value: stats!.pendingApplications, icon: ClipboardList, link: "/admin/partners", color: "text-orange-600" },
-    { title: "Active Partners", value: stats!.activePartners, icon: UserCheck, link: "/admin/partners/active", color: "text-green-600" },
+    { title: "Active Distributors", value: stats!.activePartners, icon: UserCheck, link: "/admin/partners/active", color: "text-green-600" },
     { title: "Pending Gift Claims", value: stats!.pendingGifts, icon: Gift, link: "/admin/gifts", color: "text-purple-600" },
     { title: "Total AUM", value: `₹${(stats!.totalAUM / 100000).toFixed(2)}L`, icon: BarChart3, link: "/admin/aum", color: "text-primary" },
   ];

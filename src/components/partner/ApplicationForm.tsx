@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -12,7 +12,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, CheckCircle2, LogIn } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { EXTERNAL_LOGIN_URL } from "@/lib/externalAuth";
 
 const schema = z.object({
   full_name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -30,11 +29,28 @@ const ApplicationForm = () => {
   const { t } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [existingStatus, setExistingStatus] = useState<string | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { full_name: "", email: "", phone: "", city: "", profession: "" },
   });
+
+  useEffect(() => {
+    if (!user) return;
+    form.setValue("email", user.email || "");
+    const fullName = typeof user.user_metadata?.full_name === "string" ? user.user_metadata.full_name : "";
+    if (fullName) form.setValue("full_name", fullName);
+    Promise.all([
+      supabase.from("profiles").select("full_name,email,phone").eq("user_id", user.id).maybeSingle(),
+      supabase.from("partner_applications").select("status").eq("user_id", user.id).maybeSingle(),
+    ]).then(([profileResult, applicationResult]) => {
+      if (profileResult.data?.full_name) form.setValue("full_name", profileResult.data.full_name);
+      if (profileResult.data?.email) form.setValue("email", profileResult.data.email);
+      if (profileResult.data?.phone) form.setValue("phone", profileResult.data.phone);
+      setExistingStatus(applicationResult.data?.status || null);
+    });
+  }, [form, user]);
 
   const onSubmit = async (data: FormData) => {
     if (!user?.id) return;
@@ -44,7 +60,7 @@ const ApplicationForm = () => {
     setLoading(false);
 
     if (error) {
-      toast({ title: t("partnerApp.errorTitle"), description: t("partnerApp.errorDesc"), variant: "destructive" });
+      toast({ title: t("partnerApp.errorTitle"), description: error.code === "23505" ? "You already have a distributor application." : error.message, variant: "destructive" });
       return;
     }
 
@@ -52,12 +68,13 @@ const ApplicationForm = () => {
     toast({ title: t("partnerApp.toastTitle"), description: t("partnerApp.toastDesc") });
   };
 
-  if (submitted) {
+  if (submitted || existingStatus === "pending" || existingStatus === "approved") {
     return (
       <div className="flex flex-col items-center gap-4 rounded-2xl border border-border bg-card p-8 text-center">
         <CheckCircle2 className="h-12 w-12 text-brand-green" />
-        <h3 className="font-display text-xl font-bold text-foreground">{t("partnerApp.successTitle")}</h3>
-        <p className="text-muted-foreground">{t("partnerApp.successDesc")}</p>
+        <h3 className="font-display text-xl font-bold text-foreground">{existingStatus === "approved" ? "Your distributor access is approved" : "Application received"}</h3>
+        <p className="text-muted-foreground">{existingStatus === "approved" ? "Continue to your Distributor Learning & CRM portal." : "Our team will review your details and activate your portal access after approval."}</p>
+        {existingStatus === "approved" && <Button asChild><Link to="/partner/dashboard">Open Learning &amp; CRM</Link></Button>}
       </div>
     );
   }
@@ -71,7 +88,7 @@ const ApplicationForm = () => {
           Please create an account or sign in first, so we can link your application to your login.
         </p>
         <Button asChild size="lg">
-          <a href={EXTERNAL_LOGIN_URL} target="_blank" rel="noopener noreferrer">Sign in / Create account</a>
+           <Link to="/auth?mode=signup&returnTo=%2Fpartner%23apply">Create account / Sign in</Link>
         </Button>
       </div>
     );
