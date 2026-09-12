@@ -71,7 +71,7 @@ const Dashboard = () => {
          <Button asChild><Link to="/partner/leads"><Plus className="mr-2 h-4 w-4" />Add a lead</Link></Button>
        </div>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">
         <StatsCard icon={CalendarClock} title="Due follow-ups" value={String(stats.followUps.length)} />
         <StatsCard icon={Flame} title="Hot leads" value={String(stats.hot)} />
         <StatsCard icon={Users} title="Active leads" value={String(stats.active)} />

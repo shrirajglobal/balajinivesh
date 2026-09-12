@@ -17,7 +17,7 @@ const PartnerSidebar = () => {
 
   return (
     <aside className="w-full shrink-0 lg:w-56">
-      <nav className="flex gap-1 overflow-x-auto pb-2 scrollbar-thin lg:flex-col lg:pb-0" aria-label="Distributor portal">
+      <nav className="grid grid-cols-4 gap-1 pb-2 lg:flex lg:flex-col lg:pb-0" aria-label="Distributor portal">
         {navItems.map((item, index) => {
           const active = location.pathname === item.path;
           return (
@@ -26,7 +26,7 @@ const PartnerSidebar = () => {
               <Link
                 to={item.path}
                 className={cn(
-                  "flex items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                    "flex min-w-0 flex-col items-center gap-1 rounded-lg px-1 py-2 text-xs font-medium transition-colors lg:flex-row lg:gap-2 lg:px-3 lg:py-2.5 lg:text-sm",
                   active
                     ? "bg-primary/10 text-primary"
                     : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"

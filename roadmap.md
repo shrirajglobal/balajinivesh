@@ -13,4 +13,4 @@
 - [x] Remove AUM, commission, and client features from distributor navigation and Home
 - [x] Make Home leads-first with urgent follow-ups and quick actions
 - [x] Improve Academy, Toolkit, application states, account status, and sign-out
-- [ ] Verify redirects, build, desktop, and mobile portal flows
+- [x] Verify redirects, build, desktop, and mobile portal flows

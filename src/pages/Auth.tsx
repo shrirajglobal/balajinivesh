@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { EXTERNAL_LOGIN_URL } from "@/lib/externalAuth";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -29,20 +29,14 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const pageTopRef = useRef<HTMLElement | null>(null);
   const returnTo = safeReturnTo(params.get("returnTo"));
 
   useEffect(() => {
     if (user && mode !== "choice" && mode !== "check-email") navigate(consumeReturnTo(returnTo), { replace: true });
   }, [mode, navigate, returnTo, user]);
 
-  useLayoutEffect(() => {
-    const scrollToTop = () => {
-      pageTopRef.current?.scrollIntoView({ block: "start" });
-    };
-    scrollToTop();
-    const timer = window.setTimeout(scrollToTop, 200);
-    return () => window.clearTimeout(timer);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, [mode]);
 
   const changeMode = (nextMode: Mode) => {
@@ -106,7 +100,7 @@ const Auth = () => {
 
   if (mode === "choice") {
     return (
-      <main ref={pageTopRef} className="min-h-[80vh] bg-muted/30 px-4 py-10 sm:py-16">
+      <main className="min-h-[80vh] bg-muted/30 px-4 py-10 sm:py-16">
         <div className="mx-auto max-w-4xl">
           <div className="text-center">
             <p className="text-sm font-semibold text-primary">Choose where you want to go</p>
@@ -153,7 +147,7 @@ const Auth = () => {
   }
 
   return (
-    <main ref={pageTopRef} className="min-h-[80vh] bg-muted/30 px-4 py-10 sm:py-16">
+    <main className="flex min-h-[80vh] justify-center bg-muted/30 px-4 py-10 sm:py-16">
       <Card className="w-full max-w-md border-border/60 shadow-lg">
         <CardHeader className="text-center">
           <Button type="button" variant="ghost" size="sm" className="absolute" onClick={() => changeMode("choice")}><ArrowLeft className="mr-1 h-4 w-4" />Back</Button>
