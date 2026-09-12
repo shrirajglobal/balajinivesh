@@ -35,10 +35,13 @@ const Auth = () => {
     if (user && mode !== "choice" && mode !== "check-email") navigate(consumeReturnTo(returnTo), { replace: true });
   }, [mode, navigate, returnTo, user]);
 
+  useEffect(() => {
+    window.requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "auto" }));
+  }, [mode]);
+
   const changeMode = (nextMode: Mode) => {
     setMode(nextMode);
     setError("");
-    window.scrollTo({ top: 0, behavior: "auto" });
     const next = new URLSearchParams(params);
     if (nextMode === "choice") next.delete("mode"); else next.set("mode", nextMode);
     setParams(next, { replace: true });
