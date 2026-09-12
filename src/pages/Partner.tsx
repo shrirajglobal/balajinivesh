@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { TrendingUp, Users, BookOpen, Briefcase, Home, GraduationCap, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Users, Briefcase, Home, GraduationCap, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import HeroBanner from "@/components/layout/HeroBanner";
@@ -98,9 +98,9 @@ const Partner = () => {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-8 rounded-xl border border-border bg-gradient-to-br from-brand-orange-light to-brand-blue-light p-6 text-center">
-                  <p className="font-display text-4xl font-extrabold text-primary">₹25,000+</p>
-                  <p className="mt-1 text-sm text-muted-foreground">{t("partner.avgIncome")}</p>
+                <div className="mt-8 rounded-xl border border-border bg-card p-6">
+                  <p className="font-display text-xl font-bold text-foreground">What you receive after approval</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">A focused portal for lead follow-ups, distributor learning, and practical resources.</p>
                 </div>
               </div>
               <ApplicationForm />
