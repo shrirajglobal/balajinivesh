@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link, Navigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronLeft, Loader2, Send } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -11,7 +11,6 @@ import { Textarea } from "@/components/ui/textarea";
 import SEO from "@/components/seo/SEO";
 import SebiDisclaimer from "@/components/compliance/SebiDisclaimer";
 import { toast } from "sonner";
-import { EXTERNAL_LOGIN_URL } from "@/lib/externalAuth";
 import { format, formatDistanceToNow } from "date-fns";
 
 interface Thread {
@@ -33,6 +32,7 @@ interface Post {
 
 const ForumThread = () => {
   const { slug } = useParams<{ slug: string }>();
+  const location = useLocation();
   const { user } = useAuth();
   const [thread, setThread] = useState<Thread | null | undefined>(undefined);
   const [posts, setPosts] = useState<Post[]>([]);
@@ -168,7 +168,7 @@ const ForumThread = () => {
               <div className="flex items-center justify-between gap-3 text-sm">
                 <span className="text-muted-foreground">Sign in to reply.</span>
                   <Button asChild>
-                    <a href={EXTERNAL_LOGIN_URL} target="_blank" rel="noopener noreferrer">Sign in</a>
+                    <Link to={`/auth?mode=distributor&returnTo=${encodeURIComponent(location.pathname)}`}>Sign in</Link>
                   </Button>
               </div>
             )}

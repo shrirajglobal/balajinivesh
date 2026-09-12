@@ -57,22 +57,18 @@ const AdminPartners = () => {
       return;
     }
 
-    const partnerData: any = {
-      arn_number: arnNumber.trim().toUpperCase(),
-      euin: euin.trim() || null,
-      status: "active",
-      user_id: approveDialog.user_id,
-    };
-
-    const { error: partnerError } = await supabase.from("partners").insert([partnerData]);
+    const { error: partnerError } = await (supabase.rpc as any)("approve_distributor_application", {
+      _application_id: approveDialog.id,
+      _arn_number: arnNumber.trim(),
+      _euin: euin.trim() || null,
+    });
     if (partnerError) {
       toast({ title: "Error", description: partnerError.message, variant: "destructive" });
       setApproving(false);
       return;
     }
 
-    await supabase.from("partner_applications").update({ status: "approved" as any }).eq("id", approveDialog.id);
-    toast({ title: "Partner Approved!", description: `${approveDialog.full_name} approved with ARN ${arnNumber}` });
+    toast({ title: "Distributor approved", description: `${approveDialog.full_name} can now access Learning & CRM.` });
     setApproving(false);
     setApproveDialog(null);
     setArnNumber("");
@@ -90,8 +86,8 @@ const AdminPartners = () => {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-bold text-foreground">Partner Applications</h1>
-      <p className="mt-1 text-sm text-muted-foreground">Review and approve/reject partner applications</p>
+      <h1 className="font-display text-2xl font-bold text-foreground">Distributor Applications</h1>
+      <p className="mt-1 text-sm text-muted-foreground">Review applications and activate Distributor Learning & CRM access.</p>
 
       <div className="mt-6 rounded-xl border border-border">
         <Table>
@@ -140,7 +136,7 @@ const AdminPartners = () => {
       <Dialog open={!!approveDialog} onOpenChange={(open) => !open && setApproveDialog(null)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Approve Partner Application</DialogTitle>
+            <DialogTitle>Approve Distributor Application</DialogTitle>
             <DialogDescription>Enter ARN number for {approveDialog?.full_name}.</DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
@@ -156,7 +152,7 @@ const AdminPartners = () => {
           <DialogFooter>
             <Button variant="outline" onClick={() => setApproveDialog(null)}>Cancel</Button>
             <Button onClick={handleApprove} disabled={approving}>
-              {approving ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Approving...</> : "Approve & Create Partner"}
+               {approving ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Approving...</> : "Approve & Activate Access"}
             </Button>
           </DialogFooter>
         </DialogContent>

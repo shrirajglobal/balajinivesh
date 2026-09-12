@@ -47,6 +47,7 @@ const HomemakersEducation = lazy(() => import("./pages/education/HomemakersEduca
 const KidsEducation = lazy(() => import("./pages/education/KidsEducation"));
 
 const Auth = lazy(() => import("./pages/Auth"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 // MarketInsights merged into /market-updates (Phase 6 CRO)
 const MarketUpdates = lazy(() => import("./pages/MarketUpdates"));
 const About = lazy(() => import("./pages/About"));
@@ -243,6 +244,7 @@ const App = () => (
                   <Route path="/subscribe/unsubscribe" element={<LazyRoute component={Unsubscribe} />} />
                   {/* Auth */}
                   <Route path="/auth" element={<LazyRoute component={Auth} />} />
+                   <Route path="/reset-password" element={<LazyRoute component={ResetPassword} />} />
                   {/* Static Pages */}
                   <Route path="/about" element={<LazyRoute component={About} />} />
                   <Route path="/contact" element={<LazyRoute component={Contact} />} />

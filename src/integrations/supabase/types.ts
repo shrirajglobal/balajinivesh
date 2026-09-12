@@ -1869,6 +1869,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      approve_distributor_application: {
+        Args: { _application_id: string; _arn_number: string; _euin?: string }
+        Returns: string
+      }
       find_partners_by_location: {
         Args: { _city?: string; _limit?: number; _pincode?: string }
         Returns: {

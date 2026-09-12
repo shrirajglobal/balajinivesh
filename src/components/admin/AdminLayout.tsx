@@ -42,8 +42,8 @@ import { cn } from "@/lib/utils";
 
 const menuItems = [
   { title: "Dashboard", path: "/admin", icon: LayoutDashboard },
-  { title: "Partner Applications", path: "/admin/partners", icon: ClipboardList },
-  { title: "Active Partners", path: "/admin/partners/active", icon: UserCheck },
+  { title: "Distributor Applications", path: "/admin/partners", icon: ClipboardList },
+  { title: "Active Distributors", path: "/admin/partners/active", icon: UserCheck },
   { title: "RTA Uploads", path: "/admin/rta-upload", icon: Upload },
   { title: "Clients", path: "/admin/clients", icon: UsersRound },
   { title: "Commissions", path: "/admin/commissions", icon: Wallet },

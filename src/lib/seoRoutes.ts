@@ -124,6 +124,7 @@ export const routeMeta: Record<string, RouteMeta> = {
     crumbs: [["Commission Disclosure", "/commission-disclosure"]],
   },
   "/auth": { title: "Sign in | Balaji Nivesh", description: "Sign in to your Balaji Nivesh account.", noindex: true },
+  "/reset-password": { title: "Reset Password | Balaji Nivesh", description: "Reset your Balaji Nivesh distributor account password.", noindex: true },
 };
 
 [
