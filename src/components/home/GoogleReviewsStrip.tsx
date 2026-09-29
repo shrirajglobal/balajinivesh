@@ -59,7 +59,7 @@ const GoogleReviewsStrip = () => {
       if (list && previous) {
         const cycle = list.scrollWidth / 2;
         if (cycle > 0) {
-          list.scrollLeft += Math.min(time - previous, 64) * 0.025;
+          list.scrollLeft += Math.min(time - previous, 64) * 0.04;
           if (list.scrollLeft >= cycle) list.scrollLeft -= cycle;
         }
       }

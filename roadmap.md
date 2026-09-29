@@ -31,4 +31,4 @@
 
 - [x] Replace tall review grid with a right-to-left scrolling strip of actual reviews
 - [x] Keep Google attribution, rating, links, team action, and motion controls
-- [ ] Verify mobile/desktop presentation and reduced-motion behavior
+- [x] Verify mobile/desktop presentation and reduced-motion behavior
