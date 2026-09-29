@@ -84,6 +84,7 @@ const Index = () => {
 
       <HowItWorks />
       <AuthorityStrip />
+      <GoogleReviewsStrip />
       <AppPromo variant="band" placement="homepage" />
 
       {/* What's your goal? */}
@@ -229,8 +230,6 @@ const Index = () => {
           <NewsletterSignup source="homepage" variant="card" />
         </div>
       </section>
-
-      <GoogleReviewsStrip />
 
       {/* CTA */}
       <section className="bg-gradient-to-r from-primary to-secondary py-12 sm:py-16 lg:py-20">
