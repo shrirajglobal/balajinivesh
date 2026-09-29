@@ -26,4 +26,4 @@
 
 - [x] Curate compliant verbatim excerpts from supplied Google screenshots
 - [x] Move and redesign existing review area near the early trust content
-- [ ] Verify ratings, links, mobile carousel, desktop layout and preview diagnostics
+- [x] Verify ratings, links, mobile carousel, desktop layout and preview diagnostics
