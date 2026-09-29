@@ -27,3 +27,8 @@
 - [x] Curate compliant verbatim excerpts from supplied Google screenshots
 - [x] Move and redesign existing review area near the early trust content
 - [x] Verify ratings, links, mobile carousel, desktop layout and preview diagnostics
+# Compact homepage review strip
+
+- [x] Replace tall review grid with a right-to-left scrolling strip of actual reviews
+- [x] Keep Google attribution, rating, links, team action, and motion controls
+- [ ] Verify mobile/desktop presentation and reduced-motion behavior
