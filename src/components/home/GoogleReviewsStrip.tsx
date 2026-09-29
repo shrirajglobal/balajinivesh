@@ -1,6 +1,6 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ExternalLink, PenLine, Star } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, Pause, PenLine, Play, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useSiteSettings } from "@/hooks/useSiteSettings";
 import { buildWriteReviewUrl, buildReadReviewsUrl } from "@/lib/googleReview";
@@ -28,7 +28,11 @@ const reviews = [
 
 const GoogleReviewsStrip = () => {
   const { data: settings } = useSiteSettings();
-  const reviewList = useRef<HTMLUListElement>(null);
+  const reviewList = useRef<HTMLDivElement>(null);
+  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
   const placeId = settings?.map.google_place_id;
   const rating = settings?.map.google_rating || "";
   const count = settings?.map.google_review_count || "";
@@ -38,78 +42,98 @@ const GoogleReviewsStrip = () => {
   const numericRating = Number(rating);
   const hasRating = Number.isFinite(numericRating) && numericRating > 0 && numericRating <= 5;
 
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReducedMotion(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (paused || hovered || focused || reducedMotion) return;
+    let frame = 0;
+    let previous = 0;
+    const tick = (time: number) => {
+      const list = reviewList.current;
+      if (list && previous) {
+        const cycle = list.scrollWidth / 2;
+        if (cycle > 0) {
+          list.scrollLeft += Math.min(time - previous, 64) * 0.04;
+          if (list.scrollLeft >= cycle) list.scrollLeft -= cycle;
+        }
+      }
+      previous = time;
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [paused, hovered, focused, reducedMotion]);
+
   const scrollReviews = (direction: -1 | 1) => {
+    setPaused(true);
     const list = reviewList.current;
     if (!list) return;
-    const card = list.querySelector("li");
-    const distance = card ? card.getBoundingClientRect().width + 16 : list.clientWidth;
-    list.scrollBy({ left: direction * distance, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
+    const cycle = list.scrollWidth / 2;
+    if (direction === -1 && list.scrollLeft < 8) list.scrollLeft = cycle;
+    list.scrollBy({ left: direction * Math.min(380, list.clientWidth * 0.85), behavior: reducedMotion ? "instant" : "smooth" });
   };
 
-  return (
-    <section aria-labelledby="google-reviews-title" className="border-y border-border bg-muted/30 py-12 sm:py-16">
-      <div className="container max-w-6xl">
-        <div className="flex flex-col gap-6 border-b border-border pb-7 md:flex-row md:items-end md:justify-between">
+  const reviewItems = (duplicate: boolean) => (
+    <ul aria-hidden={duplicate ? true : undefined} className="flex shrink-0 items-stretch gap-3 pr-3" aria-label={duplicate ? undefined : "Selected Google reviews"}>
+      {reviews.map((review) => (
+        <li key={review.name} className="flex w-[min(82vw,370px)] shrink-0 flex-col justify-between rounded-md border border-border/70 bg-card/75 px-4 py-3 backdrop-blur-sm sm:w-[370px]">
           <div>
-            <p className="text-sm font-semibold text-primary">Customer voices · Google reviews</p>
-            <h2 id="google-reviews-title" className="mt-2 font-display text-2xl font-bold text-foreground sm:text-3xl">
-              What customers say about Balaji Nivesh
-            </h2>
-            <p className="mt-2 text-sm text-muted-foreground">Selected excerpts from customer reviews on Google.</p>
-          </div>
-          {hasRating && (
-            <div className="shrink-0 md:text-right" aria-label={`Google rating ${rating} out of 5${count ? ` from ${count} reviews` : ""}`}>
-              <div className="flex items-baseline gap-2 md:justify-end">
-                <span className="font-display text-4xl font-bold text-foreground">{rating}</span>
-                <span className="text-sm text-muted-foreground">/ 5 on Google</span>
-              </div>
-              <div aria-hidden="true" className="mt-1 flex gap-0.5 md:justify-end">
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <Star key={i} className={i < Math.round(numericRating) ? "h-4 w-4 fill-primary text-primary" : "h-4 w-4 text-muted-foreground/30"} />
-                ))}
-              </div>
-              {count && <p className="mt-1 text-xs text-muted-foreground">Based on {count} Google reviews</p>}
+            <div aria-label={duplicate ? undefined : "5 out of 5 stars"} className="flex items-center gap-0.5 text-primary">
+              {[0, 1, 2, 3, 4].map((i) => <Star key={i} aria-hidden="true" className="h-3 w-3 fill-current" />)}
+              <span className="ml-2 text-[11px] font-medium text-muted-foreground">Google review</span>
             </div>
-          )}
-        </div>
+            <blockquote className="mt-2 text-xs leading-relaxed text-foreground sm:text-sm">“{review.quote}”</blockquote>
+          </div>
+          <p className="mt-2 text-xs font-semibold text-foreground">— {review.name}</p>
+        </li>
+      ))}
+    </ul>
+  );
 
-        <div className="mt-7 flex items-center justify-between gap-4 md:hidden">
-          <span className="text-xs font-medium text-muted-foreground">Customer reviews</span>
-          <div className="flex gap-2">
-            <Button type="button" size="icon" variant="outline" aria-label="Previous review" title="Previous review" onClick={() => scrollReviews(-1)}><ArrowLeft /></Button>
-            <Button type="button" size="icon" variant="outline" aria-label="Next review" title="Next review" onClick={() => scrollReviews(1)}><ArrowRight /></Button>
+  return (
+    <section aria-labelledby="google-reviews-title" className="overflow-hidden border-y border-border bg-muted/30 py-6 sm:py-8">
+      <div className="container max-w-6xl">
+        <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-3">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <h2 id="google-reviews-title" className="font-display text-lg font-bold text-foreground sm:text-xl">Customer voices</h2>
+            <span className="text-xs text-muted-foreground">Selected Google reviews</span>
+            {hasRating && (
+              <span aria-label={`Google rating ${rating} out of 5${count ? ` from ${count} reviews` : ""}`} className="inline-flex items-center gap-1.5 border-l border-border pl-4 text-sm font-bold text-foreground">
+                <Star aria-hidden="true" className="h-4 w-4 fill-primary text-primary" /> {rating}<span className="font-normal text-muted-foreground">/ 5{count ? ` · ${count} reviews` : ""}</span>
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-1">
+            <Button type="button" size="icon" variant="ghost" className="h-8 w-8" aria-label="Previous review" title="Previous review" onClick={() => scrollReviews(-1)}><ArrowLeft className="h-4 w-4" /></Button>
+            <Button type="button" size="icon" variant="ghost" className="h-8 w-8" aria-label="Next review" title="Next review" onClick={() => scrollReviews(1)}><ArrowRight className="h-4 w-4" /></Button>
+            {!reducedMotion && <Button type="button" size="icon" variant="ghost" className="h-8 w-8" aria-label={paused ? "Play reviews" : "Pause reviews"} title={paused ? "Play reviews" : "Pause reviews"} onClick={() => setPaused((value) => !value)}>{paused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}</Button>}
           </div>
         </div>
+      </div>
 
-        <ul ref={reviewList} className="-mx-4 mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 md:mx-0 md:mt-8 md:grid md:grid-cols-2 md:overflow-visible md:px-0 md:pb-0" aria-label="Selected Google reviews">
-          {reviews.map((review) => (
-            <li key={review.name} className="flex w-[min(85vw,350px)] shrink-0 snap-start flex-col justify-between rounded-md border border-border bg-card p-5 md:w-auto md:min-h-52 md:p-6">
-              <div>
-                <div aria-label="5 out of 5 stars" className="flex gap-0.5 text-primary">
-                  {[0, 1, 2, 3, 4].map((i) => <Star key={i} aria-hidden="true" className="h-4 w-4 fill-current" />)}
-                </div>
-                <blockquote className="mt-4 text-sm leading-relaxed text-foreground sm:text-base">“{review.quote}”</blockquote>
-              </div>
-              <p className="mt-6 border-t border-border pt-3 text-sm font-semibold text-foreground">{review.name}<span className="ml-2 font-normal text-muted-foreground">· Google review</span></p>
-            </li>
-          ))}
-        </ul>
+      <div
+        ref={reviewList}
+        className="mt-4 flex overflow-x-auto overscroll-x-contain px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:px-[max(1rem,calc((100vw-72rem)/2))]"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        onFocusCapture={() => setFocused(true)}
+        onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
+        onTouchStart={() => setPaused(true)}
+      >
+        {reviewItems(false)}
+        {reviewItems(true)}
+      </div>
 
-        <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-          {readUrl && (
-            <Button asChild variant="outline" className="w-full sm:w-auto">
-              <a href={readUrl} target="_blank" rel="noopener noreferrer">Read reviews on Google <ExternalLink /></a>
-            </Button>
-          )}
-          <Button asChild variant="link" className="w-full sm:w-auto">
-            <Link to="/contact">Talk to our team <ArrowRight /></Link>
-          </Button>
-          {writeUrl && (
-            <Button asChild variant="link" className="w-full sm:ml-auto sm:w-auto">
-              <a href={writeUrl} target="_blank" rel="noopener noreferrer"><PenLine /> Write a review</a>
-            </Button>
-          )}
-        </div>
+      <div className="container mt-3 flex max-w-6xl flex-wrap items-center gap-x-5 gap-y-1 text-xs">
+        {readUrl && <Button asChild variant="link" size="sm" className="h-8 px-0 text-xs"><a href={readUrl} target="_blank" rel="noopener noreferrer">Read on Google <ExternalLink className="h-3.5 w-3.5" /></a></Button>}
+        <Button asChild variant="link" size="sm" className="h-8 px-0 text-xs"><Link to="/contact">Talk to our team <ArrowRight className="h-3.5 w-3.5" /></Link></Button>
+        {writeUrl && <Button asChild variant="link" size="sm" className="h-8 px-0 text-xs sm:ml-auto"><a href={writeUrl} target="_blank" rel="noopener noreferrer"><PenLine className="h-3.5 w-3.5" /> Write a review</a></Button>}
       </div>
     </section>
   );
