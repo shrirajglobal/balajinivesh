@@ -123,6 +123,16 @@ export const routeMeta: Record<string, RouteMeta> = {
       "Full disclosure of the commission Balaji Nivesh Private Limited (ARN-173142) earns as a mutual fund distributor, scheme category wise.",
     crumbs: [["Commission Disclosure", "/commission-disclosure"]],
   },
+  "/customer-service-sop": {
+    title: "Customer Service & Grievance Process | Balaji Nivesh",
+    description: "How to raise a mutual fund service request or complaint with Balaji Nivesh, reach Mr Ashish Khandelwal and find official SEBI escalation channels.",
+    crumbs: [["Customer Service & Grievances", "/customer-service-sop"]],
+  },
+  "/amc-details": {
+    title: "AMC Directory — Mutual Fund Information | Balaji Nivesh",
+    description: "Browse an illustrative directory of mutual fund AMCs, check official AMFI information and ask Balaji Nivesh which fund houses it can service.",
+    crumbs: [["AMC Directory", "/amc-details"]],
+  },
   "/auth": { title: "Sign in | Balaji Nivesh", description: "Sign in to your Balaji Nivesh account.", noindex: true },
   "/reset-password": { title: "Reset Password | Balaji Nivesh", description: "Reset your Balaji Nivesh distributor account password.", noindex: true },
 };

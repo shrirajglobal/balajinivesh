@@ -100,7 +100,7 @@ const PrivacyPolicy = () => {
             In accordance with the Information Technology Act, 2000, the name and contact details of our Grievance Officer are provided below for any complaints or concerns regarding data privacy:
           </p>
           <p className="mt-2">
-            <strong>Grievance Officer:</strong> [Name of Grievance Officer]<br />
+            <strong>Privacy concerns contact:</strong> Mr Ashish Khandelwal<br />
             <strong>Email:</strong> infobalajinivesh@gmail.com<br />
             <strong>Phone:</strong> +91 93300 79717<br />
             <strong>Address:</strong> 1 R. N. Mukherjee Road, 3rd Floor, Room No. 320, Kolkata, West Bengal – 700001
