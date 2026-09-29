@@ -21,3 +21,9 @@
 - [x] Add grievance process and AMC directory pages with Ashish's temporary contact number
 - [x] Connect pages from footer, Contact, mutual funds and both sitemap sources
 - [x] Verify official links, desktop/mobile views and preview diagnostics
+
+# Homepage Google reviews
+
+- [x] Curate compliant verbatim excerpts from supplied Google screenshots
+- [x] Move and redesign existing review area near the early trust content
+- [x] Verify ratings, links, mobile carousel, desktop layout and preview diagnostics
