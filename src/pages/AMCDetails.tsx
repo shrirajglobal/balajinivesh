@@ -49,7 +49,7 @@ const AMCDetails = () => {
         </div>
         {filtered.length ? (
           <ul className="mt-6 grid border-t border-border sm:grid-cols-2">
-            {filtered.map((name, index) => (
+            {filtered.map((name) => (
               <li key={name} className="flex min-h-14 items-center gap-4 border-b border-border py-3 pr-4 text-sm text-foreground">
                 <span className="w-7 shrink-0 text-xs tabular-nums text-muted-foreground">{String(fundHouses.indexOf(name) + 1).padStart(2, "0")}</span>
                 <span className="font-medium">{name}</span>
