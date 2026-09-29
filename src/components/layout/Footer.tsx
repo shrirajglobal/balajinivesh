@@ -146,12 +146,15 @@ const Footer = () => {
 
           <div className="mt-4 flex flex-col items-center justify-between gap-3 text-xs text-muted-foreground sm:flex-row sm:gap-2">
             <p>{t("footer.copyright").replace("{year}", new Date().getFullYear().toString())}</p>
-            <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-center sm:flex sm:flex-wrap sm:justify-center sm:gap-4">
+            <nav aria-label="Investor Support & Disclosures" className="grid grid-cols-2 gap-x-6 gap-y-2 text-center sm:flex sm:flex-wrap sm:justify-center sm:gap-4">
+              <span className="col-span-2 font-semibold text-foreground sm:w-full">Investor Support &amp; Disclosures</span>
+              <Link to="/customer-service-sop" className="py-1 font-medium text-foreground hover:text-primary">Customer Service &amp; Grievances</Link>
+              <Link to="/amc-details" className="py-1 font-medium text-foreground hover:text-primary">AMC Directory</Link>
               <Link to="/privacy" className="py-1 hover:text-primary">{t("footer.privacyPolicy")}</Link>
               <Link to="/terms" className="py-1 hover:text-primary">{t("footer.termsOfUse")}</Link>
               <Link to="/disclaimer" className="py-1 hover:text-primary">{t("footer.disclaimerLink")}</Link>
               <Link to="/commission-disclosure" className="py-1 font-medium text-foreground hover:text-primary">Commission Disclosure</Link>
-            </div>
+            </nav>
           </div>
         </div>
       </div>

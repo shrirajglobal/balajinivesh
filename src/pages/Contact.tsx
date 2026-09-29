@@ -14,6 +14,7 @@ import AppPromo from "@/components/app/AppPromo";
 import { useWhatsAppContactHref } from "@/lib/whatsapp";
 import HeroBanner from "@/components/layout/HeroBanner";
 import SEO from "@/components/seo/SEO";
+import { Link } from "react-router-dom";
 
 const INTEREST_OPTIONS = [
   "Start a SIP",
@@ -193,6 +194,11 @@ const Contact = () => {
                 </div>
               </Card>
               <AppPromo variant="inline" placement="contact" />
+              <div className="border-t border-border pt-5">
+                <h2 className="font-display text-base font-semibold text-foreground">Need help with an existing investment?</h2>
+                <p className="mt-2 text-sm text-muted-foreground">See how to raise a service request or complaint and where to escalate it.</p>
+                <Button asChild variant="link" className="mt-2 px-0"><Link to="/customer-service-sop">Customer Service &amp; Grievances</Link></Button>
+              </div>
               <div className="rounded-lg border border-border bg-muted/50 p-4">
                 <p className="text-xs leading-relaxed text-muted-foreground"><strong>Note:</strong> {t("contact.note")}</p>
               </div>

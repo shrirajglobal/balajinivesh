@@ -34,6 +34,8 @@ const STATIC_PATHS = [
   { loc: "/privacy", priority: 0.3, changefreq: "yearly" },
   { loc: "/terms", priority: 0.3, changefreq: "yearly" },
   { loc: "/disclaimer", priority: 0.3, changefreq: "yearly" },
+  { loc: "/customer-service-sop", priority: 0.5, changefreq: "yearly" },
+  { loc: "/amc-details", priority: 0.5, changefreq: "yearly" },
 ];
 
 function escapeXml(s: string): string {

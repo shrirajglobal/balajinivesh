@@ -1,7 +1,10 @@
 import { TrendingUp } from "lucide-react";
 import SolutionPageTemplate from "@/components/solutions/SolutionPageTemplate";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const MutualFunds = () => (
+  <>
   <SolutionPageTemplate
     title="Mutual Funds"
     subtitle="A professionally managed investment vehicle that pools money from multiple investors to invest in diversified securities."
@@ -54,6 +57,12 @@ const MutualFunds = () => (
       },
     ]}
   />
+  <div className="container max-w-3xl border-t border-border pb-16 pt-8">
+    <h2 className="font-display text-xl font-semibold text-foreground">Explore mutual fund houses</h2>
+    <p className="mt-2 text-sm text-muted-foreground">Browse general AMC information and check which fund houses Balaji Nivesh can service.</p>
+    <Button asChild variant="link" className="mt-2 px-0"><Link to="/amc-details">View AMC directory</Link></Button>
+  </div>
+  </>
 );
 
 export default MutualFunds;

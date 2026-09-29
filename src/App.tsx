@@ -58,6 +58,8 @@ const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfUse = lazy(() => import("./pages/TermsOfUse"));
 const Disclaimer = lazy(() => import("./pages/Disclaimer"));
 const CommissionDisclosure = lazy(() => import("./pages/CommissionDisclosure"));
+const CustomerServiceSOP = lazy(() => import("./pages/CustomerServiceSOP"));
+const AMCDetails = lazy(() => import("./pages/AMCDetails"));
 
 const Partner = lazy(() => import("./pages/Partner"));
 const PartnerDashboard = lazy(() => import("./pages/partner/Dashboard"));
@@ -252,6 +254,8 @@ const App = () => (
                   <Route path="/terms" element={<LazyRoute component={TermsOfUse} />} />
                   <Route path="/disclaimer" element={<LazyRoute component={Disclaimer} />} />
                   <Route path="/commission-disclosure" element={<LazyRoute component={CommissionDisclosure} />} />
+                  <Route path="/customer-service-sop" element={<LazyRoute component={CustomerServiceSOP} />} />
+                  <Route path="/amc-details" element={<LazyRoute component={AMCDetails} />} />
                   {/* Catch-all */}
                   <Route path="*" element={<NotFound />} />
                 </Route>
